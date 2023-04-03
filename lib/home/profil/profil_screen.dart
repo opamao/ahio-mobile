@@ -36,53 +36,9 @@ class _ProfilScreenState extends State<ProfilScreen> {
       backgroundColor: const Color.fromRGBO(225, 239, 216, 1.0),
       body: Column(
         children: [
-          const Expanded(flex: 1, child: _TopPortion()),
+          const Expanded(child: _TopPortion()),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Text(
-                    nom,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge
-                        ?.copyWith(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(2),
-                        child: ElevatedButton.icon(
-                          onPressed: () async {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => EditProfil()));
-                          },
-                          label: const Text(
-                            "Modifier",
-                            style: TextStyle(color: Colors.blue),
-                          ),
-                          icon: const Icon(
-                            Icons.edit,
-                            color: Colors.blue,
-                          ),
-                          style:
-                              ElevatedButton.styleFrom(primary: Colors.white),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  _ProfileInfoRow(),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
+            flex: 2,
             child:
                 Padding(padding: const EdgeInsets.all(5.0), child: _autres()),
           ),
@@ -102,41 +58,89 @@ class _autresState extends State<_autres> {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        Card(
-          child: ListTile(
-            onTap: () {},
-            dense: true,
-            leading: const Icon(Icons.person_outline_rounded),
-            title: const Text('Mes Agents'),
-            trailing: const Icon(Icons.navigate_next),
+        ListTile(
+          onTap: () {},
+          dense: true,
+          leading: const Icon(Icons.person_outline_rounded),
+          title: const Text(
+            'Informations personnelles',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-        Card(
-          child: ListTile(
-            onTap: () {},
-            leading: const Icon(Icons.notifications_none_rounded),
-            title: const Text("Notifications"),
-            trailing: const Icon(Icons.navigate_next),
-            dense: true,
-          ),
+        const Divider(
+          thickness: 2,
+          indent: 20,
+          endIndent: 20,
+          height: 2,
         ),
-        Card(
-          child: ListTile(
-            onTap: () {},
-            leading: const Icon(Icons.help_outline_rounded),
-            title: const Text("Aides & Feedback"),
-            trailing: const Icon(Icons.navigate_next),
-            dense: true,
+        ListTile(
+          onTap: () {},
+          leading: const Icon(Icons.notifications_none_rounded),
+          title: const Text(
+            "Confidentialité et sécurité",
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
           ),
+          dense: true,
         ),
-        Card(
-          child: ListTile(
-            onTap: () {},
-            leading: const Icon(Icons.info_outline_rounded),
-            title: const Text("Apropos"),
-            trailing: const Icon(Icons.navigate_next),
-            dense: true,
+        const Divider(
+          thickness: 2,
+          indent: 20,
+          endIndent: 20,
+          height: 2,
+        ),
+        ListTile(
+          onTap: () {},
+          leading: const Icon(Icons.help_outline_rounded),
+          title: const Text(
+            "Langues",
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
           ),
+          dense: true,
+        ),
+        const Divider(
+          thickness: 2,
+          indent: 20,
+          endIndent: 20,
+          height: 2,
+        ),
+        ListTile(
+          onTap: () {},
+          leading: const Icon(Icons.info_outline_rounded),
+          title: const Text(
+            "Notifications",
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          dense: true,
+        ),
+        const Divider(
+          thickness: 2,
+          indent: 20,
+          endIndent: 20,
+          height: 2,
+        ),
+        ListTile(
+          onTap: () {},
+          leading: const Icon(Icons.info_outline_rounded),
+          title: const Text(
+            "Mode sombre",
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          dense: true,
         ),
         const Divider(),
         Card(
@@ -152,7 +156,10 @@ class _autresState extends State<_autres> {
                 actions: <Widget>[
                   TextButton(
                     onPressed: () => Navigator.pop(context, 'Cancel'),
-                    child: const Text('NON', style: TextStyle(color: Colors.black),),
+                    child: const Text(
+                      'NON',
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
                   TextButton(
                     onPressed: () async {
@@ -186,8 +193,8 @@ class _autresState extends State<_autres> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String typeToken = pref.getString("token_type")!;
     String token = pref.getString("access_token")!;
-    
-    print(typeToken + ' '+ token);
+
+    print(typeToken + ' ' + token);
 
     var reponse = await http.post(
         Uri.parse(
@@ -208,9 +215,8 @@ class _autresState extends State<_autres> {
       var message = resp["message"];
 
       if (response == 'SUCCESS') {
-
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("$message")));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("$message")));
 
         pageRoute();
       } else if (response == 'ERREUR') {
@@ -230,85 +236,8 @@ class _autresState extends State<_autres> {
     await pref.clear();
 
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => const Login()), (route) => false);
-  }
-}
-
-class _ProfileInfoRow extends StatefulWidget {
-  @override
-  State<_ProfileInfoRow> createState() => _ProfileInfoRowState();
-}
-
-class _ProfileInfoRowState extends State<_ProfileInfoRow> {
-  String phone = "";
-  String email = "";
-  String role = "";
-
-  @override
-  void initState() {
-    super.initState();
-    getCred();
-  }
-
-  void getCred() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    setState(() {
-      phone = pref.getString("phone")!;
-      email = pref.getString("email")!;
-      role = pref.getString("role")!;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 100,
-      constraints: const BoxConstraints(maxWidth: 400),
-      child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
-        clipBehavior: Clip.antiAlias,
-        color: Colors.white,
-        elevation: 5.0,
-        child: Row(
-          children: [
-            Expanded(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    phone,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-                Text("Téléphone", style: Theme.of(context).textTheme.bodySmall)
-              ],
-            )),
-            Expanded(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    email,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-                Text("E-mail", style: Theme.of(context).textTheme.bodySmall)
-              ],
-            )),
-          ],
-        ),
-      ),
-    );
+        MaterialPageRoute(builder: (context) => const Login()),
+        (route) => false);
   }
 }
 
@@ -324,18 +253,27 @@ class _TopPortionState extends State<_TopPortion> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Align(
+        const SizedBox(
+          height: 80,
+        ),
+        const Align(
           alignment: Alignment.centerLeft,
           child: Padding(
             padding: EdgeInsets.only(left: 8),
-            child: Text("dde"),
+            child: Text(
+              "Profil",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 42,
+              ),
+            ),
           ),
         ),
         Align(
           alignment: Alignment.bottomCenter,
           child: SizedBox(
-            width: 150,
-            height: 150,
+            width: 90,
+            height: 90,
             child: Stack(
               fit: StackFit.expand,
               children: [
@@ -364,6 +302,25 @@ class _TopPortionState extends State<_TopPortion> {
                 ),
               ],
             ),
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          "Nom utilisateur",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          "theodoreyapi@gmail.com",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.normal,
           ),
         )
       ],
