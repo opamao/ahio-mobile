@@ -56,18 +56,22 @@ AlertDialog alartDialog(String title, String content, BuildContext context) {
     content: Text(content),
     actions: [
       TextButton(
-        child: Text(
-          "OK",
-          style: TextStyle(color: Colors.white),
-        ),
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.black38)),
         onPressed: () {
           Navigator.of(context).pop();
         },
+        child: const Text(
+          "OK",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
     ],
   );
 }
 
 class LoginFormStyle {}
+
+//Les differentes couleurs de l'application
+Color couleurFond = const Color.fromRGBO(225, 239, 216, 1.0);
+Color couleurTransparant = Colors.transparent;
