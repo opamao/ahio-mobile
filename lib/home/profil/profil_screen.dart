@@ -1,4 +1,6 @@
+import 'package:ahio/common/theme.dart';
 import 'package:ahio/home/profil/edit_profil.dart';
+import 'package:ahio/home/profil/profil_security.dart';
 import 'package:ahio/login.dart';
 import 'dart:convert';
 
@@ -33,7 +35,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(225, 239, 216, 1.0),
+      backgroundColor: couleurFond,
       body: Column(
         children: [
           const Expanded(child: _TopPortion()),
@@ -59,7 +61,14 @@ class _autresState extends State<_autres> {
     return ListView(
       children: <Widget>[
         ListTile(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const EditProfil(),
+              ),
+            );
+          },
           dense: true,
           leading: const Icon(Icons.person_outline_rounded),
           title: const Text(
@@ -77,8 +86,15 @@ class _autresState extends State<_autres> {
           height: 2,
         ),
         ListTile(
-          onTap: () {},
-          leading: const Icon(Icons.notifications_none_rounded),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const securityProfil(),
+              ),
+            );
+          },
+          leading: const Icon(Icons.lock_outlined),
           title: const Text(
             "Confidentialité et sécurité",
             style: TextStyle(
@@ -96,7 +112,7 @@ class _autresState extends State<_autres> {
         ),
         ListTile(
           onTap: () {},
-          leading: const Icon(Icons.help_outline_rounded),
+          leading: const Icon(Icons.translate_outlined),
           title: const Text(
             "Langues",
             style: TextStyle(
@@ -114,7 +130,7 @@ class _autresState extends State<_autres> {
         ),
         ListTile(
           onTap: () {},
-          leading: const Icon(Icons.info_outline_rounded),
+          leading: const Icon(Icons.notifications_outlined),
           title: const Text(
             "Notifications",
             style: TextStyle(
@@ -132,7 +148,7 @@ class _autresState extends State<_autres> {
         ),
         ListTile(
           onTap: () {},
-          leading: const Icon(Icons.info_outline_rounded),
+          leading: const Icon(Icons.exit_to_app_rounded),
           title: const Text(
             "Mode sombre",
             style: TextStyle(
@@ -143,47 +159,48 @@ class _autresState extends State<_autres> {
           dense: true,
         ),
         const Divider(),
-        Card(
-          child: ListTile(
-            onTap: () => showDialog<String>(
-              context: context,
-              builder: (BuildContext context) => AlertDialog(
-                title: const Text(
-                  'DECONNEXION',
-                  style: TextStyle(color: Colors.red),
-                ),
-                content: const Text('Êtes-vous sûr ?'),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, 'Cancel'),
-                    child: const Text(
-                      'NON',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () async {
-                      logout();
-                    },
-                    child: const Text(
-                      'OUI',
-                      style: TextStyle(color: Colors.green),
-                    ),
-                  ),
-                ],
+        ListTile(
+          onTap: () => showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              title: const Text(
+                'DECONNEXION',
+                style: TextStyle(color: Colors.red),
               ),
+              content: const Text('Êtes-vous sûr ?'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  child: const Text(
+                    'NON',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    logout();
+                  },
+                  child: const Text(
+                    'OUI',
+                    style: TextStyle(color: Colors.green),
+                  ),
+                ),
+              ],
             ),
-            leading: const Icon(
-              Icons.exit_to_app_rounded,
+          ),
+          leading: const Icon(
+            Icons.exit_to_app_rounded,
+            color: Colors.red,
+          ),
+          title: const Text(
+            "Se déconnecter",
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
               color: Colors.red,
             ),
-            title: const Text(
-              "Se déconnecter",
-              style: TextStyle(color: Colors.red),
-            ),
-            trailing: const Icon(Icons.navigate_next, color: Colors.red),
-            dense: true,
           ),
+          dense: true,
         ),
       ],
     );
@@ -259,7 +276,7 @@ class _TopPortionState extends State<_TopPortion> {
         const Align(
           alignment: Alignment.centerLeft,
           child: Padding(
-            padding: EdgeInsets.only(left: 8),
+            padding: EdgeInsets.only(left: 20),
             child: Text(
               "Profil",
               style: TextStyle(
@@ -282,7 +299,9 @@ class _TopPortionState extends State<_TopPortion> {
                     color: Colors.black,
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                        fit: BoxFit.fill, image: AssetImage("images/ahio.png")),
+                      fit: BoxFit.fill,
+                      image: AssetImage("images/ahio.png"),
+                    ),
                   ),
                 ),
                 Positioned(
@@ -304,10 +323,10 @@ class _TopPortionState extends State<_TopPortion> {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
-        Text(
+        const Text(
           "Nom utilisateur",
           textAlign: TextAlign.center,
           style: TextStyle(
@@ -315,7 +334,7 @@ class _TopPortionState extends State<_TopPortion> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        Text(
+        const Text(
           "theodoreyapi@gmail.com",
           textAlign: TextAlign.center,
           style: TextStyle(

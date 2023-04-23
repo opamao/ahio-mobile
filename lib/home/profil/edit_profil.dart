@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:ahio/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gap/gap.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:sizer/sizer.dart';
 import 'package:ahio/common/constance.dart';
@@ -53,225 +55,252 @@ class _EditProfilState extends State<EditProfil> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("images/fond.png"),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Scaffold(
-          extendBodyBehindAppBar: true,
-          appBar: AppBar(
-            backgroundColor: const Color.fromARGB(0, 141, 249, 83),
-            elevation: 0,
-            leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const CircleAvatar(
-                backgroundColor: Colors.white,
-                child: Icon(
-                  Icons.arrow_back,
-                  color: Colors.black,
-                ),
-              ),
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: couleurTransparant,
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const CircleAvatar(
+            backgroundColor: Colors.white,
+            child: Icon(
+              Icons.arrow_back,
+              color: Colors.black,
             ),
           ),
-          backgroundColor: const Color.fromARGB(0, 146, 240, 95),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                  padding: const EdgeInsets.only(right: 220, top: 90),
-                  child: Image.asset(
-                    "images/ahio1.png",
-                    width: 20.w,
-                    height: 10.h,
-                  )),
-              Expanded(
-                child: Container(
+        ),
+      ),
+      backgroundColor: couleurFond,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Gap(150),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Icon(
+                  Icons.person_outline_rounded,
+                  size: 30,
+                ),
+                Text(
+                  'Informations personnelles',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            SizedBox(
+              width: 90,
+              height: 90,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Container(
                     decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(.96),
-                        borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(40),
-                            topRight: Radius.circular(40))),
-                    child: Center(
-                      child: Column(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.all(20),
-                            child: Text(
-                              "MODIFICATION",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18.sp),
-                            ),
-                          ),
-                          Center(
-                            child: Container(
-                              margin: const EdgeInsets.all(20),
-                              child: Form(
-                                  key: _formkey,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      TextFormField(
-                                        controller: name,
-                                        textInputAction: TextInputAction.done,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(100),
-                                          ),
-                                          hintText: "Nom complet",
-                                          prefixIcon: const Padding(
-                                            padding: EdgeInsets.all(0),
-                                            child: Icon(Icons.person),
-                                          ),
-                                        ),
-                                        keyboardType: TextInputType.text,
-                                        validator: (value) {
-                                          if (value!.isEmpty) {
-                                            return "Veillez entrer un nom correct";
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                      ),
-                                      const SizedBox(
-                                        height: 7,
-                                      ),
-                                      TextFormField(
-                                        keyboardType: TextInputType.number,
-                                        maxLength: 10,
-                                        controller: phone,
-                                        textInputAction: TextInputAction.done,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(100),
-                                          ),
-                                          hintText: "Téléphone",
-                                          prefixIcon: const Padding(
-                                            padding: EdgeInsets.all(0),
-                                            child: Icon(Icons.phone),
-                                          ),
-                                        ),
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter.allow(
-                                              RegExp(r"[0-9]"))
-                                        ],
-                                        validator: (value) {
-                                          if (value!.isEmpty ||
-                                              value.length != 10) {
-                                            return "Votre numéro doit être de 10 chiffres";
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                      ),
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-                                      TextFormField(
-                                        controller: email,
-                                        textInputAction: TextInputAction.done,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(100),
-                                          ),
-                                          hintText: "Email",
-                                          prefixIcon: const Icon(Icons.email),
-                                        ),
-                                        keyboardType:
-                                            TextInputType.emailAddress,
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      TextFormField(
-                                        controller: password,
-                                        textInputAction: TextInputAction.done,
-                                        obscureText: _obscure,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(100),
-                                          ),
-                                          hintText: "Mot de passe",
-                                          suffixIcon: IconButton(
-                                              icon: Icon(_obscure
-                                                  ? Icons.visibility
-                                                  : Icons.visibility_off),
-                                              onPressed: () {
-                                                setState(() {
-                                                  _obscure = !_obscure;
-                                                });
-                                              }),
-                                          prefixIcon: const Padding(
-                                            padding: EdgeInsets.all(0),
-                                            child: Icon(Icons.lock),
-                                          ),
-                                        ),
-                                        validator: (value) {
-                                          if (value!.isEmpty
-                                              // !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
-                                              //     .hasMatch(value)
-                                              ) {
-                                            return "Votre mot de passe doit être de 8 caractères";
-                                          }
-                                        },
-                                      ),
-                                      SizedBox(
-                                        height: 10.w,
-                                      ),
-                                      SizedBox(
-                                        width: 70.0.w,
-                                        height: 6.h,
-                                        child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  HexColor("#93E237"),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(30.0),
-                                              ),
-                                            ),
-                                            onPressed: () async {
-                                              if (_formkey.currentState!
-                                                  .validate()) {
-                                                register();
-                                              } else {
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(_snackBar);
-                                              }
-                                            },
-                                            child: Text(
-                                              "Modifier",
-                                              style: TextStyle(
-                                                  fontSize: 6.w,
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                      ),
-                                    ],
-                                  )),
-                            ),
-                          ),
-                        ],
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        width: 3,
+                        color: Colors.black,
                       ),
-                    )),
+                      image: const DecorationImage(
+                        fit: BoxFit.fill,
+                        image: AssetImage("images/ahio.png"),
+                      ),
+                    ),
+                  ),
+                  const Positioned(
+                    child: Icon(
+                      Icons.photo_camera_outlined,
+                      size: 40,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          )),
+            ),
+            Center(
+              child: Column(
+                children: [
+                  Center(
+                    child: Container(
+                      margin: const EdgeInsets.all(20),
+                      child: Form(
+                        key: _formkey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            TextFormField(
+                              controller: name,
+                              textInputAction: TextInputAction.done,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                hintText: "Nom utilisateur",
+                                prefixIcon: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Text(
+                                      "Nom :",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                                suffixIcon: Container(
+                                  margin: const EdgeInsets.all(8),
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xFFBDBDBD),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(20),
+                                    ),
+                                  ),
+                                  child: const Icon(
+                                    Icons.drive_file_rename_outline_rounded,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              keyboardType: TextInputType.text,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Veillez entrer un nom utilisateur correct";
+                                } else {
+                                  return null;
+                                }
+                              },
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            TextFormField(
+                              keyboardType: TextInputType.number,
+                              controller: phone,
+                              textInputAction: TextInputAction.done,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                hintText: "Téléphone",
+                                prefixIcon: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Text(
+                                      "Tel :",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                                suffixIcon: Container(
+                                  margin: const EdgeInsets.all(8),
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xFFBDBDBD),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(20),
+                                    ),
+                                  ),
+                                  child: const Icon(
+                                    Icons.drive_file_rename_outline_rounded,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Veuillez entrer un numéro de téléphone";
+                                } else {
+                                  return null;
+                                }
+                              },
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            TextFormField(
+                              controller: email,
+                              textInputAction: TextInputAction.done,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                hintText: "Email utilisateur",
+                                prefixIcon: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Text(
+                                      "Email :",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                                suffixIcon: Container(
+                                  margin: const EdgeInsets.all(8),
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xFFBDBDBD),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(20),
+                                    ),
+                                  ),
+                                  child: const Icon(
+                                    Icons.drive_file_rename_outline_rounded,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              keyboardType: TextInputType.emailAddress,
+                            ),
+                            SizedBox(
+                              height: 10.w,
+                            ),
+                            SizedBox(
+                              width: 70.0.w,
+                              height: 6.h,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: HexColor("#93E237"),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  if (_formkey.currentState!.validate()) {
+                                    register();
+                                  } else {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(_snackBar);
+                                  }
+                                },
+                                child: Text(
+                                  "Modifier",
+                                  style: TextStyle(
+                                      fontSize: 6.w,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -293,7 +322,6 @@ class _EditProfilState extends State<EditProfil> {
     print(reponse.statusCode);
 
     if (reponse.statusCode == 200) {
-
       var resp = json.decode(reponse.body);
 
       var response = resp["response"];
@@ -316,9 +344,9 @@ class _EditProfilState extends State<EditProfil> {
     }
   }
 /**
-  void pageRoute(String phone, String password) async {
+    void pageRoute(String phone, String password) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("phone", phone);
     await pref.setString("passwword", password);
-  }*/
+    }*/
 }
