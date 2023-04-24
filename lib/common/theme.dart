@@ -73,5 +73,5 @@ AlertDialog alartDialog(String title, String content, BuildContext context) {
 class LoginFormStyle {}
 
 //Les differentes couleurs de l'application
-Color couleurFond = const Color.fromRGBO(147, 226, 55, .7);
+Color couleurFond = const Color.fromRGBO(255, 239, 250, 230);
 Color couleurTransparant = Colors.transparent;
