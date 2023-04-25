@@ -15,7 +15,6 @@ class LocationsScreenContent extends State<LocationsScreen> {
       home: DefaultTabController(
         length: 3,
         child: Scaffold(
-          backgroundColor: couleurFond,
           appBar: AppBar(
             title: const Text(
               "Location",
@@ -25,22 +24,31 @@ class LocationsScreenContent extends State<LocationsScreen> {
                 color: Colors.black,
               ),
             ),
-            backgroundColor: couleurFond,
-            bottom: const TabBar(
-              indicatorColor: Colors.transparent,
-              labelColor: Color.fromRGBO(106, 196, 0, 1),
-              unselectedLabelColor: Colors.grey,
-              tabs: [
-                Tab(
-                  text: ("En cours"),
+            backgroundColor: couleurTransparant,
+            surfaceTintColor: couleurTransparant,
+            shadowColor: couleurTransparant,
+            bottom: const PreferredSize(
+              preferredSize: Size.fromHeight(50),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: TabBar(
+                  isScrollable: true,
+                  indicatorColor: Colors.transparent,
+                  labelColor: Color.fromRGBO(106, 196, 0, 1),
+                  unselectedLabelColor: Colors.grey,
+                  tabs: [
+                    Tab(
+                      text: ("En cours"),
+                    ),
+                    Tab(
+                      text: ("Terminé"),
+                    ),
+                    Tab(
+                      text: ("Tous"),
+                    ),
+                  ],
                 ),
-                Tab(
-                  text: ("Terminé"),
-                ),
-                Tab(
-                  text: ("Tous"),
-                ),
-              ],
+              ),
             ),
           ),
           body: const TabBarView(
