@@ -2,6 +2,7 @@ import 'package:ahio/common/theme.dart';
 import 'package:ahio/home/location/detail_location_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class LocationsScreen extends StatefulWidget {
   const LocationsScreen({super.key});
@@ -133,11 +134,22 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             ),
                             const Gap(10),
                             const Text(
-                              "08 Jan - 18 Jan",
+                              "Du 08 Jan au 18 Jan",
                               style: TextStyle(
                                 color: Colors.green,
                                 fontSize: 15,
                               ),
+                            ),
+                            const Gap(10),
+                            LinearPercentIndicator(
+                              animation: true,
+                              animationDuration: 2500,
+                              width: 200.0,
+                              lineHeight: 8.0,
+                              percent: 0.5,
+                              barRadius: const Radius.circular(16),
+                              backgroundColor: Colors.grey,
+                              progressColor: Colors.black,
                             ),
                             const Gap(10),
                             Row(
@@ -247,11 +259,22 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             ),
                             const Gap(10),
                             const Text(
-                              "08 Jan - 18 Jan",
+                              "Du 08 Jan au 18 Jan",
                               style: TextStyle(
                                 color: Colors.green,
                                 fontSize: 15,
                               ),
+                            ),
+                            const Gap(10),
+                            LinearPercentIndicator(
+                              animation: true,
+                              animationDuration: 2500,
+                              width: 200.0,
+                              lineHeight: 8.0,
+                              percent: 0.5,
+                              barRadius: const Radius.circular(16),
+                              backgroundColor: Colors.grey,
+                              progressColor: Colors.black,
                             ),
                             const Gap(10),
                             Row(
@@ -361,11 +384,22 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             ),
                             const Gap(10),
                             const Text(
-                              "08 Jan - 18 Jan",
+                              "Du 08 Jan au 18 Jan",
                               style: TextStyle(
                                 color: Colors.green,
                                 fontSize: 15,
                               ),
+                            ),
+                            const Gap(10),
+                            LinearPercentIndicator(
+                              animation: true,
+                              animationDuration: 2500,
+                              width: 200.0,
+                              lineHeight: 8.0,
+                              percent: 0.5,
+                              barRadius: const Radius.circular(16),
+                              backgroundColor: Colors.grey,
+                              progressColor: Colors.black,
                             ),
                             const Gap(10),
                             Row(
@@ -489,11 +523,22 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             ),
                             const Gap(10),
                             const Text(
-                              "08 Jan - 18 Jan",
+                              "Du 08 Jan au 18 Jan",
                               style: TextStyle(
                                 color: Colors.green,
                                 fontSize: 15,
                               ),
+                            ),
+                            const Gap(10),
+                            LinearPercentIndicator(
+                              animation: true,
+                              animationDuration: 2500,
+                              width: 200.0,
+                              lineHeight: 8.0,
+                              percent: 1,
+                              barRadius: const Radius.circular(16),
+                              backgroundColor: Colors.grey,
+                              progressColor: Colors.black,
                             ),
                             const Gap(10),
                             Row(
@@ -604,11 +649,22 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             ),
                             const Gap(10),
                             const Text(
-                              "08 Jan - 18 Jan",
+                              "Du 08 Jan au 18 Jan",
                               style: TextStyle(
                                 color: Colors.green,
                                 fontSize: 15,
                               ),
+                            ),
+                            const Gap(10),
+                            LinearPercentIndicator(
+                              animation: true,
+                              animationDuration: 2500,
+                              width: 200.0,
+                              lineHeight: 8.0,
+                              percent: 1,
+                              barRadius: const Radius.circular(16),
+                              backgroundColor: Colors.grey,
+                              progressColor: Colors.black,
                             ),
                             const Gap(10),
                             Row(
@@ -719,11 +775,22 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             ),
                             const Gap(10),
                             const Text(
-                              "08 Jan - 18 Jan",
+                              "Du 08 Jan au 18 Jan",
                               style: TextStyle(
                                 color: Colors.green,
                                 fontSize: 15,
                               ),
+                            ),
+                            const Gap(10),
+                            LinearPercentIndicator(
+                              animation: true,
+                              animationDuration: 2500,
+                              width: 200.0,
+                              lineHeight: 8.0,
+                              percent: 1,
+                              barRadius: const Radius.circular(16),
+                              backgroundColor: Colors.grey,
+                              progressColor: Colors.black,
                             ),
                             const Gap(10),
                             Row(
@@ -855,11 +922,22 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             ),
                             const Gap(10),
                             const Text(
-                              "08 Jan - 18 Jan",
+                              "Du 08 Jan au 18 Jan",
                               style: TextStyle(
                                 color: Colors.green,
                                 fontSize: 15,
                               ),
+                            ),
+                            const Gap(10),
+                            LinearPercentIndicator(
+                              animation: true,
+                              animationDuration: 2500,
+                              width: 200.0,
+                              lineHeight: 8.0,
+                              percent: 0.5,
+                              barRadius: const Radius.circular(16),
+                              backgroundColor: Colors.grey,
+                              progressColor: Colors.black,
                             ),
                             const Gap(10),
                             Row(
@@ -980,11 +1058,22 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             ),
                             const Gap(10),
                             const Text(
-                              "08 Jan - 18 Jan",
+                              "Du 08 Jan au 18 Jan",
                               style: TextStyle(
                                 color: Colors.green,
                                 fontSize: 15,
                               ),
+                            ),
+                            const Gap(10),
+                            LinearPercentIndicator(
+                              animation: true,
+                              animationDuration: 2500,
+                              width: 200.0,
+                              lineHeight: 8.0,
+                              percent: 1,
+                              barRadius: const Radius.circular(16),
+                              backgroundColor: Colors.grey,
+                              progressColor: Colors.black,
                             ),
                             const Gap(10),
                             Row(
@@ -1095,11 +1184,22 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             ),
                             const Gap(10),
                             const Text(
-                              "08 Jan - 18 Jan",
+                              "Du 08 Jan au 18 Jan",
                               style: TextStyle(
                                 color: Colors.green,
                                 fontSize: 15,
                               ),
+                            ),
+                            const Gap(10),
+                            LinearPercentIndicator(
+                              animation: true,
+                              animationDuration: 2500,
+                              width: 200.0,
+                              lineHeight: 8.0,
+                              percent: 1,
+                              barRadius: const Radius.circular(16),
+                              backgroundColor: Colors.grey,
+                              progressColor: Colors.black,
                             ),
                             const Gap(10),
                             Row(
@@ -1210,11 +1310,22 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             ),
                             const Gap(10),
                             const Text(
-                              "08 Jan - 18 Jan",
+                              "Du 08 Jan au 18 Jan",
                               style: TextStyle(
                                 color: Colors.green,
                                 fontSize: 15,
                               ),
+                            ),
+                            const Gap(10),
+                            LinearPercentIndicator(
+                              animation: true,
+                              animationDuration: 2500,
+                              width: 200.0,
+                              lineHeight: 8.0,
+                              percent: 1,
+                              barRadius: const Radius.circular(16),
+                              backgroundColor: Colors.grey,
+                              progressColor: Colors.black,
                             ),
                             const Gap(10),
                             Row(
