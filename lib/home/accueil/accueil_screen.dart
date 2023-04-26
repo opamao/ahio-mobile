@@ -94,25 +94,28 @@ class AccueilScreenContent extends State<AccueilScreen> {
                       ),
                     )),
                 Positioned(
-                    top: 0,
-                    left: 30,
-                    child: Card(
-                        elevation: 50.0,
-                        shadowColor: Colors.grey.withOpacity(0.5),
-                        color: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
+                  top: 0,
+                  left: 30,
+                  child: Card(
+                    elevation: 50.0,
+                    shadowColor: Colors.grey.withOpacity(0.5),
+                    color: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: Container(
+                      height: 200,
+                      width: 150,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: Assets.images.home.provider(),
                         ),
-                        child: Container(
-                            height: 200,
-                            width: 150,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.0),
-                              image: DecorationImage(
-                                fit: BoxFit.fill,
-                                image: Assets.images.home.provider(),
-                              ),
-                            )))),
+                      ),
+                    ),
+                  ),
+                ),
                 Positioned(
                     top: 45,
                     left: 180,
