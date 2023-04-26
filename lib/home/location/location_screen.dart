@@ -90,7 +90,14 @@ class LocationsScreenContent extends State<LocationsScreen> {
             shrinkWrap: true,
             children: <Widget>[
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DetailLocationScreen(),
+                    ),
+                  );
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
