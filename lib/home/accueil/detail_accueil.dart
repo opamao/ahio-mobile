@@ -54,7 +54,7 @@ class DetailAccueilScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 30.0, bottom: 15),
                   child: Column(
                     children: [
-                      Spacer(),
+                      const Spacer(),
                       Row(
                         children: [
                           Column(
@@ -70,7 +70,7 @@ class DetailAccueilScreen extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(
-                                width: 240,
+                                width: 200,
                                 child: AutoSizeText(
                                   "Abidjan / Cocody cité des arts rue L109",
                                   maxLines: 2,
@@ -86,7 +86,7 @@ class DetailAccueilScreen extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
+                            children: const [
                               Text(
                                 "25.000 F",
                                 style: TextStyle(
@@ -238,8 +238,8 @@ class DetailAccueilScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Gap(10),
-                                  Text(
+                                  const Gap(10),
+                                  const Text(
                                     "Parking",
                                     style: TextStyle(
                                       color: Colors.black,
@@ -261,8 +261,8 @@ class DetailAccueilScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Gap(10),
-                                  Text(
+                                  const Gap(10),
+                                  const Text(
                                     "Climatisation",
                                     style: TextStyle(
                                       color: Colors.black,
@@ -284,8 +284,8 @@ class DetailAccueilScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Gap(10),
-                                  Text(
+                                  const Gap(10),
+                                  const Text(
                                     "Piscine",
                                     style: TextStyle(
                                       color: Colors.black,
@@ -307,8 +307,8 @@ class DetailAccueilScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Gap(10),
-                                  Text(
+                                  const Gap(10),
+                                  const Text(
                                     "Concierge",
                                     style: TextStyle(
                                       color: Colors.black,
@@ -330,8 +330,8 @@ class DetailAccueilScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Gap(10),
-                                  Text(
+                                  const Gap(10),
+                                  const Text(
                                     "Wifi",
                                     style: TextStyle(
                                       color: Colors.black,
@@ -353,8 +353,8 @@ class DetailAccueilScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Gap(10),
-                                  Text(
+                                  const Gap(10),
+                                  const Text(
                                     "Bar",
                                     style: TextStyle(
                                       color: Colors.black,
@@ -376,8 +376,8 @@ class DetailAccueilScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Gap(10),
-                                  Text(
+                                  const Gap(10),
+                                  const Text(
                                     "Lave linge",
                                     style: TextStyle(
                                       color: Colors.black,
@@ -431,15 +431,11 @@ class DetailAccueilScreen extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(
-            left: 80.0,
-            right: 80.0,
-            top: 10,
-            bottom: 10,
+          padding: const EdgeInsets.all(
+            20.0,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ElevatedButton.icon(
                 icon: const Icon(
@@ -462,7 +458,7 @@ class DetailAccueilScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Spacer(),
+              const Gap(10),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromRGBO(147, 226, 55, 1),

@@ -1,8 +1,10 @@
 import 'package:ahio/common/theme.dart';
 import 'package:ahio/home/location/detail_location_screen.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:sizer/sizer.dart';
 
 class LocationsScreen extends StatefulWidget {
   const LocationsScreen({super.key});
@@ -87,6 +89,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
       child: Column(
         children: [
           ListView(
+            scrollDirection: Axis.vertical,
             shrinkWrap: true,
             children: <Widget>[
               InkWell(
@@ -115,7 +118,8 @@ class LocationsScreenContent extends State<LocationsScreen> {
                           ),
                           child: Image.asset(
                             "images/bsalon.png",
-                            height: 176,
+                            height: 48.w,
+                            width: 48.w,
                           ),
                         ),
                         const Gap(10),
@@ -123,35 +127,39 @@ class LocationsScreenContent extends State<LocationsScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               "Appartement",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 25,
+                                fontSize: 6.w,
                               ),
                             ),
                             const Gap(10),
-                            const Text(
-                              "Abidjan",
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            SizedBox(
+                              width: 150,
+                              child: AutoSizeText(
+                                "Abidjan / Cocody cité des arts / Rue L109",
+                                maxLines: 2,
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 3.w,
+                                ),
                               ),
                             ),
                             const Gap(10),
-                            const Text(
+                            Text(
                               "Du 08 Jan au 18 Jan",
                               style: TextStyle(
                                 color: Colors.green,
-                                fontSize: 15,
+                                fontSize: 3.2.w,
                               ),
                             ),
                             const Gap(10),
                             LinearPercentIndicator(
                               animation: true,
                               animationDuration: 2500,
-                              width: 200.0,
+                              width: 150.0,
                               lineHeight: 8.0,
                               percent: 0.5,
                               barRadius: const Radius.circular(16),
@@ -162,8 +170,8 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             Row(
                               children: [
                                 SizedBox(
-                                  height: 50,
-                                  width: 90,
+                                  height: 5.h,
+                                  width: 19.w,
                                   child: Container(
                                     decoration: const BoxDecoration(
                                       color: Colors.grey,
@@ -171,12 +179,12 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                         Radius.circular(30),
                                       ),
                                     ),
-                                    child: const Center(
+                                    child: Center(
                                       child: Text(
                                         "En cours...",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          fontSize: 15,
+                                          fontSize: 3.5.w,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -192,12 +200,12 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     Text(
                                       "25.000 F",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 4.w,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -206,7 +214,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                       "la nuit",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 4.w,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -222,7 +230,14 @@ class LocationsScreenContent extends State<LocationsScreen> {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DetailLocationScreen(),
+                    ),
+                  );
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
@@ -240,7 +255,8 @@ class LocationsScreenContent extends State<LocationsScreen> {
                           ),
                           child: Image.asset(
                             "images/maison.png",
-                            height: 176,
+                            height: 48.w,
+                            width: 48.w,
                           ),
                         ),
                         const Gap(10),
@@ -248,35 +264,39 @@ class LocationsScreenContent extends State<LocationsScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               "Appartement",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 25,
+                                fontSize: 6.w,
                               ),
                             ),
                             const Gap(10),
-                            const Text(
-                              "Abidjan",
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            SizedBox(
+                              width: 150,
+                              child: AutoSizeText(
+                                "Abidjan / Cocody cité des arts / Rue L109",
+                                maxLines: 2,
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 3.w,
+                                ),
                               ),
                             ),
                             const Gap(10),
-                            const Text(
+                            Text(
                               "Du 08 Jan au 18 Jan",
                               style: TextStyle(
                                 color: Colors.green,
-                                fontSize: 15,
+                                fontSize: 3.2.w,
                               ),
                             ),
                             const Gap(10),
                             LinearPercentIndicator(
                               animation: true,
                               animationDuration: 2500,
-                              width: 200.0,
+                              width: 150.0,
                               lineHeight: 8.0,
                               percent: 0.5,
                               barRadius: const Radius.circular(16),
@@ -287,8 +307,8 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             Row(
                               children: [
                                 SizedBox(
-                                  height: 50,
-                                  width: 90,
+                                  height: 5.h,
+                                  width: 19.w,
                                   child: Container(
                                     decoration: const BoxDecoration(
                                       color: Colors.grey,
@@ -296,12 +316,12 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                         Radius.circular(30),
                                       ),
                                     ),
-                                    child: const Center(
+                                    child: Center(
                                       child: Text(
                                         "En cours...",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          fontSize: 15,
+                                          fontSize: 3.5.w,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -317,12 +337,12 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     Text(
                                       "25.000 F",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 4.w,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -331,7 +351,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                       "la nuit",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 4.w,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -347,7 +367,14 @@ class LocationsScreenContent extends State<LocationsScreen> {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DetailLocationScreen(),
+                    ),
+                  );
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
@@ -365,7 +392,8 @@ class LocationsScreenContent extends State<LocationsScreen> {
                           ),
                           child: Image.asset(
                             "images/sal1.png",
-                            height: 176,
+                            height: 48.w,
+                            width: 48.w,
                           ),
                         ),
                         const Gap(10),
@@ -373,35 +401,39 @@ class LocationsScreenContent extends State<LocationsScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               "Appartement",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 25,
+                                fontSize: 6.w,
                               ),
                             ),
                             const Gap(10),
-                            const Text(
-                              "Abidjan",
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            SizedBox(
+                              width: 150,
+                              child: AutoSizeText(
+                                "Abidjan / Cocody cité des arts / Rue L109",
+                                maxLines: 2,
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 3.w,
+                                ),
                               ),
                             ),
                             const Gap(10),
-                            const Text(
+                            Text(
                               "Du 08 Jan au 18 Jan",
                               style: TextStyle(
                                 color: Colors.green,
-                                fontSize: 15,
+                                fontSize: 3.2.w,
                               ),
                             ),
                             const Gap(10),
                             LinearPercentIndicator(
                               animation: true,
                               animationDuration: 2500,
-                              width: 200.0,
+                              width: 150.0,
                               lineHeight: 8.0,
                               percent: 0.5,
                               barRadius: const Radius.circular(16),
@@ -412,8 +444,8 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             Row(
                               children: [
                                 SizedBox(
-                                  height: 50,
-                                  width: 90,
+                                  height: 5.h,
+                                  width: 19.w,
                                   child: Container(
                                     decoration: const BoxDecoration(
                                       color: Colors.grey,
@@ -421,12 +453,12 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                         Radius.circular(30),
                                       ),
                                     ),
-                                    child: const Center(
+                                    child: Center(
                                       child: Text(
                                         "En cours...",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          fontSize: 15,
+                                          fontSize: 3.5.w,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -442,12 +474,12 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     Text(
                                       "25.000 F",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 4.w,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -456,7 +488,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                       "la nuit",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 4.w,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -483,6 +515,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
       child: Column(
         children: [
           ListView(
+            scrollDirection: Axis.vertical,
             shrinkWrap: true,
             children: <Widget>[
               InkWell(
@@ -503,8 +536,9 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             Radius.circular(20),
                           ),
                           child: Image.asset(
-                            "images/sal1.png",
-                            height: 176,
+                            "images/bsalon.png",
+                            height: 48.w,
+                            width: 48.w,
                           ),
                         ),
                         const Gap(10),
@@ -512,35 +546,39 @@ class LocationsScreenContent extends State<LocationsScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               "Appartement",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 25,
+                                fontSize: 6.w,
                               ),
                             ),
                             const Gap(10),
-                            const Text(
-                              "Abidjan",
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            SizedBox(
+                              width: 150,
+                              child: AutoSizeText(
+                                "Abidjan / Cocody cité des arts / Rue L109",
+                                maxLines: 2,
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 3.w,
+                                ),
                               ),
                             ),
                             const Gap(10),
-                            const Text(
+                            Text(
                               "Du 08 Jan au 18 Jan",
                               style: TextStyle(
                                 color: Colors.green,
-                                fontSize: 15,
+                                fontSize: 3.2.w,
                               ),
                             ),
                             const Gap(10),
                             LinearPercentIndicator(
                               animation: true,
                               animationDuration: 2500,
-                              width: 200.0,
+                              width: 150.0,
                               lineHeight: 8.0,
                               percent: 1,
                               barRadius: const Radius.circular(16),
@@ -551,8 +589,8 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             Row(
                               children: [
                                 SizedBox(
-                                  height: 50,
-                                  width: 90,
+                                  height: 5.h,
+                                  width: 19.w,
                                   child: Container(
                                     decoration: const BoxDecoration(
                                       color: Colors.black,
@@ -560,14 +598,14 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                         Radius.circular(30),
                                       ),
                                     ),
-                                    child: const Center(
+                                    child: Center(
                                       child: Text(
                                         "Terminé",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          fontSize: 15,
-                                          color: Colors.white,
+                                          fontSize: 3.5.w,
                                           fontWeight: FontWeight.bold,
+                                          color: Colors.white,
                                         ),
                                       ),
                                     ),
@@ -582,12 +620,12 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     Text(
                                       "25.000 F",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 4.w,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -596,7 +634,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                       "la nuit",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 4.w,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -630,7 +668,8 @@ class LocationsScreenContent extends State<LocationsScreen> {
                           ),
                           child: Image.asset(
                             "images/maison.png",
-                            height: 176,
+                            height: 48.w,
+                            width: 48.w,
                           ),
                         ),
                         const Gap(10),
@@ -638,35 +677,39 @@ class LocationsScreenContent extends State<LocationsScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               "Appartement",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 25,
+                                fontSize: 6.w,
                               ),
                             ),
                             const Gap(10),
-                            const Text(
-                              "Abidjan",
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            SizedBox(
+                              width: 150,
+                              child: AutoSizeText(
+                                "Abidjan / Cocody cité des arts / Rue L109",
+                                maxLines: 2,
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 3.w,
+                                ),
                               ),
                             ),
                             const Gap(10),
-                            const Text(
+                            Text(
                               "Du 08 Jan au 18 Jan",
                               style: TextStyle(
                                 color: Colors.green,
-                                fontSize: 15,
+                                fontSize: 3.2.w,
                               ),
                             ),
                             const Gap(10),
                             LinearPercentIndicator(
                               animation: true,
                               animationDuration: 2500,
-                              width: 200.0,
+                              width: 150.0,
                               lineHeight: 8.0,
                               percent: 1,
                               barRadius: const Radius.circular(16),
@@ -677,8 +720,8 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             Row(
                               children: [
                                 SizedBox(
-                                  height: 50,
-                                  width: 90,
+                                  height: 5.h,
+                                  width: 19.w,
                                   child: Container(
                                     decoration: const BoxDecoration(
                                       color: Colors.black,
@@ -686,14 +729,14 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                         Radius.circular(30),
                                       ),
                                     ),
-                                    child: const Center(
+                                    child: Center(
                                       child: Text(
                                         "Terminé",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          fontSize: 15,
-                                          color: Colors.white,
+                                          fontSize: 3.5.w,
                                           fontWeight: FontWeight.bold,
+                                          color: Colors.white,
                                         ),
                                       ),
                                     ),
@@ -708,12 +751,12 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     Text(
                                       "25.000 F",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 4.w,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -722,7 +765,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                       "la nuit",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 4.w,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -755,8 +798,9 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             Radius.circular(20),
                           ),
                           child: Image.asset(
-                            "images/bsalon.png",
-                            height: 176,
+                            "images/sal1.png",
+                            height: 48.w,
+                            width: 48.w,
                           ),
                         ),
                         const Gap(10),
@@ -764,35 +808,39 @@ class LocationsScreenContent extends State<LocationsScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               "Appartement",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 25,
+                                fontSize: 6.w,
                               ),
                             ),
                             const Gap(10),
-                            const Text(
-                              "Abidjan",
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            SizedBox(
+                              width: 150,
+                              child: AutoSizeText(
+                                "Abidjan / Cocody cité des arts / Rue L109",
+                                maxLines: 2,
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 3.w,
+                                ),
                               ),
                             ),
                             const Gap(10),
-                            const Text(
+                            Text(
                               "Du 08 Jan au 18 Jan",
                               style: TextStyle(
                                 color: Colors.green,
-                                fontSize: 15,
+                                fontSize: 3.2.w,
                               ),
                             ),
                             const Gap(10),
                             LinearPercentIndicator(
                               animation: true,
                               animationDuration: 2500,
-                              width: 200.0,
+                              width: 150.0,
                               lineHeight: 8.0,
                               percent: 1,
                               barRadius: const Radius.circular(16),
@@ -803,8 +851,8 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             Row(
                               children: [
                                 SizedBox(
-                                  height: 50,
-                                  width: 90,
+                                  height: 5.h,
+                                  width: 19.w,
                                   child: Container(
                                     decoration: const BoxDecoration(
                                       color: Colors.black,
@@ -812,15 +860,14 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                         Radius.circular(30),
                                       ),
                                     ),
-                                    child: const Center(
+                                    child: Center(
                                       child: Text(
                                         "Terminé",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          fontSize: 15,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                            fontSize: 3.5.w,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
                                       ),
                                     ),
                                   ),
@@ -834,12 +881,12 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     Text(
                                       "25.000 F",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 4.w,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -848,7 +895,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                       "la nuit",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 4.w,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -875,6 +922,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
       child: Column(
         children: [
           ListView(
+            scrollDirection: Axis.vertical,
             shrinkWrap: true,
             children: <Widget>[
               InkWell(
@@ -902,8 +950,9 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             Radius.circular(20),
                           ),
                           child: Image.asset(
-                            "images/maison.png",
-                            height: 176,
+                            "images/bsalon.png",
+                            height: 48.w,
+                            width: 48.w,
                           ),
                         ),
                         const Gap(10),
@@ -911,35 +960,39 @@ class LocationsScreenContent extends State<LocationsScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               "Appartement",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 25,
+                                fontSize: 6.w,
                               ),
                             ),
                             const Gap(10),
-                            const Text(
-                              "Abidjan",
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            SizedBox(
+                              width: 150,
+                              child: AutoSizeText(
+                                "Abidjan / Cocody cité des arts / Rue L109",
+                                maxLines: 2,
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 3.w,
+                                ),
                               ),
                             ),
                             const Gap(10),
-                            const Text(
+                            Text(
                               "Du 08 Jan au 18 Jan",
                               style: TextStyle(
                                 color: Colors.green,
-                                fontSize: 15,
+                                fontSize: 3.2.w,
                               ),
                             ),
                             const Gap(10),
                             LinearPercentIndicator(
                               animation: true,
                               animationDuration: 2500,
-                              width: 200.0,
+                              width: 150.0,
                               lineHeight: 8.0,
                               percent: 0.5,
                               barRadius: const Radius.circular(16),
@@ -950,8 +1003,8 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             Row(
                               children: [
                                 SizedBox(
-                                  height: 50,
-                                  width: 90,
+                                  height: 5.h,
+                                  width: 19.w,
                                   child: Container(
                                     decoration: const BoxDecoration(
                                       color: Colors.grey,
@@ -959,12 +1012,12 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                         Radius.circular(30),
                                       ),
                                     ),
-                                    child: const Center(
+                                    child: Center(
                                       child: Text(
                                         "En cours...",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          fontSize: 15,
+                                          fontSize: 3.5.w,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -980,12 +1033,12 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     Text(
                                       "25.000 F",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 4.w,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -994,7 +1047,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                       "la nuit",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 4.w,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -1018,6 +1071,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
             endIndent: 20,
           ),
           ListView(
+            scrollDirection: Axis.vertical,
             shrinkWrap: true,
             children: <Widget>[
               InkWell(
@@ -1038,8 +1092,9 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             Radius.circular(20),
                           ),
                           child: Image.asset(
-                            "images/sal1.png",
-                            height: 176,
+                            "images/bsalon.png",
+                            height: 48.w,
+                            width: 48.w,
                           ),
                         ),
                         const Gap(10),
@@ -1047,35 +1102,39 @@ class LocationsScreenContent extends State<LocationsScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               "Appartement",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 25,
+                                fontSize: 6.w,
                               ),
                             ),
                             const Gap(10),
-                            const Text(
-                              "Abidjan",
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            SizedBox(
+                              width: 150,
+                              child: AutoSizeText(
+                                "Abidjan / Cocody cité des arts / Rue L109",
+                                maxLines: 2,
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 3.w,
+                                ),
                               ),
                             ),
                             const Gap(10),
-                            const Text(
+                            Text(
                               "Du 08 Jan au 18 Jan",
                               style: TextStyle(
                                 color: Colors.green,
-                                fontSize: 15,
+                                fontSize: 3.2.w,
                               ),
                             ),
                             const Gap(10),
                             LinearPercentIndicator(
                               animation: true,
                               animationDuration: 2500,
-                              width: 200.0,
+                              width: 150.0,
                               lineHeight: 8.0,
                               percent: 1,
                               barRadius: const Radius.circular(16),
@@ -1086,8 +1145,8 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             Row(
                               children: [
                                 SizedBox(
-                                  height: 50,
-                                  width: 90,
+                                  height: 5.h,
+                                  width: 19.w,
                                   child: Container(
                                     decoration: const BoxDecoration(
                                       color: Colors.black,
@@ -1095,14 +1154,14 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                         Radius.circular(30),
                                       ),
                                     ),
-                                    child: const Center(
+                                    child: Center(
                                       child: Text(
                                         "Terminé",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          fontSize: 15,
-                                          color: Colors.white,
+                                          fontSize: 3.5.w,
                                           fontWeight: FontWeight.bold,
+                                          color: Colors.white,
                                         ),
                                       ),
                                     ),
@@ -1117,12 +1176,12 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     Text(
                                       "25.000 F",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 4.w,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -1131,7 +1190,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                       "la nuit",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 4.w,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -1165,7 +1224,8 @@ class LocationsScreenContent extends State<LocationsScreen> {
                           ),
                           child: Image.asset(
                             "images/maison.png",
-                            height: 176,
+                            height: 48.w,
+                            width: 48.w,
                           ),
                         ),
                         const Gap(10),
@@ -1173,35 +1233,39 @@ class LocationsScreenContent extends State<LocationsScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               "Appartement",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 25,
+                                fontSize: 6.w,
                               ),
                             ),
                             const Gap(10),
-                            const Text(
-                              "Abidjan",
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            SizedBox(
+                              width: 150,
+                              child: AutoSizeText(
+                                "Abidjan / Cocody cité des arts / Rue L109",
+                                maxLines: 2,
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 3.w,
+                                ),
                               ),
                             ),
                             const Gap(10),
-                            const Text(
+                            Text(
                               "Du 08 Jan au 18 Jan",
                               style: TextStyle(
                                 color: Colors.green,
-                                fontSize: 15,
+                                fontSize: 3.2.w,
                               ),
                             ),
                             const Gap(10),
                             LinearPercentIndicator(
                               animation: true,
                               animationDuration: 2500,
-                              width: 200.0,
+                              width: 150.0,
                               lineHeight: 8.0,
                               percent: 1,
                               barRadius: const Radius.circular(16),
@@ -1212,8 +1276,8 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             Row(
                               children: [
                                 SizedBox(
-                                  height: 50,
-                                  width: 90,
+                                  height: 5.h,
+                                  width: 19.w,
                                   child: Container(
                                     decoration: const BoxDecoration(
                                       color: Colors.black,
@@ -1221,14 +1285,14 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                         Radius.circular(30),
                                       ),
                                     ),
-                                    child: const Center(
+                                    child: Center(
                                       child: Text(
                                         "Terminé",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          fontSize: 15,
-                                          color: Colors.white,
+                                          fontSize: 3.5.w,
                                           fontWeight: FontWeight.bold,
+                                          color: Colors.white,
                                         ),
                                       ),
                                     ),
@@ -1243,12 +1307,12 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     Text(
                                       "25.000 F",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 4.w,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -1257,7 +1321,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                       "la nuit",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 4.w,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -1290,8 +1354,9 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             Radius.circular(20),
                           ),
                           child: Image.asset(
-                            "images/bsalon.png",
-                            height: 176,
+                            "images/sal1.png",
+                            height: 48.w,
+                            width: 48.w,
                           ),
                         ),
                         const Gap(10),
@@ -1299,35 +1364,39 @@ class LocationsScreenContent extends State<LocationsScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               "Appartement",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 25,
+                                fontSize: 6.w,
                               ),
                             ),
                             const Gap(10),
-                            const Text(
-                              "Abidjan",
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                            SizedBox(
+                              width: 150,
+                              child: AutoSizeText(
+                                "Abidjan / Cocody cité des arts / Rue L109",
+                                maxLines: 2,
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 3.w,
+                                ),
                               ),
                             ),
                             const Gap(10),
-                            const Text(
+                            Text(
                               "Du 08 Jan au 18 Jan",
                               style: TextStyle(
                                 color: Colors.green,
-                                fontSize: 15,
+                                fontSize: 3.2.w,
                               ),
                             ),
                             const Gap(10),
                             LinearPercentIndicator(
                               animation: true,
                               animationDuration: 2500,
-                              width: 200.0,
+                              width: 150.0,
                               lineHeight: 8.0,
                               percent: 1,
                               barRadius: const Radius.circular(16),
@@ -1338,8 +1407,8 @@ class LocationsScreenContent extends State<LocationsScreen> {
                             Row(
                               children: [
                                 SizedBox(
-                                  height: 50,
-                                  width: 90,
+                                  height: 5.h,
+                                  width: 19.w,
                                   child: Container(
                                     decoration: const BoxDecoration(
                                       color: Colors.black,
@@ -1347,15 +1416,14 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                         Radius.circular(30),
                                       ),
                                     ),
-                                    child: const Center(
+                                    child: Center(
                                       child: Text(
                                         "Terminé",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          fontSize: 15,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                            fontSize: 3.5.w,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
                                       ),
                                     ),
                                   ),
@@ -1369,12 +1437,12 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     Text(
                                       "25.000 F",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 4.w,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -1383,7 +1451,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                       "la nuit",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 4.w,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),

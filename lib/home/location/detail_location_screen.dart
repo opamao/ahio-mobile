@@ -116,7 +116,7 @@ class DetailLocationScreen extends StatelessWidget {
                                   LinearPercentIndicator(
                                     animation: true,
                                     animationDuration: 2500,
-                                    width: 200.0,
+                                    width: 190.0,
                                     lineHeight: 8.0,
                                     percent: .5,
                                     barRadius: const Radius.circular(16),

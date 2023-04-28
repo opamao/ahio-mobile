@@ -6,6 +6,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:ahio/common/constance.dart';
+import 'package:gap/gap.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -38,9 +39,11 @@ class _ProfilScreenState extends State<ProfilScreen> {
       backgroundColor: couleurFond,
       body: Column(
         children: [
-          const Expanded(child: _TopPortion()),
+          const Expanded(
+            flex: -5,
+            child: _TopPortion(),
+          ),
           Expanded(
-            flex: 2,
             child:
                 Padding(padding: const EdgeInsets.all(5.0), child: _autres()),
           ),
@@ -268,81 +271,84 @@ class _TopPortion extends StatefulWidget {
 class _TopPortionState extends State<_TopPortion> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(
-          height: 80,
-        ),
-        const Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: EdgeInsets.only(left: 20),
-            child: Text(
-              "Profil",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 42,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 50,
+          ),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Text(
+                "Profil",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 42,
+                ),
               ),
             ),
           ),
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: SizedBox(
-            width: 90,
-            height: 90,
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.black,
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: AssetImage("images/ahio.png"),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: CircleAvatar(
-                    radius: 20,
-                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                    child: Container(
-                      margin: const EdgeInsets.all(8.0),
-                      decoration: const BoxDecoration(
-                        color: Colors.green,
-                        shape: BoxShape.circle,
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: SizedBox(
+              width: 90,
+              height: 90,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.black,
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: AssetImage("images/ahio.png"),
                       ),
                     ),
                   ),
-                ),
-              ],
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: CircleAvatar(
+                      radius: 20,
+                      backgroundColor:
+                          Theme.of(context).scaffoldBackgroundColor,
+                      child: Container(
+                        margin: const EdgeInsets.all(8.0),
+                        decoration: const BoxDecoration(
+                          color: Colors.green,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        const Text(
-          "Nom utilisateur",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
+          const SizedBox(
+            height: 10,
           ),
-        ),
-        const Text(
-          "theodoreyapi@gmail.com",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.normal,
+          const Text(
+            "Nom utilisateur",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        )
-      ],
+          const Text(
+            "theodoreyapi@gmail.com",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.normal,
+            ),
+          )
+        ],
+      ),
     );
   }
 }

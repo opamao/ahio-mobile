@@ -18,6 +18,13 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
   String _range = '';
   String _rangeCount = '';
 
+  final _formkey = GlobalKey<FormState>();
+
+  final _snackBar = const SnackBar(
+    content: Text('Les dates début séjour et fin séjour doivent être sélectionner'),
+    backgroundColor: Colors.red,
+  );
+
   var dateDebut = TextEditingController();
   var dateFin = TextEditingController();
 
@@ -44,297 +51,319 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromRGBO(225, 239, 216, 1.0),
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          "Remplir et Payer",
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.normal,
-          ),
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const CircleAvatar(
-            backgroundColor: Colors.white,
-            child: Icon(
-              Icons.arrow_back,
+    return Form(
+      key: _formkey,
+      child: Scaffold(
+        backgroundColor: const Color.fromRGBO(225, 239, 216, 1.0),
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text(
+            "Remplir et Payer",
+            style: TextStyle(
               color: Colors.black,
+              fontWeight: FontWeight.normal,
+            ),
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+              ),
             ),
           ),
         ),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                width: 400,
-                height: 200,
-                decoration: const BoxDecoration(
-                  color: Colors.transparent,
-                  image: DecorationImage(
-                    image: AssetImage("images/sal2.png"),
-                    fit: BoxFit.cover,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  width: 400,
+                  height: 200,
+                  decoration: const BoxDecoration(
+                    color: Colors.transparent,
+                    image: DecorationImage(
+                      image: AssetImage("images/sal2.png"),
+                      fit: BoxFit.cover,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(40),
+                    ),
                   ),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(40),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 30.0,
-                    bottom: 15,
-                  ),
-                  child: Column(
-                    children: [
-                      Spacer(),
-                      Row(
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text(
-                                "Appartement",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 23,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 30.0,
+                      bottom: 15,
+                    ),
+                    child: Column(
+                      children: [
+                        Spacer(),
+                        Row(
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text(
+                                  "Appartement",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 23,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 240,
-                                child: AutoSizeText(
-                                  "Abidjan / Cocody cité des arts rue L109",
-                                  maxLines: 2,
+                                SizedBox(
+                                  width: 200,
+                                  child: AutoSizeText(
+                                    "Abidjan / Cocody cité des arts rue L109",
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  "25.000 F",
+                                  style: TextStyle(
+                                    color: Colors.green,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                Text(
+                                  " / nuit",
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.normal,
                                     fontSize: 14,
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                "25.000 F",
-                                style: TextStyle(
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              Text(
-                                " / nuit",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Gap(20),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.info_outlined,
+                        color: Colors.red,
+                      ),
+                      Gap(10),
+                      Text(
+                        "Informations obligatoires",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.red,
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ),
-              Gap(20),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.info_outlined,
-                      color: Colors.red,
-                    ),
-                    Gap(10),
-                    Text(
-                      "Informations obligatoires",
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.red,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      decoration: const BoxDecoration(
-                        color: Color.fromRGBO(0, 0, 0, .16),
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                      ),
-                      child: DropdownDatePicker(
-                        locale: 'fr_FR',
-                        isDropdownHideUnderline: true,
-                        isFormValidator: true,
-                        startYear: 1900,
-                        endYear: 3000,
-                        width: 10,
-                        selectedMonth: 01,
-                        selectedYear: 2023,
-                        onChangedMonth: (value) =>
-                            print('onChangedMonth: $value'),
-                        onChangedYear: (value) =>
-                            print('onChangedYear: $value'),
-                        //boxDecoration: BoxDecoration(
-                        // border: Border.all(color: Colors.grey, width: 1.0)), // optional
-                        showDay: false,
-                        // dayFlex: 2,// optional
-                        // locale: "zh_CN",// optional
-                        // hintDay: 'Day', // optional
-                        // hintMonth: 'Month', // optional
-                        // hintYear: 'Year', // optional
-                        // hintTextStyle: TextStyle(color: Colors.grey), // optional
-                      ),
-                    ),
-                    Gap(10),
-                    Container(
-                      decoration: const BoxDecoration(
-                        color: Color.fromRGBO(0, 0, 0, .16),
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                      ),
-                      child: SfDateRangePicker(
-                        onSelectionChanged: _onSelectionChanged,
-                        view: DateRangePickerView.month,
-                        selectionMode: DateRangePickerSelectionMode.range,
-                        startRangeSelectionColor: Colors.green,
-                        endRangeSelectionColor: Colors.green,
-                        rangeSelectionColor: Colors.lightGreen,
-                        initialSelectedRange: PickerDateRange(
-                          DateTime.now().subtract(
-                            const Duration(days: 4),
-                          ),
-                          DateTime.now().add(
-                            const Duration(days: 3),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      /*Container(
+                        decoration: const BoxDecoration(
+                          color: Color.fromRGBO(0, 0, 0, .16),
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                        ),
+                        child: DropdownDatePicker(
+                          locale: 'fr_FR',
+                          isDropdownHideUnderline: true,
+                          isFormValidator: true,
+                          startYear: 1900,
+                          endYear: 3000,
+                          width: 10,
+                          selectedMonth: 01,
+                          selectedYear: 2023,
+                          onChangedMonth: (value) =>
+                              print('onChangedMonth: $value'),
+                          onChangedYear: (value) =>
+                              print('onChangedYear: $value'),
+                          //boxDecoration: BoxDecoration(
+                          // border: Border.all(color: Colors.grey, width: 1.0)), // optional
+                          showDay: false,
+                          // dayFlex: 2,// optional
+                          // locale: "zh_CN",// optional
+                          // hintDay: 'Day', // optional
+                          // hintMonth: 'Month', // optional
+                          // hintYear: 'Year', // optional
+                          // hintTextStyle: TextStyle(color: Colors.grey), // optional
+                        ),
+                      ),*/
+                      Container(
+                        decoration: const BoxDecoration(
+                          color: Color.fromRGBO(0, 0, 0, .16),
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                        ),
+                        child: SfDateRangePicker(
+                          onSelectionChanged: _onSelectionChanged,
+                          view: DateRangePickerView.month,
+                          selectionMode: DateRangePickerSelectionMode.range,
+                          startRangeSelectionColor: Colors.green,
+                          endRangeSelectionColor: Colors.green,
+                          rangeSelectionColor: Colors.lightGreen,
+                          initialSelectedRange: PickerDateRange(
+                            DateTime.now().subtract(
+                              const Duration(days: 4),
+                            ),
+                            DateTime.now().add(
+                              const Duration(days: 3),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Gap(10),
-                    Column(
-                      children: [
-                        TextFormField(
-                          controller: dateDebut,
-                          textInputAction: TextInputAction.done,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            hintText: "Début",
-                            prefixIcon: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: SizedBox(
-                                width: 90,
-                                child: Row(
-                                  children: const [
-                                    Icon(Icons.date_range_outlined),
-                                    Text(
-                                      "Début séjour :",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.normal,
+                      Gap(10),
+                      Column(
+                        children: [
+                          TextFormField(
+                            controller: dateDebut,
+                            textInputAction: TextInputAction.done,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              hintText: "Début",
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: SizedBox(
+                                  width: 100,
+                                  child: Row(
+                                    children: const [
+                                      Icon(Icons.date_range_outlined),
+                                      Text(
+                                        "Début séjour :",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.normal,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
+                            keyboardType: TextInputType.text,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Veuillez sélectionner la date de début séjour";
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          keyboardType: TextInputType.text,
-                        ),
-                        Gap(10),
-                        TextFormField(
-                          controller: dateFin,
-                          textInputAction: TextInputAction.done,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            hintText: "Fin",
-                            prefixIcon: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: SizedBox(
-                                width: 90,
-                                child: Row(
-                                  children: const [
-                                    Icon(Icons.date_range_outlined),
-                                    Text(
-                                      "Fin séjour :",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.normal,
+                          Gap(10),
+                          TextFormField(
+                            controller: dateFin,
+                            textInputAction: TextInputAction.done,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              hintText: "Fin",
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: SizedBox(
+                                  width: 90,
+                                  child: Row(
+                                    children: const [
+                                      Icon(Icons.date_range_outlined),
+                                      Text(
+                                        "Fin séjour :",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.normal,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
+                            keyboardType: TextInputType.text,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Veuillez sélectionner la date de fin séjour";
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          keyboardType: TextInputType.text,
-                        ),
-                      ],
-                    )
-                  ],
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15),
-            topRight: Radius.circular(15),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 90.0,
-            right: 90.0,
-            top: 10,
-            bottom: 10,
-          ),
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromRGBO(147, 226, 55, 1),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
+              ],
             ),
-            onPressed: () {},
-            child: const Text(
-              "Mode de paiement",
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
+          ),
+        ),
+        bottomNavigationBar: Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15),
+              topRight: Radius.circular(15),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 90.0,
+              right: 90.0,
+              top: 10,
+              bottom: 10,
+            ),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromRGBO(147, 226, 55, 1),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+              onPressed: () async {
+                if (_formkey.currentState!.validate()) {
+                } else {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(_snackBar);
+                }
+              },
+              child: const Text(
+                "Mode de paiement",
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
