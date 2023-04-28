@@ -155,7 +155,11 @@ class _LoginState extends State<Login> {
                                             ),
                                             TextButton(
                                                 onPressed: () {
-                                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const recuppassword()));
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const recuppassword()));
                                                 },
                                                 child: const Text(
                                                   "Mot de passe oublié ?",
@@ -184,7 +188,14 @@ class _LoginState extends State<Login> {
                                                   onPressed: () async {
                                                     if (_formkey.currentState!
                                                         .validate()) {
-                                                      sign();
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const Home_screen(),
+                                                        ),
+                                                      );
+                                                      //sign();
                                                     } else {
                                                       ScaffoldMessenger.of(
                                                               context)
