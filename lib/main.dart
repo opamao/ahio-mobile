@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.green,
           ),
-          initialRoute: "/home_screen",
+          initialRoute: "/splash_screen",
           routes: {
             '/login': (context) => const Login(),
             '/splash_screen': (context) => const SplashScreenn(),

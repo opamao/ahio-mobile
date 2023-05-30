@@ -6,11 +6,8 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:dropdown_selection/dropdown_selection.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:ahio/common/constance.dart';
-import 'home/residence/capacite_screen.dart';
 import 'package:http/http.dart' as http;
 
 class Maps extends StatefulWidget {

@@ -1,23 +1,21 @@
 import 'package:ahio/home_screen.dart';
 import 'package:ahio/login.dart';
 import 'package:flutter/material.dart';
-
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:splashscreen/splashscreen.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sizer/sizer.dart';
 
 class SplashScreenn extends StatelessWidget {
   const SplashScreenn({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SplashScreen(
-      seconds: 3,
-      navigateAfterSeconds: const TestScreen(),
-      backgroundColor: Colors.white,
-      imageBackground: const AssetImage('images/ahio0.jpeg'),
-      photoSize: 100.0,
+    return MaterialApp(
+      home: AnimatedSplashScreen(
+        splash: Image.asset("images/ahionoir.png"),
+        duration: 3000,
+        backgroundColor: const Color.fromRGBO(147, 226, 55, 1),
+        nextScreen: const TestScreen(),
+      ),
     );
   }
 }

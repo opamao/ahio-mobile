@@ -473,21 +473,22 @@ class DetailLocationScreen extends StatelessWidget {
             bottom: 10,
           ),
           child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromRGBO(147, 226, 55, 1),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromRGBO(147, 226, 55, 1),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
               ),
-              onPressed: () {},
-              child: const Text(
-                "Terminer",
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.black,
-                  fontWeight: FontWeight.normal,
-                ),
-              )),
+            ),
+            onPressed: () {},
+            child: const Text(
+              "Terminer",
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.black,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+          ),
         ),
       ),
     );
