@@ -142,7 +142,7 @@ class _CapaciteScreenState extends State<CapaciteScreen> {
                             ),
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                   Row(
