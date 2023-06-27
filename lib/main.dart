@@ -1,3 +1,4 @@
+import 'package:ahio/home/paiement/mode_paiement.dart';
 import 'package:ahio/home/profil/profil_screen.dart';
 import 'package:ahio/home/residence/capacite_screen.dart';
 import 'package:ahio/home/residence/equipement_screen.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
             '/capacite': (context) => const CapaciteScreen(),
             '/equipement': (context) => const EquipementScreen(),
             '/profil': (context) => const ProfilScreen(),
+            '/paiement': (context) => const ModePaiementScreen(),
             // '/login': (context) => Login(),
           },
         );

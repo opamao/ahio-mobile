@@ -17,8 +17,7 @@ class _TypeScreenState extends State<TypeScreen> {
   int selected = 0;
   String libelle = "";
 
-  Widget customRadio(
-      String image, String titre, String description, int index) {
+  Widget customRadio(String image, String titre, String description, int index) {
     return OutlinedButton(
       onPressed: () {
         setState(() {
@@ -113,20 +112,29 @@ class _TypeScreenState extends State<TypeScreen> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: customRadio(
-                        "images/appartement.png",
-                        "Un appartement",
-                        "Lorem ipsum dolor sit\namet, consetetur",
-                        1),
+                      "images/appartement.png",
+                      "Un appartement",
+                      "Lorem ipsum dolor sit\namet, consetetur",
+                      1,
+                    ),
                   ),
                   Container(
                     padding: const EdgeInsets.all(10),
-                    child: customRadio("images/villas.png", "Une villa",
-                        "Lorem ipsum dolor sit\namet, consetetur", 2),
+                    child: customRadio(
+                      "images/villas.png",
+                      "Une villa",
+                      "Lorem ipsum dolor sit\namet, consetetur",
+                      2,
+                    ),
                   ),
                   Container(
                     padding: const EdgeInsets.all(10),
-                    child: customRadio("images/chambre.png", "Une chambre",
-                        "Lorem ipsum dolor sit\namet, consetetur", 3),
+                    child: customRadio(
+                      "images/chambre.png",
+                      "Une chambre",
+                      "Lorem ipsum dolor sit\namet, consetetur",
+                      3,
+                    ),
                   ),
                 ],
               ),

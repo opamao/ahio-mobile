@@ -1,4 +1,4 @@
-import 'package:datepicker_dropdown/datepicker_dropdown.dart';
+import 'package:ahio/home/paiement/mode_paiement.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -21,7 +21,8 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
   final _formkey = GlobalKey<FormState>();
 
   final _snackBar = const SnackBar(
-    content: Text('Les dates début séjour et fin séjour doivent être sélectionner'),
+    content:
+        Text('Les dates début séjour et fin séjour doivent être sélectionner'),
     backgroundColor: Colors.red,
   );
 
@@ -352,9 +353,14 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
               ),
               onPressed: () async {
                 if (_formkey.currentState!.validate()) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ModePaiementScreen(),
+                    ),
+                  );
                 } else {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(_snackBar);
+                  ScaffoldMessenger.of(context).showSnackBar(_snackBar);
                 }
               },
               child: const Text(
