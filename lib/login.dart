@@ -59,337 +59,316 @@ class _LoginState extends State<Login> {
         ),
       ),
       child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Spacer(),
-              Expanded(
-                flex: 2,
-                child: Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 8.w),
-                        child: Assets.images.ahio1.image(
-                          width: 20.w,
-                          height: 20.w,
-                        ),
+        backgroundColor: Colors.transparent,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Spacer(),
+            Expanded(
+              flex: 2,
+              child: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 8.w),
+                      child: Assets.images.ahio1.image(
+                        width: 20.w,
+                        height: 20.w,
                       ),
                     ),
-                    Expanded(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10.w),
-                          topRight: Radius.circular(10.w),
-                        ),
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                          child: Container(
-                            padding: const EdgeInsets.all(15),
-                            color: Colors.white.withOpacity(0.7),
-                            child: SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  SizedBox(height: 2.h),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
-                                      Text(
-                                        "Connexion",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20),
-                                      ),
-                                    ],
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 10, right: 10),
-                                    child: Form(
-                                        key: _formkey,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            InputText(
-                                              keyboardType: TextInputType.text,
-                                              controller: phone,
-                                              hintText:
-                                                  "Téléphone ou adresse mail",
-                                              prefixIcon: const Padding(
-                                                padding: EdgeInsets.all(0),
-                                                child: Icon(Icons.person),
+                  ),
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10.w),
+                        topRight: Radius.circular(10.w),
+                      ),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                        child: Container(
+                          padding: const EdgeInsets.all(15),
+                          color: Colors.white.withOpacity(0.7),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                SizedBox(height: 2.h),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Text(
+                                      "Connexion",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: Form(
+                                    key: _formkey,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        InputText(
+                                          keyboardType: TextInputType.text,
+                                          controller: phone,
+                                          hintText: "Téléphone ou adresse mail",
+                                          prefixIcon: const Padding(
+                                            padding: EdgeInsets.all(0),
+                                            child: Icon(Icons.person),
+                                          ),
+                                          validatorMessage:
+                                              "Veuillez saisir votre téléphone ou mail",
+                                        ),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        InputPassword(
+                                          controller: password,
+                                          hintText: "Mot de passe",
+                                          prefixIcon: const Padding(
+                                            padding: EdgeInsets.all(0),
+                                            child: Icon(Icons.lock),
+                                          ),
+                                          validatorMessage:
+                                              "Votre mot de passe doit être de 8 caractères",
+                                          suffixIcon: IconButton(
+                                              icon: Icon(_obscure
+                                                  ? Icons.visibility
+                                                  : Icons.visibility_off),
+                                              onPressed: () {
+                                                setState(() {
+                                                  _obscure = !_obscure;
+                                                });
+                                              }),
+                                        ),
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const recuppassword()));
+                                            },
+                                            child: const Text(
+                                              "Mot de passe oublié ?",
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 11,
+                                                decoration:
+                                                    TextDecoration.underline,
                                               ),
-                                              validatorMessage:
-                                                  "Veuillez saisir votre téléphone ou mail",
-                                            ),
-                                            const SizedBox(
-                                              height: 15,
-                                            ),
-                                            InputPassword(
-                                              controller: password,
-                                              hintText: "Mot de passe",
-                                              prefixIcon: const Padding(
-                                                padding: EdgeInsets.all(0),
-                                                child: Icon(Icons.lock),
+                                            )),
+                                        SizedBox(
+                                          width: 300.0,
+                                          height: 50.0,
+                                          child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor:
+                                                    HexColor("#93E237"),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          30.0),
+                                                ),
                                               ),
-                                              validatorMessage:
-                                                  "Votre mot de passe doit être de 8 caractères",
-                                              suffixIcon: IconButton(
-                                                  icon: Icon(_obscure
-                                                      ? Icons.visibility
-                                                      : Icons.visibility_off),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      _obscure = !_obscure;
-                                                    });
-                                                  }),
-                                            ),
-                                            TextButton(
-                                                onPressed: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              const recuppassword()));
-                                                },
-                                                child: const Text(
-                                                  "Mot de passe oublié ?",
-                                                  style: TextStyle(
+                                              onPressed: () async {
+                                                if (_formkey.currentState!
+                                                    .validate()) {
+                                                  sign();
+                                                } else {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(_snackBar);
+                                                  Clean();
+                                                }
+                                              },
+                                              child: const Text(
+                                                constance.login,
+                                                style: TextStyle(
+                                                    fontSize: 15,
                                                     color: Colors.black,
-                                                    fontSize: 11,
-                                                    decoration: TextDecoration
-                                                        .underline,
-                                                  ),
-                                                )),
-                                            SizedBox(
-                                              width: 300.0,
-                                              height: 50.0,
-                                              child: ElevatedButton(
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        HexColor("#93E237"),
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              30.0),
-                                                    ),
-                                                  ),
-                                                  onPressed: () async {
-                                                    if (_formkey.currentState!
-                                                        .validate()) {
-                                                      Navigator.push(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
+                                        ),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        const Text(constance.textCreate,
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 11,
+                                            )),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        Container(
+                                          margin: const EdgeInsets.only(
+                                              left: 15, right: 15),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Card(
+                                                color: HexColor("#151615")
+                                                    .withOpacity(.0001),
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            100)),
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              const Home_screen(),
-                                                        ),
-                                                      );
-                                                      //sign();
-                                                    } else {
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(
-                                                              _snackBar);
-                                                      Clean();
-                                                    }
+                                                            builder: (context) =>
+                                                                const Inscription()));
                                                   },
-                                                  child: const Text(
-                                                    constance.login,
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
-                                            ),
-                                            const SizedBox(
-                                              height: 15,
-                                            ),
-                                            const Text(constance.textCreate,
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 11,
-                                                )),
-                                            const SizedBox(
-                                              height: 15,
-                                            ),
-                                            Container(
-                                              margin: const EdgeInsets.only(
-                                                  left: 15, right: 15),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Card(
-                                                    color: HexColor("#151615")
-                                                        .withOpacity(.0001),
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        100)),
-                                                    child: InkWell(
-                                                      onTap: () {
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        const Inscription()));
-                                                      },
-                                                      child: Column(
-                                                        children: [
-                                                          const SizedBox(
-                                                              height: 10),
-                                                          Image.asset(
-                                                            "images/envelop.png",
-                                                            width: 38,
-                                                            height: 15,
-                                                          ),
-                                                          const SizedBox(
-                                                              height: 10),
-                                                        ],
+                                                  child: Column(
+                                                    children: [
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      Image.asset(
+                                                        "images/envelop.png",
+                                                        width: 38,
+                                                        height: 15,
                                                       ),
-                                                    ),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                    ],
                                                   ),
-                                                  Card(
-                                                    color: HexColor("#151615")
-                                                        .withOpacity(.0001),
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        100)),
-                                                    child: InkWell(
-                                                      onTap: () {
-                                                        showDialog(
-                                                          context: context,
-                                                          builder: (ctx) =>
-                                                              AlertDialog(
-                                                            title: const Text(
-                                                              "«ahio» souhaite utiliser facebook.com» pour  se       connecter",
-                                                              style: TextStyle(
-                                                                  fontSize: 19),
-                                                            ),
-                                                            content: const Text(
-                                                              "Cela permet à l’app et au site web d’échanger des informations vous concernant.",
-                                                              style: TextStyle(
-                                                                  fontSize: 14),
-                                                            ),
-                                                            actions: <Widget>[
-                                                              TextButton(
-                                                                onPressed: () {
-                                                                  Navigator.of(
-                                                                          ctx)
-                                                                      .pop();
-                                                                },
-                                                                child:
-                                                                    Container(),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        );
-                                                      },
-                                                      child: Column(
-                                                        children: [
-                                                          const SizedBox(
-                                                              height: 10),
-                                                          Image.asset(
-                                                            "images/fb.png",
-                                                            width: 38,
-                                                            height: 20,
-                                                          ),
-                                                          const SizedBox(
-                                                              height: 10),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Card(
-                                                    color: HexColor("#151615")
-                                                        .withOpacity(.0001),
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        100)),
-                                                    child: InkWell(
-                                                      onTap: () {
-                                                        showDialog(
-                                                          context: context,
-                                                          builder: (ctx) =>
-                                                              AlertDialog(
-                                                            title: const Text(
-                                                              "«ahio» souhaite utiliser google.com» pour  se       connecter",
-                                                              style: TextStyle(
-                                                                  fontSize: 19),
-                                                            ),
-                                                            content: const Text(
-                                                              "Cela permet à l’app et au site web d’échanger des informations vous concernant.",
-                                                              style: TextStyle(
-                                                                  fontSize: 14),
-                                                            ),
-                                                            actions: <Widget>[
-                                                              TextButton(
-                                                                onPressed: () {
-                                                                  Navigator.of(
-                                                                          ctx)
-                                                                      .pop();
-                                                                },
-                                                                child:
-                                                                    Container(),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        );
-                                                      },
-                                                      child: Column(
-                                                        children: [
-                                                          const SizedBox(
-                                                              height: 10),
-                                                          Image.asset(
-                                                            "images/google.png",
-                                                            width: 38,
-                                                            height: 20,
-                                                          ),
-                                                          const SizedBox(
-                                                              height: 10),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
+                                                ),
                                               ),
-                                            ),
-                                          ],
-                                        )),
+                                              Card(
+                                                color: HexColor("#151615")
+                                                    .withOpacity(.0001),
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            100)),
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (ctx) =>
+                                                          AlertDialog(
+                                                        title: const Text(
+                                                          "«ahio» souhaite utiliser facebook.com» pour  se       connecter",
+                                                          style: TextStyle(
+                                                              fontSize: 19),
+                                                        ),
+                                                        content: const Text(
+                                                          "Cela permet à l’app et au site web d’échanger des informations vous concernant.",
+                                                          style: TextStyle(
+                                                              fontSize: 14),
+                                                        ),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              Navigator.of(ctx)
+                                                                  .pop();
+                                                            },
+                                                            child: Container(),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: Column(
+                                                    children: [
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      Image.asset(
+                                                        "images/fb.png",
+                                                        width: 38,
+                                                        height: 20,
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              Card(
+                                                color: HexColor("#151615")
+                                                    .withOpacity(.0001),
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            100)),
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (ctx) =>
+                                                          AlertDialog(
+                                                        title: const Text(
+                                                          "«ahio» souhaite utiliser google.com» pour  se       connecter",
+                                                          style: TextStyle(
+                                                              fontSize: 19),
+                                                        ),
+                                                        content: const Text(
+                                                          "Cela permet à l’app et au site web d’échanger des informations vous concernant.",
+                                                          style: TextStyle(
+                                                              fontSize: 14),
+                                                        ),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              Navigator.of(ctx)
+                                                                  .pop();
+                                                            },
+                                                            child: Container(),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: Column(
+                                                    children: [
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      Image.asset(
+                                                        "images/google.png",
+                                                        width: 38,
+                                                        height: 20,
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          )),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
