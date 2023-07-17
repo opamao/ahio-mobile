@@ -77,9 +77,9 @@ class _securityProfilState extends State<securityProfil> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Gap(150),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Icon(
                   Icons.lock_outlined,
                   size: 30,
@@ -129,9 +129,9 @@ class _securityProfilState extends State<securityProfil> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               hintText: "Mot de passe",
-                              prefixIcon: Column(
+                              prefixIcon: const Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
+                                children: [
                                   Padding(
                                     padding: EdgeInsets.all(8.0),
                                     child: Text(
@@ -177,9 +177,9 @@ class _securityProfilState extends State<securityProfil> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               hintText: "Mot de passe",
-                              prefixIcon: Column(
+                              prefixIcon: const Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
+                                children: [
                                   Padding(
                                     padding: EdgeInsets.all(8.0),
                                     child: Text(
@@ -222,9 +222,9 @@ class _securityProfilState extends State<securityProfil> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               hintText: "Mot de passe",
-                              prefixIcon: Column(
+                              prefixIcon: const Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
+                                children: [
                                   Padding(
                                     padding: EdgeInsets.all(8.0),
                                     child: Text(

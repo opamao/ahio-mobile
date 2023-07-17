@@ -17,7 +17,8 @@ class _TypeScreenState extends State<TypeScreen> {
   int selected = 0;
   String libelle = "";
 
-  Widget customRadio(String image, String titre, String description, int index) {
+  Widget customRadio(
+      String image, String titre, String description, int index) {
     return OutlinedButton(
       onPressed: () {
         setState(() {
@@ -144,23 +145,25 @@ class _TypeScreenState extends State<TypeScreen> {
               width: 272,
               height: 50,
               child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromRGBO(147, 226, 55, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromRGBO(147, 226, 55, 1),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
                   ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/locator',
-                        arguments: {"type": libelle});
-                  },
-                  child: Text(
-                    "Suivant",
-                    style: TextStyle(
-                        fontSize: 15.sp,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
-                  )),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/locator',
+                      arguments: {"type": libelle});
+                },
+                child: Text(
+                  "Suivant",
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             ),
             const Spacer(),
           ],
