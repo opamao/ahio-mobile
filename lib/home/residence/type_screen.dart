@@ -1,4 +1,5 @@
 import 'package:ahio/home/residence/capacite_screen.dart';
+import 'package:ahio/route.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:sizer/sizer.dart';
@@ -53,17 +54,19 @@ class _TypeScreenState extends State<TypeScreen> {
                 titre,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.bold),
+                  color: Colors.black,
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               Text(
                 description,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    color: Colors.black45,
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.normal),
+                  color: Colors.black45,
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.normal,
+                ),
               )
             ],
           )
@@ -103,7 +106,7 @@ class _TypeScreenState extends State<TypeScreen> {
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 20.sp,
-                  fontWeight: FontWeight.bold),
+                  fontWeight: FontWeight.bold,),
             ),
             const Gap(20),
             Center(
@@ -152,7 +155,7 @@ class _TypeScreenState extends State<TypeScreen> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/locator',
+                  Navigator.pushNamed(context, Routes.locator,
                       arguments: {"type": libelle});
                 },
                 child: Text(
