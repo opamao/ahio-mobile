@@ -14,261 +14,319 @@ class FavorisScreenContent extends State<FavorisScreen> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 239, 250, 230),
       body: ListView(
+        scrollDirection: Axis.vertical,
         children: [
-          Gap(67),
+          const Gap(40),
           Container(
             padding: const EdgeInsets.only(left: 25),
             child: Text(
               "FAVORIS",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 28,
+              ),
             ),
           ),
           Gap(16),
           GridView.count(
-            childAspectRatio: 0.76,
-            physics: const NeverScrollableScrollPhysics(),
             crossAxisCount: 2,
+            childAspectRatio: 0.66,
+            padding: const EdgeInsets.all(5.0),
+            mainAxisSpacing: 4.0,
+            crossAxisSpacing: 4.0,
             shrinkWrap: true,
             children: [
               InkWell(
-                borderRadius: BorderRadius.circular(20),
                 onTap: () {},
                 child: Card(
                   shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                  ),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
                     ),
-                    child: Column(
-                      children: [
-                        Image.asset(
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                        child: Image.asset(
                           "images/sal1.png",
+                          fit: BoxFit.cover,
+                          height: 170,
                         ),
-                        Row(
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 5.0),
+                        child: Column(
                           children: [
-                            Padding(padding: EdgeInsets.only(left: 10)),
-                            const Text(
-                              "Appartement",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 15),
+                            Row(
+                              children: [
+                                const Text(
+                                  "Appartement",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                const Spacer(),
+                                Image.asset(
+                                  "images/favorisIcon.png",
+                                  width: 35,
+                                  height: 35,
+                                )
+                              ],
                             ),
-                            Gap(35),
-                            Image.asset(
-                              "images/favorisIcon.png",
-                              width: 35,
-                              height: 35,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Abidjan",
+                                    ),
+                                    Gap(3),
+                                    Text(
+                                      "08 Jan - 18 Jan",
+                                      style: TextStyle(
+                                        color: Colors.green,
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  height: 30,
+                                  width: 20,
+                                  child: VerticalDivider(color: Colors.green),
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "25.000 F",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      "la nuit",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
                             )
                           ],
                         ),
-                        Container(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Row(
-                            children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    "Abidjan",
-                                    textAlign: TextAlign.start,
-                                  ),
-                                  Gap(3),
-                                  Text(
-                                    "08 Jan - 18 Jan",
-                                    style: TextStyle(color: Colors.green),
-                                  ),
-                                  Gap(4),
-                                ],
-                              ),
-                              Gap(8),
-                              Container(
-                                  height: 30,
-                                  width: 20,
-                                  child: VerticalDivider(color: Colors.green)),
-                              Column(
-                                children: [
-                                  Text(
-                                    "25.000 F",
-                                    style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Gap(3),
-                                  Text(
-                                    "la nuit",
-                                    style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ),
               ),
               InkWell(
-                borderRadius: BorderRadius.circular(20),
                 onTap: () {},
                 child: Card(
                   shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                  ),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
                     ),
-                    child: Column(
-                      children: [
-                        Image.asset(
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                        child: Image.asset(
                           "images/maison.png",
+                          fit: BoxFit.cover,
+                          height: 170,
                         ),
-                        Row(
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 5.0),
+                        child: Column(
                           children: [
-                            Padding(padding: EdgeInsets.only(left: 10)),
-                            const Text(
-                              "Villa",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 15),
+                            Row(
+                              children: [
+                                const Text(
+                                  "Appartement",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                const Spacer(),
+                                Image.asset(
+                                  "images/favorisIcon.png",
+                                  width: 35,
+                                  height: 35,
+                                )
+                              ],
                             ),
-                            Gap(94),
-                            Image.asset(
-                              "images/favorisIcon.png",
-                              width: 35,
-                              height: 35,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Abidjan",
+                                    ),
+                                    Gap(3),
+                                    Text(
+                                      "08 Jan - 18 Jan",
+                                      style: TextStyle(
+                                        color: Colors.green,
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  height: 30,
+                                  width: 20,
+                                  child: VerticalDivider(color: Colors.green),
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "25.000 F",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      "la nuit",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
                             )
                           ],
                         ),
-                        Container(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Row(
-                            children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    "Abidjan",
-                                    textAlign: TextAlign.start,
-                                  ),
-                                  Gap(3),
-                                  Text(
-                                    "08 Jan - 18 Jan",
-                                    style: TextStyle(color: Colors.green),
-                                  ),
-                                  Gap(3),
-                                ],
-                              ),
-                              Gap(8),
-                              Container(
-                                  height: 30,
-                                  width: 20,
-                                  child: VerticalDivider(color: Colors.green)),
-                              Column(
-                                children: [
-                                  Text(
-                                    "25.000 F",
-                                    style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Gap(3),
-                                  Text(
-                                    "la nuit",
-                                    style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ),
               ),
               InkWell(
-                borderRadius: BorderRadius.circular(20),
                 onTap: () {},
                 child: Card(
                   shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                  ),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
                     ),
-                    child: Column(
-                      children: [
-                        Image.asset(
-                          "images/bsalon.png",
-                          width: 490,
-                          height: 176,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(20),
                         ),
-                        Row(
+                        child: Image.asset(
+                          "images/bsalon.png",
+                          fit: BoxFit.cover,
+                          height: 170,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 5.0),
+                        child: Column(
                           children: [
-                            Padding(padding: EdgeInsets.only(left: 10)),
-                            const Text(
-                              "Duplexe",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 15),
+                            Row(
+                              children: [
+                                const Text(
+                                  "Appartement",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                const Spacer(),
+                                Image.asset(
+                                  "images/favorisIcon.png",
+                                  width: 35,
+                                  height: 35,
+                                )
+                              ],
                             ),
-                            Gap(70),
-                            Image.asset(
-                              "images/favorisIcon.png",
-                              width: 35,
-                              height: 35,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Abidjan",
+                                    ),
+                                    Gap(3),
+                                    Text(
+                                      "08 Jan - 18 Jan",
+                                      style: TextStyle(
+                                        color: Colors.green,
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  height: 30,
+                                  width: 20,
+                                  child: VerticalDivider(color: Colors.green),
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "25.000 F",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      "la nuit",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
                             )
                           ],
                         ),
-                        Container(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Row(
-                            children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    "Abidjan",
-                                    textAlign: TextAlign.start,
-                                  ),
-                                  Gap(3),
-                                  Text(
-                                    "08 Jan - 18 Jan",
-                                    style: TextStyle(color: Colors.green),
-                                  ),
-                                  Gap(4),
-                                ],
-                              ),
-                              Gap(8),
-                              Container(
-                                  height: 30,
-                                  width: 20,
-                                  child: VerticalDivider(color: Colors.green)),
-                              Column(
-                                children: [
-                                  Text(
-                                    "25.000 F",
-                                    style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Gap(3),
-                                  Text(
-                                    "la nuit",
-                                    style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ),
               ),
