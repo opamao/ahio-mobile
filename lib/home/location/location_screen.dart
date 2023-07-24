@@ -176,7 +176,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                     decoration: const BoxDecoration(
                                       color: Colors.grey,
                                       borderRadius: BorderRadius.all(
-                                        Radius.circular(30),
+                                        Radius.circular(15),
                                       ),
                                     ),
                                     child: Center(
@@ -313,7 +313,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                     decoration: const BoxDecoration(
                                       color: Colors.grey,
                                       borderRadius: BorderRadius.all(
-                                        Radius.circular(30),
+                                        Radius.circular(15),
                                       ),
                                     ),
                                     child: Center(
@@ -450,7 +450,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                     decoration: const BoxDecoration(
                                       color: Colors.grey,
                                       borderRadius: BorderRadius.all(
-                                        Radius.circular(30),
+                                        Radius.circular(15),
                                       ),
                                     ),
                                     child: Center(
@@ -595,7 +595,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                     decoration: const BoxDecoration(
                                       color: Colors.black,
                                       borderRadius: BorderRadius.all(
-                                        Radius.circular(30),
+                                        Radius.circular(15),
                                       ),
                                     ),
                                     child: Center(
@@ -726,7 +726,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                     decoration: const BoxDecoration(
                                       color: Colors.black,
                                       borderRadius: BorderRadius.all(
-                                        Radius.circular(30),
+                                        Radius.circular(15),
                                       ),
                                     ),
                                     child: Center(
@@ -857,7 +857,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                     decoration: const BoxDecoration(
                                       color: Colors.black,
                                       borderRadius: BorderRadius.all(
-                                        Radius.circular(30),
+                                        Radius.circular(15),
                                       ),
                                     ),
                                     child: Center(
@@ -1009,7 +1009,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                     decoration: const BoxDecoration(
                                       color: Colors.grey,
                                       borderRadius: BorderRadius.all(
-                                        Radius.circular(30),
+                                        Radius.circular(15),
                                       ),
                                     ),
                                     child: Center(
@@ -1151,7 +1151,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                     decoration: const BoxDecoration(
                                       color: Colors.black,
                                       borderRadius: BorderRadius.all(
-                                        Radius.circular(30),
+                                        Radius.circular(15),
                                       ),
                                     ),
                                     child: Center(
@@ -1282,7 +1282,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                     decoration: const BoxDecoration(
                                       color: Colors.black,
                                       borderRadius: BorderRadius.all(
-                                        Radius.circular(30),
+                                        Radius.circular(15),
                                       ),
                                     ),
                                     child: Center(
@@ -1413,7 +1413,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                     decoration: const BoxDecoration(
                                       color: Colors.black,
                                       borderRadius: BorderRadius.all(
-                                        Radius.circular(30),
+                                        Radius.circular(15),
                                       ),
                                     ),
                                     child: Center(

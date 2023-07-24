@@ -74,8 +74,8 @@ class _InscriptionState extends State<Inscription> {
     );
   }
 
-  String initialCountry = 'NG';
-  PhoneNumber number = PhoneNumber(isoCode: 'NG');
+  String initialCountry = 'CI';
+  PhoneNumber number = PhoneNumber(isoCode: 'CI');
 
   @override
   Widget build(BuildContext context) {
@@ -183,7 +183,7 @@ class _InscriptionState extends State<Inscription> {
                                       decimal: true,
                                     ),
                                     inputBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(100),
+                                      borderRadius: BorderRadius.circular(15),
                                     ),
                                     onSaved: (PhoneNumber number) {
                                       print('On Saved: $number');
@@ -309,7 +309,7 @@ class _InscriptionState extends State<Inscription> {
                                         backgroundColor: HexColor("#93E237"),
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(30.0),
+                                              BorderRadius.circular(15.0),
                                         ),
                                       ),
                                       onPressed: () async {

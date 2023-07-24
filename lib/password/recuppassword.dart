@@ -32,7 +32,8 @@ class _recuppasswordState extends State<recuppassword> {
     String? val = pref.getString("access_token");
     if (val != null) {
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => Otp()), (route) => false);
+          MaterialPageRoute(builder: (context) => const Otp()),
+          (route) => false);
     }
   }
 
@@ -88,14 +89,15 @@ class _recuppasswordState extends State<recuppassword> {
                                     Container(
                                       margin: const EdgeInsets.only(
                                           left: 5, top: 50, bottom: 10),
-                                      child: Column(
-                                        children: const [
+                                      child: const Column(
+                                        children: [
                                           Text(
                                             "Gestion de mot de passe oublié",
                                             style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 20),
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                            ),
                                           ),
                                           SizedBox(
                                             height: 10,
@@ -110,72 +112,73 @@ class _recuppasswordState extends State<recuppassword> {
                                     Center(
                                       child: Container(
                                         margin: const EdgeInsets.only(
-                                            left: 35, right: 35),
+                                          left: 35,
+                                          right: 35,
+                                        ),
                                         child: Form(
-                                            key: _formkey,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                const SizedBox(
-                                                  height: 10,
+                                          key: _formkey,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              InputText(
+                                                keyboardType:
+                                                    TextInputType.text,
+                                                controller: phone,
+                                                hintText:
+                                                    "Téléphone ou adresse mail",
+                                                prefixIcon: const Padding(
+                                                  padding: EdgeInsets.all(0),
+                                                  child: Icon(Icons.person),
                                                 ),
-                                                InputText(
-                                                  keyboardType:
-                                                      TextInputType.text,
-                                                  controller: phone,
-                                                  hintText:
-                                                      "Téléphone ou adresse mail",
-                                                  prefixIcon: const Padding(
-                                                    padding: EdgeInsets.all(0),
-                                                    child: Icon(Icons.person),
+                                                validatorMessage:
+                                                    "Veuillez saisir votre téléphone ou mail",
+                                              ),
+                                              const SizedBox(
+                                                height: 50,
+                                              ),
+                                              SizedBox(
+                                                width: 300.0,
+                                                height: 50.0,
+                                                child: ElevatedButton(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        HexColor("#93E237"),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15.0),
+                                                    ),
                                                   ),
-                                                  validatorMessage:
-                                                      "Veuillez saisir votre téléphone ou mail",
+                                                  onPressed: () {
+                                                    if (_formkey.currentState!
+                                                        .validate()) {
+                                                      recupass();
+                                                    } else {
+                                                      print("erreur");
+                                                    }
+                                                  },
+                                                  child: const Text(
+                                                    "Continuer",
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
                                                 ),
-                                                const SizedBox(
-                                                  height: 50,
-                                                ),
-                                                SizedBox(
-                                                  width: 300.0,
-                                                  height: 50.0,
-                                                  child: ElevatedButton(
-                                                      style: ElevatedButton
-                                                          .styleFrom(
-                                                        backgroundColor:
-                                                            HexColor("#93E237"),
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      30.0),
-                                                        ),
-                                                      ),
-                                                      onPressed: () {
-                                                        if (_formkey
-                                                            .currentState!
-                                                            .validate()) {
-                                                          recupass();
-                                                        } else {
-                                                          print("erreur");
-                                                        }
-                                                      },
-                                                      child: const Text(
-                                                        "Continuer",
-                                                        style: TextStyle(
-                                                            fontSize: 15,
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      )),
-                                                ),
-                                                const SizedBox(
-                                                  height: 40,
-                                                ),
-                                              ],
-                                            )),
+                                              ),
+                                              const SizedBox(
+                                                height: 40,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -208,12 +211,12 @@ class _recuppasswordState extends State<recuppassword> {
 
         pageRoute(phonee);
       } else if (response == 'ERREUR') {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Votre nuéero est incorrect, ressayez")));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Votre nuéero est incorrect, ressayez")));
       }
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Erreur, veuillez ressayer")));
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Erreur, veuillez ressayer")));
     }
   }
 
@@ -221,6 +224,6 @@ class _recuppasswordState extends State<recuppassword> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("phone", phonee);
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => Otp()), (route) => false);
+        MaterialPageRoute(builder: (context) => const Otp()), (route) => false);
   }
 }

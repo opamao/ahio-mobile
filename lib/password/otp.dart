@@ -43,140 +43,145 @@ class _otpState extends State<Otp> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: Assets.images.fond.provider(),
-            fit: BoxFit.cover,
-          ),
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: Assets.images.fond.provider(),
+          fit: BoxFit.cover,
         ),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Spacer(),
-              Expanded(
-                flex: 2,
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 8.w),
-                          child: Assets.images.ahio1.image(
-                            width: 20.w,
-                            height: 20.w,
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Spacer(),
+            Expanded(
+              flex: 2,
+              child: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 8.w),
+                      child: Assets.images.ahio1.image(
+                        width: 20.w,
+                        height: 20.w,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                      child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10.w),
+                      topRight: Radius.circular(10.w),
+                    ),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(.7),
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(40),
+                            topRight: Radius.circular(40),
+                          ),
+                        ),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(
+                                    left: 5, top: 25, bottom: 10),
+                                child: const Column(
+                                  children: [
+                                    Text(
+                                      " vérification du numéro ",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 30),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      " de téléphone",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 30),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      "Entrez le code reçu par mail ou sms ",
+                                      style: TextStyle(fontSize: 13),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.transparent,
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                margin:
+                                    const EdgeInsets.only(left: 35, right: 35),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    OtpInput(_fieldOne, false),
+                                    // auto focus
+                                    OtpInput(_fieldTwo, false),
+                                    OtpInput(_fieldThree, false),
+                                    OtpInput(_fieldFour, false),
+                                    OtpInput(_fieldFive, false)
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 60,
+                              ),
+                              SizedBox(
+                                width: 300.0,
+                                height: 50.0,
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: HexColor("#93E237"),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      verifotp();
+                                    },
+                                    child: const Text(
+                                      "Continuer",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                      Expanded(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10.w),
-                              topRight: Radius.circular(10.w),
-                            ),
-                            child: BackdropFilter(
-                              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(.7),
-                                    borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(40),
-                                        topRight: Radius.circular(40),),),
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        margin:
-                                        const EdgeInsets.only(left: 5, top: 25, bottom: 10),
-                                        child: Column(
-                                          children: const [
-                                            Text(
-                                              " verification du numeo ",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 30),
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Text(
-                                              " de telephone",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 30),
-                                            ),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              "Entrez le code reçu par mail ou sms ",
-                                              style: TextStyle(fontSize: 13),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.transparent,
-                                          borderRadius: BorderRadius.circular(30.0),
-                                        ),
-                                        margin: const EdgeInsets.only(left: 35, right: 35),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            OtpInput(_fieldOne, false), // auto focus
-                                            OtpInput(_fieldTwo, false),
-                                            OtpInput(_fieldThree, false),
-                                            OtpInput(_fieldFour, false),
-                                            OtpInput(_fieldFive, false)
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 60,
-                                      ),
-                                      SizedBox(
-                                        width: 300.0,
-                                        height: 50.0,
-                                        child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: HexColor("#93E237"),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(30.0),
-                                              ),
-                                            ),
-                                            onPressed: () {
-                                              verifotp();
-                                            },
-                                            child: const Text(
-                                              "Continuer",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                      ),
-                                      const SizedBox(
-                                        height: 30,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                      )
-                    ],
-                  ),
+                    ),
+                  ))
+                ],
               ),
-            ],
-          ),
-        ));
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   void verifotp() async {
@@ -214,8 +219,8 @@ class _otpState extends State<Otp> {
     } else {
       var resp = json.decode(reponse.body);
 
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Erreur, veuillez ressayer")));
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Erreur, veuillez ressayer")));
     }
   }
 
@@ -232,6 +237,7 @@ class _otpState extends State<Otp> {
 class OtpInput extends StatelessWidget {
   final TextEditingController controller;
   final bool autoFocus;
+
   const OtpInput(this.controller, this.autoFocus, {Key? key}) : super(key: key);
 
   @override

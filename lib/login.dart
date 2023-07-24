@@ -179,7 +179,7 @@ class _LoginState extends State<Login> {
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
-                                                          30.0),
+                                                          15.0),
                                                 ),
                                               ),
                                               onPressed: () async {

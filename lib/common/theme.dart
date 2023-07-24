@@ -41,7 +41,7 @@ ButtonStyle buttonStyle() {
   return ButtonStyle(
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
+        borderRadius: BorderRadius.circular(15.0),
       ),
     ),
     minimumSize: MaterialStateProperty.all(Size(50, 50)),

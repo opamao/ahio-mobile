@@ -13,7 +13,6 @@ class Home_screen extends StatefulWidget {
 }
 
 class _Home_screenState extends State<Home_screen> {
-
   int selectedIndex = 0;
   final Widget _accueil = const AccueilScreen();
   final Widget _favoris = const FavorisScreen();
@@ -29,26 +28,46 @@ class _Home_screenState extends State<Home_screen> {
         items: [
           SalomonBottomBarItem(
             icon: Image.asset("images/accueilIcon.png"),
-            title: const Text("Accueil",
-                style: TextStyle(color: Colors.black, fontSize: 12)),
+            title: const Text(
+              "Accueil",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+              ),
+            ),
             selectedColor: const Color.fromRGBO(18, 140, 126, 1),
           ),
           SalomonBottomBarItem(
             icon: Image.asset("images/favorisIcon.png"),
-            title: const Text("Favoris",
-                style: TextStyle(color: Colors.black, fontSize: 12)),
+            title: const Text(
+              "Favoris",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+              ),
+            ),
             selectedColor: const Color.fromRGBO(18, 140, 126, 1),
           ),
           SalomonBottomBarItem(
             icon: Image.asset("images/locationIcon.png"),
-            title: const Text("Location",
-                style: TextStyle(color: Colors.black, fontSize: 12)),
+            title: const Text(
+              "Location",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+              ),
+            ),
             selectedColor: const Color.fromRGBO(18, 140, 126, 1),
           ),
           SalomonBottomBarItem(
             icon: Image.asset("images/profilIcon.png"),
-            title: const Text("Profil",
-                style: TextStyle(color: Colors.black, fontSize: 12)),
+            title: const Text(
+              "Profil",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+              ),
+            ),
             selectedColor: const Color.fromRGBO(18, 140, 126, 1),
           )
         ],

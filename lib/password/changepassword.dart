@@ -81,154 +81,155 @@ class _ChangepassState extends State<Changepass> {
                       ),
                     ),
                     Expanded(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10.w),
-                            topRight: Radius.circular(10.w),
-                          ),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(.7),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(40),
-                                  topRight: Radius.circular(40),),),
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  children: [
-                                    Container(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10.w),
+                          topRight: Radius.circular(10.w),
+                        ),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(.7),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(40),
+                                topRight: Radius.circular(40),
+                              ),
+                            ),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(
+                                        left: 5, top: 15, bottom: 10),
+                                    child: const Column(
+                                      children: [
+                                        Text(
+                                          "Creation de mot de passe ",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          "Entrer votre nouveau mot de passe ",
+                                          style: TextStyle(fontSize: 13),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Center(
+                                    child: Container(
                                       margin: const EdgeInsets.only(
-                                          left: 5, top: 15, bottom: 10),
-                                      child: Column(
-                                        children: const [
-                                          Text(
-                                            "Creation de mot de passe ",
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 20),
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            "Entrer votre nouveau mot de passe ",
-                                            style: TextStyle(fontSize: 13),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Center(
-                                      child: Container(
-                                        margin:
-                                        const EdgeInsets.only(left: 35, right: 35),
-                                        child: Form(
-                                            key: _formkey,
-                                            child: Column(
-                                              crossAxisAlignment:
+                                          left: 35, right: 35),
+                                      child: Form(
+                                        key: _formkey,
+                                        child: Column(
+                                          crossAxisAlignment:
                                               CrossAxisAlignment.center,
-                                              children: [
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-
-                                                InputPassword(
-                                                  controller: password,
-                                                  hintText: "Nouveau mot de passe",
-                                                  prefixIcon: const Padding(
-                                                    padding: EdgeInsets.all(0),
-                                                    child: Icon(Icons.lock),
-                                                  ),
-                                                  validatorMessage:
+                                          children: [
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            InputPassword(
+                                              controller: password,
+                                              hintText: "Nouveau mot de passe",
+                                              prefixIcon: const Padding(
+                                                padding: EdgeInsets.all(0),
+                                                child: Icon(Icons.lock),
+                                              ),
+                                              validatorMessage:
                                                   "Votre mot de passe doit être de 8 caractères",
-                                                  suffixIcon: IconButton(
-                                                      icon: Icon(_obscure
-                                                          ? Icons.visibility
-                                                          : Icons.visibility_off),
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          _obscure = !_obscure;
-                                                        });
-                                                      }),
-                                                ),
-                                                const SizedBox(
-                                                  height: 20,
-                                                ),
-                                                InputPassword(
-                                                  controller: confirmpassword,
-                                                  hintText: "Confirmer le mot de passe",
-                                                  prefixIcon: const Padding(
-                                                    padding: EdgeInsets.all(0),
-                                                    child: Icon(Icons.lock),
-                                                  ),
-                                                  validatorMessage:
+                                              suffixIcon: IconButton(
+                                                  icon: Icon(_obscure
+                                                      ? Icons.visibility
+                                                      : Icons.visibility_off),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      _obscure = !_obscure;
+                                                    });
+                                                  }),
+                                            ),
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            InputPassword(
+                                              controller: confirmpassword,
+                                              hintText:
+                                                  "Confirmer le mot de passe",
+                                              prefixIcon: const Padding(
+                                                padding: EdgeInsets.all(0),
+                                                child: Icon(Icons.lock),
+                                              ),
+                                              validatorMessage:
                                                   "Votre mot de passe doit être de 8 caractères",
-                                                  suffixIcon: IconButton(
-                                                      icon: Icon(_obscure
-                                                          ? Icons.visibility
-                                                          : Icons.visibility_off),
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          _obscure = !_obscure;
-                                                        });
-                                                      }),
+                                              suffixIcon: IconButton(
+                                                  icon: Icon(_obscure
+                                                      ? Icons.visibility
+                                                      : Icons.visibility_off),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      _obscure = !_obscure;
+                                                    });
+                                                  }),
+                                            ),
+                                            const SizedBox(
+                                              height: 30,
+                                            ),
+                                            SizedBox(
+                                              width: 300.0,
+                                              height: 50.0,
+                                              child: ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      HexColor("#93E237"),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15.0),
+                                                  ),
                                                 ),
-                                                const SizedBox(
-                                                  height: 30,
+                                                onPressed: () async {
+                                                  if (_formkey.currentState!
+                                                      .validate()) {
+                                                    if (confirmpassword.text ==
+                                                        password.text) {
+                                                      changemdp();
+                                                    } else {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                              _snackBar);
+                                                    }
+                                                  }
+                                                },
+                                                child: const Text(
+                                                  "Continuer",
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
-                                                SizedBox(
-                                                  width: 300.0,
-                                                  height: 50.0,
-                                                  child: ElevatedButton(
-                                                      style:
-                                                      ElevatedButton.styleFrom(
-                                                        backgroundColor:
-                                                        HexColor("#93E237"),
-                                                        shape:
-                                                        RoundedRectangleBorder(
-                                                          borderRadius:
-                                                          BorderRadius.circular(
-                                                              30.0),
-                                                        ),
-                                                      ),
-                                                      onPressed: () async {
-                                                        if (_formkey.currentState!
-                                                            .validate()) {
-                                                          if (confirmpassword
-                                                              .text ==
-                                                              password.text) {
-                                                            changemdp();
-                                                          } else {
-                                                            ScaffoldMessenger.of(
-                                                                context)
-                                                                .showSnackBar(
-                                                                _snackBar);
-                                                          }
-                                                        }
-                                                      },
-                                                      child: const Text(
-                                                        "Continuer",
-                                                        style: TextStyle(
-                                                            fontSize: 15,
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                            FontWeight.bold),
-                                                      )),
-                                                ),
-                                                const SizedBox(
-                                                  height: 163,
-                                                ),
-                                              ],
-                                            )),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 163,
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                        )
+                        ),
+                      ),
                     )
                   ],
                 ),
@@ -256,8 +257,8 @@ class _ChangepassState extends State<Changepass> {
 
         pageRoute();
       } else if (response == 'ERREUR') {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Mot de passe non modifie, ressayez")));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Mot de passe non modifie, ressayez")));
       }
     } else {
       var resp = json.decode(reponse.body);
@@ -269,6 +270,7 @@ class _ChangepassState extends State<Changepass> {
 
   void pageRoute() async {
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => const Login()), (route) => false);
+        MaterialPageRoute(builder: (context) => const Login()),
+        (route) => false);
   }
 }
