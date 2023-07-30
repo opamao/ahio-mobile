@@ -43,7 +43,7 @@ class _LoginState extends State<Login> {
 
   bool _obscure = true;
 
-  var phone = TextEditingController();
+  var email = TextEditingController();
   var password = TextEditingController();
 
   final _snackBar = const SnackBar(
@@ -124,11 +124,11 @@ class _LoginState extends State<Login> {
                                         ),
                                         InputText(
                                           keyboardType: TextInputType.text,
-                                          controller: phone,
-                                          hintText: "Téléphone ou adresse mail",
+                                          controller: email,
+                                          hintText: "adresse mail",
                                           prefixIcon: const Padding(
                                             padding: EdgeInsets.all(0),
-                                            child: Icon(Icons.person),
+                                            child: Icon(Icons.email),
                                           ),
                                           validatorMessage:
                                               "Veuillez saisir votre téléphone ou mail",
@@ -382,14 +382,14 @@ class _LoginState extends State<Login> {
 
   void Clean() {
     password.clear();
-    phone.clear();
+    email.clear();
   }
 
   void sign() async {
     print(password.text);
     //call export data
     var reponse = await http.post(Uri.parse("${constance.urlApi}login"),
-        body: ({'phone': phone.text, 'password': password.text}));
+        body: ({'phone': email.text, 'password': password.text}));
 
     if (reponse.statusCode == 200) {
       var resp = json.decode(reponse.body);
