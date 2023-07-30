@@ -72,8 +72,10 @@ class EspaceScreen extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const TypeScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const TypeScreen()));
                   },
                   child: Text(
                     "Démarrer",

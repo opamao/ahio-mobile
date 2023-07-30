@@ -104,9 +104,10 @@ class _TypeScreenState extends State<TypeScreen> {
               "Quel est le type de Résidence disposez-vous ?",
               textAlign: TextAlign.center,
               style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.bold,),
+                color: Colors.black,
+                fontSize: 20.sp,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const Gap(20),
             Center(
@@ -155,6 +156,7 @@ class _TypeScreenState extends State<TypeScreen> {
                   ),
                 ),
                 onPressed: () {
+                  print(libelle);
                   Navigator.pushNamed(context, Routes.locator,
                       arguments: {"type": libelle});
                 },

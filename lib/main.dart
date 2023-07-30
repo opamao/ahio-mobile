@@ -12,6 +12,7 @@ import 'package:ahio/route.dart';
 import 'package:flutter/material.dart';
 import 'package:ahio/login.dart';
 import 'package:sizer/sizer.dart';
+import 'home/residence/type_screen.dart';
 import 'splash_screen.dart';
 import 'felicitation.dart';
 import 'inscription.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.green,
             useMaterial3: true,
           ),
-          home: const SplashScreenn(),
+          home: const Loader(),
           onGenerateRoute: (settings) => RouteGenerator.generateRoute(settings),
         );
       },
@@ -78,9 +79,28 @@ class RouteGenerator {
           builder: (context) => const Otp(),
         );
       case Routes.locator:
-        return MaterialPageRoute(
-          builder: (context) => const Maps(),
-        );
+        {
+          if (settings.name == '/locator') {
+            // Récupérer les arguments de la route
+            Map<String, dynamic>? arguments =
+                settings.arguments as Map<String, dynamic>?;
+
+            // Vérifier si les arguments contiennent la clé "type"
+            if (arguments != null && arguments.containsKey('type')) {
+              // Récupérer la valeur associée à la clé "type"
+              String type = arguments['type'];
+
+              // Retourner la page correspondant à "/locator" avec les arguments
+              return MaterialPageRoute(
+                builder: (context) => Maps(type: type),
+              );
+            }
+          }
+          return MaterialPageRoute(
+            builder: (context) => TypeScreen(),
+          );
+        }
+
       case Routes.inscription:
         return MaterialPageRoute(
           builder: (context) => const Inscription(),

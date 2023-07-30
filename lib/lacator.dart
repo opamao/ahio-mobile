@@ -11,8 +11,8 @@ import 'package:ahio/common/constance.dart';
 import 'package:http/http.dart' as http;
 
 class Maps extends StatefulWidget {
-
-  const Maps({super.key});
+  Maps({super.key, required this.type});
+  final String type;
 
   @override
   State<Maps> createState() => _MapsState();
@@ -186,7 +186,8 @@ class _PanelState extends State<Panel> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
+    final arguments = (ModalRoute.of(context)?.settings.arguments ??
+        <String, dynamic>{}) as Map;
 
     return ListView(
       physics: const BouncingScrollPhysics(),
@@ -321,6 +322,8 @@ class _PanelState extends State<Panel> {
                         ),
                       ),
                       onPressed: () {
+                        print(type);
+                        return;
                         Navigator.pushNamed(context, '/capacite', arguments: {
                           "adresse": adresse.text,
                           "rue": rue.text,
