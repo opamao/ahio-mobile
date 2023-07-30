@@ -1,11 +1,7 @@
-import 'package:ahio/home/residence/capacite_screen.dart';
 import 'package:ahio/route.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:sizer/sizer.dart';
-
-import '../../common/constance.dart';
-import '../../lacator.dart';
 
 class TypeScreen extends StatefulWidget {
   const TypeScreen({super.key});
