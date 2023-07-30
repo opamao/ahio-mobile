@@ -322,8 +322,6 @@ class _PanelState extends State<Panel> {
                         ),
                       ),
                       onPressed: () {
-                        print(type);
-                        return;
                         Navigator.pushNamed(context, '/capacite', arguments: {
                           "adresse": adresse.text,
                           "rue": rue.text,
