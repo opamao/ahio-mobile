@@ -102,7 +102,7 @@ class _ChangepassState extends State<Changepass> {
                                   Container(
                                     margin: const EdgeInsets.only(
                                         left: 5, top: 15, bottom: 10),
-                                    child: const Column(
+                                    child: Column(
                                       children: [
                                         Text(
                                           "Creation de mot de passe ",

@@ -4,6 +4,7 @@ import 'package:ahio/home/residence/capacite_screen.dart';
 import 'package:ahio/home/residence/equipement_screen.dart';
 import 'package:ahio/homeApbar.dart';
 import 'package:ahio/home_screen.dart';
+import 'package:ahio/load.dart';
 import 'package:ahio/page_not_found.dart';
 import 'package:ahio/password/otp.dart';
 import 'package:ahio/password/recuppassword.dart';

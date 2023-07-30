@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:ahio/common/constance.dart';
 import 'package:ahio/common/input/input.dart';
+import 'package:ahio/common/theme.dart';
 import 'package:ahio/home_screen.dart';
 import 'package:ahio/inscription.dart';
+import 'package:ahio/loading.dart';
 import 'package:ahio/password/recuppassword.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -11,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:sizer/sizer.dart';
 import 'gen/assets.gen.dart';
+import 'load.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -40,7 +43,7 @@ class _LoginState extends State<Login> {
 
   bool _obscure = true;
 
-  var phone = TextEditingController();
+  var email = TextEditingController();
   var password = TextEditingController();
 
   final _snackBar = const SnackBar(
@@ -121,11 +124,11 @@ class _LoginState extends State<Login> {
                                         ),
                                         InputText(
                                           keyboardType: TextInputType.text,
-                                          controller: phone,
-                                          hintText: "Téléphone ou adresse mail",
+                                          controller: email,
+                                          hintText: "adresse mail",
                                           prefixIcon: const Padding(
                                             padding: EdgeInsets.all(0),
-                                            child: Icon(Icons.person),
+                                            child: Icon(Icons.email),
                                           ),
                                           validatorMessage:
                                               "Veuillez saisir votre téléphone ou mail",
@@ -186,6 +189,11 @@ class _LoginState extends State<Login> {
                                                 if (_formkey.currentState!
                                                     .validate()) {
                                                   sign();
+                                                  // Navigator.push(
+                                                  //     context,
+                                                  //     MaterialPageRoute(
+                                                  //         builder: (context) =>
+                                                  //             Loading()));
                                                 } else {
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(_snackBar);
@@ -374,14 +382,14 @@ class _LoginState extends State<Login> {
 
   void Clean() {
     password.clear();
-    phone.clear();
+    email.clear();
   }
 
   void sign() async {
     print(password.text);
     //call export data
     var reponse = await http.post(Uri.parse("${constance.urlApi}login"),
-        body: ({'phone': phone.text, 'password': password.text}));
+        body: ({'phone': email.text, 'password': password.text}));
 
     if (reponse.statusCode == 200) {
       var resp = json.decode(reponse.body);
@@ -425,7 +433,6 @@ class _LoginState extends State<Login> {
     await pref.setString("phone", phone);
     await pref.setString("role", role);
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => Home_screen()),
-        (route) => false);
+        MaterialPageRoute(builder: (context) => Loading()), (route) => false);
   }
 }
