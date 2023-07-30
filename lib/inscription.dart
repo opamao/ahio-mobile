@@ -3,6 +3,9 @@ import 'dart:ui';
 import 'package:ahio/common/constance.dart';
 import 'package:ahio/common/input/input.dart';
 import 'package:ahio/home_screen.dart';
+import 'package:ahio/load.dart';
+import 'package:ahio/login.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,11 +15,24 @@ import 'package:http/http.dart' as http;
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:sizer/sizer.dart';
 
+import 'splash_screen.dart';
+
 class Inscription extends StatefulWidget {
   const Inscription({super.key});
 
   @override
   State<Inscription> createState() => _InscriptionState();
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: AnimatedSplashScreen(
+        splash: Image.asset("images/ahionoir.png"),
+        duration: 3000,
+        backgroundColor: const Color.fromRGBO(147, 226, 55, 1),
+        nextScreen: const Login(),
+      ),
+    );
+  }
 }
 
 class _InscriptionState extends State<Inscription> {
@@ -315,6 +331,17 @@ class _InscriptionState extends State<Inscription> {
                                       onPressed: () async {
                                         if (_formkey.currentState!.validate()) {
                                           register();
+
+                                          // Navigator.push(
+                                          //     context,
+                                          //     MaterialPageRoute(
+                                          //         builder: (context) =>
+                                          //             Loader()));
+                                          // Navigator.push(
+                                          //     context,
+                                          //     MaterialPageRoute(
+                                          //         builder: (context) =>
+                                          //             Login()));
                                         } else {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(_snackBar);
@@ -377,7 +404,7 @@ class _InscriptionState extends State<Inscription> {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("${message}")));
 
-        //pageRoute(phone.text, password.text);
+        pageRoute(phone.text, password.text);
       } else if (response == 'ERREUR') {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("${resp["object"]}")));
@@ -395,7 +422,7 @@ class _InscriptionState extends State<Inscription> {
     await pref.setString("phone", phone);
     await pref.setString("passwword", password);
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => const Home_screen()),
+        MaterialPageRoute(builder: (context) => const Loader()),
         (route) => false);
   }
 }

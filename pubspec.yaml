@@ -59,6 +59,7 @@ dependencies:
   percent_indicator: ^4.2.3
   datepicker_dropdown: ^0.0.7+4
   syncfusion_flutter_datepicker: ^21.1.41
+ 
 
 dev_dependencies:
   flutter_test:

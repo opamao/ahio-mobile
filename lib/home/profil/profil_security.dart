@@ -77,7 +77,7 @@ class _securityProfilState extends State<securityProfil> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Gap(150),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
@@ -129,7 +129,7 @@ class _securityProfilState extends State<securityProfil> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               hintText: "Mot de passe",
-                              prefixIcon: const Column(
+                              prefixIcon: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Padding(
@@ -177,7 +177,7 @@ class _securityProfilState extends State<securityProfil> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               hintText: "Mot de passe",
-                              prefixIcon: const Column(
+                              prefixIcon: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Padding(
@@ -222,7 +222,7 @@ class _securityProfilState extends State<securityProfil> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               hintText: "Mot de passe",
-                              prefixIcon: const Column(
+                              prefixIcon: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Padding(

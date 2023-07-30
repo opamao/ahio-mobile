@@ -92,7 +92,7 @@ class _otpState extends State<Otp> {
                               Container(
                                 margin: const EdgeInsets.only(
                                     left: 5, top: 25, bottom: 10),
-                                child: const Column(
+                                child: Column(
                                   children: [
                                     Text(
                                       " vérification du numéro ",

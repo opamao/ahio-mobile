@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:ahio/common/constance.dart';
 import 'package:ahio/common/input/input.dart';
+import 'package:ahio/common/theme.dart';
 import 'package:ahio/home_screen.dart';
 import 'package:ahio/inscription.dart';
+import 'package:ahio/loading.dart';
 import 'package:ahio/password/recuppassword.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -11,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:sizer/sizer.dart';
 import 'gen/assets.gen.dart';
+import 'load.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -186,6 +189,11 @@ class _LoginState extends State<Login> {
                                                 if (_formkey.currentState!
                                                     .validate()) {
                                                   sign();
+                                                  // Navigator.push(
+                                                  //     context,
+                                                  //     MaterialPageRoute(
+                                                  //         builder: (context) =>
+                                                  //             Loading()));
                                                 } else {
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(_snackBar);
@@ -425,7 +433,6 @@ class _LoginState extends State<Login> {
     await pref.setString("phone", phone);
     await pref.setString("role", role);
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => Home_screen()),
-        (route) => false);
+        MaterialPageRoute(builder: (context) => Loading()), (route) => false);
   }
 }

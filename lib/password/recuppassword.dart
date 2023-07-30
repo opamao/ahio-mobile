@@ -32,8 +32,7 @@ class _recuppasswordState extends State<recuppassword> {
     String? val = pref.getString("access_token");
     if (val != null) {
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const Otp()),
-          (route) => false);
+          MaterialPageRoute(builder: (context) => Otp()), (route) => false);
     }
   }
 
@@ -89,7 +88,7 @@ class _recuppasswordState extends State<recuppassword> {
                                     Container(
                                       margin: const EdgeInsets.only(
                                           left: 5, top: 50, bottom: 10),
-                                      child: const Column(
+                                      child: Column(
                                         children: [
                                           Text(
                                             "Gestion de mot de passe oublié",
