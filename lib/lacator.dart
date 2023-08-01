@@ -11,8 +11,9 @@ import 'package:ahio/common/constance.dart';
 import 'package:http/http.dart' as http;
 
 class Maps extends StatefulWidget {
+  final String type;
 
-  const Maps({super.key});
+  const Maps({Key? key, required this.type}) : super(key: key);
 
   @override
   State<Maps> createState() => _MapsState();
@@ -186,7 +187,7 @@ class _PanelState extends State<Panel> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
+    final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{'type':''}) as Map;
 
     return ListView(
       physics: const BouncingScrollPhysics(),
