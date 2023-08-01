@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.green,
             useMaterial3: true,
           ),
-          home: const Loader(),
+          home: const SplashScreenn(),
           onGenerateRoute: (settings) => RouteGenerator.generateRoute(settings),
         );
       },
@@ -48,6 +48,8 @@ class MyApp extends StatelessWidget {
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
+    print("=====================");
+    print(args);
 
     switch (settings.name) {
       case Routes.splash:

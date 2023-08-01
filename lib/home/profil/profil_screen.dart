@@ -107,60 +107,60 @@ class _autresState extends State<_autres> {
           ),
           dense: true,
         ),
-        const Divider(
-          thickness: 2,
-          indent: 20,
-          endIndent: 20,
-          height: 2,
-        ),
-        ListTile(
-          onTap: () {},
-          leading: const Icon(Icons.translate_outlined),
-          title: const Text(
-            "Langues",
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          dense: true,
-        ),
-        const Divider(
-          thickness: 2,
-          indent: 20,
-          endIndent: 20,
-          height: 2,
-        ),
-        ListTile(
-          onTap: () {},
-          leading: const Icon(Icons.notifications_outlined),
-          title: const Text(
-            "Notifications",
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          dense: true,
-        ),
-        const Divider(
-          thickness: 2,
-          indent: 20,
-          endIndent: 20,
-          height: 2,
-        ),
-        ListTile(
-          onTap: () {},
-          leading: const Icon(Icons.exit_to_app_rounded),
-          title: const Text(
-            "Mode sombre",
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          dense: true,
-        ),
+        // const Divider(
+        //   thickness: 2,
+        //   indent: 20,
+        //   endIndent: 20,
+        //   height: 2,
+        // ),
+        // ListTile(
+        //   onTap: () {},
+        //   leading: const Icon(Icons.translate_outlined),
+        //   title: const Text(
+        //     "Langues",
+        //     style: TextStyle(
+        //       fontSize: 14,
+        //       fontWeight: FontWeight.bold,
+        //     ),
+        //   ),
+        //   dense: true,
+        // ),
+        // const Divider(
+        //   thickness: 2,
+        //   indent: 20,
+        //   endIndent: 20,
+        //   height: 2,
+        // ),
+        // ListTile(
+        //   onTap: () {},
+        //   leading: const Icon(Icons.notifications_outlined),
+        //   title: const Text(
+        //     "Notifications",
+        //     style: TextStyle(
+        //       fontSize: 14,
+        //       fontWeight: FontWeight.bold,
+        //     ),
+        //   ),
+        //   dense: true,
+        // ),
+        // const Divider(
+        //   thickness: 2,
+        //   indent: 20,
+        //   endIndent: 20,
+        //   height: 2,
+        // ),
+        // ListTile(
+        //   onTap: () {},
+        //   leading: const Icon(Icons.exit_to_app_rounded),
+        //   title: const Text(
+        //     "Mode sombre",
+        //     style: TextStyle(
+        //       fontSize: 14,
+        //       fontWeight: FontWeight.bold,
+        //     ),
+        //   ),
+        //   dense: true,
+        // ),
         const Divider(),
         ListTile(
           onTap: () => showDialog<String>(
@@ -269,6 +269,21 @@ class _TopPortion extends StatefulWidget {
 }
 
 class _TopPortionState extends State<_TopPortion> {
+  String nom = "";
+
+  @override
+  void initState() {
+    super.initState();
+    getCred();
+  }
+
+  void getCred() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    setState(() {
+      nom = pref.getString("nom")!;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -339,8 +354,8 @@ class _TopPortionState extends State<_TopPortion> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const Text(
-            "theodoreyapi@gmail.com",
+          Text(
+            nom,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 16,

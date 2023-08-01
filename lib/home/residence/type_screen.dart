@@ -119,7 +119,7 @@ class _TypeScreenState extends State<TypeScreen> {
                     child: customRadio(
                       "images/appartement.png",
                       "Un appartement",
-                      "Lorem ipsum dolor sit\namet, consetetur",
+                      "",
                       1,
                     ),
                   ),
@@ -128,7 +128,7 @@ class _TypeScreenState extends State<TypeScreen> {
                     child: customRadio(
                       "images/villas.png",
                       "Une villa",
-                      "Lorem ipsum dolor sit\namet, consetetur",
+                      "",
                       2,
                     ),
                   ),
@@ -137,7 +137,7 @@ class _TypeScreenState extends State<TypeScreen> {
                     child: customRadio(
                       "images/chambre.png",
                       "Une chambre",
-                      "Lorem ipsum dolor sit\namet, consetetur",
+                      "",
                       3,
                     ),
                   ),
@@ -156,9 +156,15 @@ class _TypeScreenState extends State<TypeScreen> {
                   ),
                 ),
                 onPressed: () {
+                  print("dddddddf");
+                  print(selected);
                   print(libelle);
-                  Navigator.pushNamed(context, Routes.locator,
-                      arguments: {"type": libelle});
+
+                  // Navigator.pushNamed(context, Routes.locator,
+                  //     arguments: {"type": libelle});
+                  Route route = MaterialPageRoute(
+                      builder: (context) => Maps(type: libelle));
+                  Navigator.push(context, route);
                 },
                 child: Text(
                   "Suivant",

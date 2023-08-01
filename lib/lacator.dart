@@ -11,8 +11,8 @@ import 'package:ahio/common/constance.dart';
 import 'package:http/http.dart' as http;
 
 class Maps extends StatefulWidget {
-  Maps({super.key, required this.type});
   final String type;
+  const Maps({required this.type});
 
   @override
   State<Maps> createState() => _MapsState();

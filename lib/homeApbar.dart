@@ -25,7 +25,12 @@ class HomeApbar extends StatelessWidget {
               width: 30,
               height: 30,
             ),
-          )
+          ),
+          IconButton(
+            icon: Icon(Icons.notification_add_outlined),
+            color: Color(0xFF475269),
+            onPressed: () {},
+          ),
         ],
       ),
     );

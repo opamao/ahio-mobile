@@ -32,7 +32,7 @@ class EspaceScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: Text(
-                "Bienvenue dans l’espace d’ajout de résidence à la location",
+                "Bienvenue dans l’espace d’ajout\n    de vos residence. ",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: const Color.fromRGBO(147, 226, 55, 1),
@@ -41,17 +41,6 @@ class EspaceScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 25),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "Lorem ipsum do sadipscing elitr, sed.",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 25.sp,
-                ),
-              ),
-            ),
             SizedBox(height: 5.h),
             Container(
               alignment: Alignment.center,

@@ -133,15 +133,7 @@ class AccueilScreenContent extends State<AccueilScreen> {
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold),
                             ),
-                            const Spacer(),
-                            Text(
-                              "Lorem ipsum dolor sit \namet, consetetur",
-                              style: TextStyle(
-                                fontSize: 10.sp,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            const Divider(color: Colors.blue, height: 8),
+                            const Divider(color: Colors.blue, height: 40),
                             const Spacer(),
                             InkWell(
                               onTap: () {
@@ -176,7 +168,7 @@ class AccueilScreenContent extends State<AccueilScreen> {
                 TextButton(
                   onPressed: () {},
                   child: Text(
-                    "Maison atypiques",
+                    "Appartement",
                     style: TextStyle(color: Colors.black26, fontSize: 10.sp),
                   ),
                 ),
@@ -186,7 +178,7 @@ class AccueilScreenContent extends State<AccueilScreen> {
                 TextButton(
                     onPressed: () {},
                     child: Text(
-                      "Maison citadines",
+                      "Villa",
                       style: TextStyle(color: Colors.black26, fontSize: 10.sp),
                     )),
                 const SizedBox(
@@ -195,7 +187,7 @@ class AccueilScreenContent extends State<AccueilScreen> {
                 TextButton(
                     onPressed: () {},
                     child: Text(
-                      "Maison Luxuseuses",
+                      "Chambre",
                       style: TextStyle(color: Colors.black26, fontSize: 10.sp),
                     )),
               ],
