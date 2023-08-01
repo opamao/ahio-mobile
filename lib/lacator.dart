@@ -12,8 +12,7 @@ import 'package:http/http.dart' as http;
 
 class Maps extends StatefulWidget {
   final String type;
-
-  const Maps({Key? key, required this.type}) : super(key: key);
+  const Maps({required this.type});
 
   @override
   State<Maps> createState() => _MapsState();
@@ -187,7 +186,8 @@ class _PanelState extends State<Panel> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{'type':''}) as Map;
+    final arguments = (ModalRoute.of(context)?.settings.arguments ??
+        <String, dynamic>{}) as Map;
 
     return ListView(
       physics: const BouncingScrollPhysics(),

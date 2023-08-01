@@ -100,9 +100,10 @@ class _TypeScreenState extends State<TypeScreen> {
               "Quel est le type de Résidence disposez-vous ?",
               textAlign: TextAlign.center,
               style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.bold,),
+                color: Colors.black,
+                fontSize: 20.sp,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const Gap(20),
             Center(
@@ -114,7 +115,7 @@ class _TypeScreenState extends State<TypeScreen> {
                     child: customRadio(
                       "images/appartement.png",
                       "Un appartement",
-                      "Lorem ipsum dolor sit\namet, consetetur",
+                      "",
                       1,
                     ),
                   ),
@@ -123,7 +124,7 @@ class _TypeScreenState extends State<TypeScreen> {
                     child: customRadio(
                       "images/villas.png",
                       "Une villa",
-                      "Lorem ipsum dolor sit\namet, consetetur",
+                      "",
                       2,
                     ),
                   ),
@@ -132,7 +133,7 @@ class _TypeScreenState extends State<TypeScreen> {
                     child: customRadio(
                       "images/chambre.png",
                       "Une chambre",
-                      "Lorem ipsum dolor sit\namet, consetetur",
+                      "",
                       3,
                     ),
                   ),
@@ -151,8 +152,15 @@ class _TypeScreenState extends State<TypeScreen> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, Routes.locator,
-                      arguments: {"type": libelle});
+                  print("dddddddf");
+                  print(selected);
+                  print(libelle);
+
+                  // Navigator.pushNamed(context, Routes.locator,
+                  //     arguments: {"type": libelle});
+                  Route route = MaterialPageRoute(
+                      builder: (context) => Maps(type: libelle));
+                  Navigator.push(context, route);
                 },
                 child: Text(
                   "Suivant",
