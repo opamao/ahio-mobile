@@ -59,12 +59,26 @@ class _EditProfilState extends State<EditProfil> {
 
   Future imagepick() async {
     try {
-      final _images =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (_images == null) return;
+      final images = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (images == null) return;
       final imageTemp = File(images!.path);
-      setState(() => this.images = imageTemp);
+      setState(() {
+        this.images = imageTemp;
+        _saveImageForProfile(this.images = imageTemp);
+      });
     } on PlatformException catch (e) {}
+  }
+
+  Future<void> _saveImageForProfile(File image) async {
+    //recuperer le repectoire d'application où l'image est rnregistrer
+    try {
+      final appDir = await getApplicationDocumentsDirectory();
+      final profileImage = File('${appDir.path}/profile.png');
+      await images!.copy(profileImage.path);
+      print('Image sauvegardée avec succès : ${profileImage.path}');
+    } catch (e) {
+      print('Erreur lors de la sauvegarde de l\'image : $e');
+    }
   }
 
   var password = TextEditingController();

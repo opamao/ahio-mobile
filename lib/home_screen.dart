@@ -17,7 +17,7 @@ class _Home_screenState extends State<Home_screen> {
   final Widget _accueil = const AccueilScreen();
   final Widget _favoris = const FavorisScreen();
   final Widget _location = const LocationsScreen();
-  final Widget _profil = const ProfilScreen();
+  final Widget _profil = ProfilScreen();
 
   @override
   Widget build(BuildContext context) {
