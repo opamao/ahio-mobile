@@ -45,9 +45,9 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 class NavigationService {
-  static GlobalKey<NavigatorState> navigatorKey =
-  GlobalKey<NavigatorState>();
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 }
 
 class RouteGenerator {
@@ -117,9 +117,37 @@ class RouteGenerator {
           builder: (context) => const Changepass(),
         );
       case Routes.capacite:
-        return MaterialPageRoute(
-          builder: (context) => const CapaciteScreen(),
-        );
+        {
+          if (settings.name == '/capacite') {
+            // Récupérer les arguments de la route
+            Map<String, dynamic>? arguments =
+                settings.arguments as Map<String, dynamic>?;
+
+            // Vérifier si les arguments contiennent la clé "type"
+            if (arguments != null && arguments.containsKey('type')) {
+              // Récupérer la valeur associée à la clé "type"
+              String type = arguments['type'];
+              String adresse = arguments['adresse'];
+              String quartier = arguments['quartier'];
+              String rue = arguments['rue'];
+              int pays = arguments['pays'];
+              int ville = arguments['ville'];
+
+              // Retourner la page correspondant à "/capacite" avec les arguments
+              return MaterialPageRoute(
+                builder: (context) => CapaciteScreen(
+                  adresse: adresse,
+                  quartier: quartier,
+                  rue: rue,
+                  type: type,
+                  pays: pays,
+                  ville: ville,
+                ),
+              );
+            }
+          }
+        }
+        break;
       case Routes.equipement:
         return MaterialPageRoute(
           builder: (context) => const EquipementScreen(),

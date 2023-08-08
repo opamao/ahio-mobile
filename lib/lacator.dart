@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ahio/home/residence/capacite_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_map/flutter_map.dart';
@@ -12,6 +13,7 @@ import 'package:http/http.dart' as http;
 
 class Maps extends StatefulWidget {
   final String type;
+
   const Maps({required this.type});
 
   @override
@@ -163,9 +165,12 @@ class _PanelState extends State<Panel> {
         await http.get(Uri.parse("${constance.urlApi}pays"), headers: {
       'Authorization': '$type $token',
     });
-    final jsonData = json.decode(response.body) as List;
+
+    print("RETOUR ${response.body}");
+
+    final jsonData = json.decode(response.body)["object"] as List;
 // On doit enlever avant la mise en prod
-    print(jsonData);
+    print("RETOUR ${jsonData}");
 
     setState(() {
       _pays = jsonData.map((item) => Pays.fromJson(item)).toList();
@@ -178,7 +183,7 @@ class _PanelState extends State<Panel> {
         headers: {
           'Authorization': '$type $token',
         });
-    final jsonData = json.decode(response.body) as List;
+    final jsonData = json.decode(response.body)['object'] as List;
     setState(() {
       _ville = jsonData.map((item) => Ville.fromJson(item)).toList();
     });
@@ -194,155 +199,173 @@ class _PanelState extends State<Panel> {
       controller: widget.controller,
       children: <Widget>[
         Center(
-            child: Container(
-          padding: const EdgeInsets.all(25),
-          child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(25),
+            child: SingleChildScrollView(
               child: Form(
-            key: _formkey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                const Text(
-                  "Saisir votre adresse",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  controller: adresse,
-                  textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(100),
+                key: _formkey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    const Text(
+                      "Saisir votre adresse",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
                     ),
-                    hintText: "adresse",
-                    prefixIcon: const Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Icon(
-                        Icons.location_on_rounded,
-                        color: Colors.black,
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      controller: adresse,
+                      textInputAction: TextInputAction.done,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        hintText: "adresse",
+                        prefixIcon: const Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Icon(
+                            Icons.location_on_rounded,
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  controller: rue,
-                  textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(100),
+                    const SizedBox(
+                      height: 20,
                     ),
-                    hintText: "  rue",
-                    suffixIcon: const Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Icon(Icons.edit),
+                    TextFormField(
+                      controller: rue,
+                      textInputAction: TextInputAction.done,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        hintText: "  rue",
+                        suffixIcon: const Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Icon(Icons.edit),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                TextFormField(
-                  controller: quartier,
-                  textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(100),
+                    const SizedBox(
+                      height: 15,
                     ),
-                    hintText: "  quartier",
-                    suffixIcon: const Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Icon(Icons.edit),
+                    TextFormField(
+                      controller: quartier,
+                      textInputAction: TextInputAction.done,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        hintText: "  quartier",
+                        suffixIcon: const Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Icon(Icons.edit),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Column(
-                  children: <Widget>[
-                    DropdownButtonFormField<Pays>(
-                      value: _selectedCountryId != null
-                          ? _pays.firstWhere((c) => c.id == _selectedCountryId)
-                          : null,
-                      hint: const Text('Selectionner le pays'),
-                      items: _pays
-                          .map((pays) => DropdownMenuItem<Pays>(
-                                value: pays,
-                                child: Text(pays.name),
-                              ))
-                          .toList(),
-                      onChanged: (pays) {
-                        setState(() {
-                          _selectedCountryId = pays?.id;
-                          _selectedCityId = null;
-                        });
-                        _fetchVille(pays!.id);
-                      },
+                    const SizedBox(
+                      height: 15,
                     ),
-                    const SizedBox(height: 20),
-                    DropdownButtonFormField<Ville>(
-                      decoration: const InputDecoration(),
-                      value: _selectedCityId != null
-                          ? _ville.firstWhere((c) => c.id == _selectedCityId)
-                          : null,
-                      hint: const Text('Selectionner la ville'),
-                      items: _ville
-                          .map((ville) => DropdownMenuItem<Ville>(
-                                value: ville,
-                                child: Text(ville.name),
-                              ))
-                          .toList(),
-                      onChanged: (ville) {
-                        setState(() {
-                          _selectedCityId = ville?.id;
-                        });
-                      },
+                    Column(
+                      children: <Widget>[
+                        DropdownButtonFormField<Pays>(
+                          value: _selectedCountryId != null
+                              ? _pays
+                                  .firstWhere((c) => c.id == _selectedCountryId)
+                              : null,
+                          hint: const Text('Selectionner le pays'),
+                          items: _pays
+                              .map((pays) => DropdownMenuItem<Pays>(
+                                    value: pays,
+                                    child: Text(pays.name),
+                                  ))
+                              .toList(),
+                          onChanged: (pays) {
+                            setState(() {
+                              _selectedCountryId = pays?.id;
+                              _selectedCityId = null;
+                            });
+                            _fetchVille(pays!.id);
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                        DropdownButtonFormField<Ville>(
+                          decoration: const InputDecoration(),
+                          value: _selectedCityId != null
+                              ? _ville
+                                  .firstWhere((c) => c.id == _selectedCityId)
+                              : null,
+                          hint: const Text('Selectionner la ville'),
+                          items: _ville
+                              .map((ville) => DropdownMenuItem<Ville>(
+                                    value: ville,
+                                    child: Text(ville.name),
+                                  ))
+                              .toList(),
+                          onChanged: (ville) {
+                            setState(() {
+                              _selectedCityId = ville?.id;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      width: 300.0,
+                      height: 50.0,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: HexColor("#93E237"),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                        ),
+                        onPressed: () {
+                          // Navigator.pushNamed(context, '/capacite', arguments: {
+                          //   "adresse": adresse.text,
+                          //   "rue": rue.text,
+                          //   "quartier": quartier.text,
+                          //   "pays": _selectedCountryId,
+                          //   "ville": _selectedCityId,
+                          //   "type": arguments["type"],
+                          // });
+                          Route route = MaterialPageRoute(
+                            builder: (context) => CapaciteScreen(
+                                adresse: adresse.text,
+                                rue: rue.text,
+                                quartier: quartier.text,
+                                pays: _selectedCountryId,
+                                ville: _selectedCityId,
+                                type: arguments["type"],
+                            ),
+                          );
+                          Navigator.push(context, route);
+                        },
+                        child: const Text(
+                          "   Suivant    ",
+                          style: TextStyle(
+                            fontSize: 19,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  width: 300.0,
-                  height: 50.0,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: HexColor("#93E237"),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/capacite', arguments: {
-                          "adresse": adresse.text,
-                          "rue": rue.text,
-                          "quartier": quartier.text,
-                          "pays": _selectedCountryId,
-                          "ville": _selectedCityId,
-                          "type": arguments["type"],
-                        });
-                      },
-                      child: const Text(
-                        "   Suivant    ",
-                        style: TextStyle(
-                            fontSize: 19,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                      )),
-                ),
-              ],
+              ),
             ),
-          )),
-        )),
+          ),
+        ),
       ],
     );
   }

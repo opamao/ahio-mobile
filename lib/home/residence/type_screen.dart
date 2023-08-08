@@ -1,4 +1,5 @@
-import 'package:ahio/route.dart';
+import 'package:ahio/lacator.dart';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:sizer/sizer.dart';
@@ -152,14 +153,11 @@ class _TypeScreenState extends State<TypeScreen> {
                   ),
                 ),
                 onPressed: () {
-                  print("dddddddf");
-                  print(selected);
-                  print(libelle);
-
                   // Navigator.pushNamed(context, Routes.locator,
                   //     arguments: {"type": libelle});
                   Route route = MaterialPageRoute(
-                      builder: (context) => Maps(type: libelle));
+                    builder: (context) => Maps(type: libelle),
+                  );
                   Navigator.push(context, route);
                 },
                 child: Text(
