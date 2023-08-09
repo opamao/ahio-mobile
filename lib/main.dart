@@ -154,7 +154,7 @@ class RouteGenerator {
         );
       case Routes.profil:
         return MaterialPageRoute(
-          builder: (context) => const ProfilScreen(),
+          builder: (context) => ProfilScreen(),
         );
       case Routes.paiement:
         return MaterialPageRoute(

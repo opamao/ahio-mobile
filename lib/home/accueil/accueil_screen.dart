@@ -8,10 +8,11 @@ import 'package:gap/gap.dart';
 import 'package:sizer/sizer.dart';
 
 class AccueilScreen extends StatefulWidget {
-  const AccueilScreen({super.key});
+  AccueilScreen({super.key, required this.role});
 
   @override
   State<AccueilScreen> createState() => AccueilScreenContent();
+  List<String> role;
 }
 
 class AccueilScreenContent extends State<AccueilScreen> {
@@ -70,6 +71,7 @@ class AccueilScreenContent extends State<AccueilScreen> {
               ],
             ),
           ),
+          // if (widget.role == 'proprietaire') ...[
           SizedBox(
               height: 30.h,
               child: Stack(children: [
@@ -157,8 +159,51 @@ class AccueilScreenContent extends State<AccueilScreen> {
                           ],
                         )))
               ])),
+          // ],
+          // (widget.role == 'proprietaire')
+          //     ? Container(
+          //         color: Colors.white,
+          //         margin: const EdgeInsets.only(left: 20),
+          //         height: 40,
+          //         width: 280,
+          //         child: ListView(
+          //           scrollDirection: Axis.horizontal,
+          //           children: [
+          //             TextButton(
+          //               onPressed: () {},
+          //               child: Text(
+          //                 "Appartement",
+          //                 style:
+          //                     TextStyle(color: Colors.black26, fontSize: 10.sp),
+          //               ),
+          //             ),
+          //             const SizedBox(
+          //               width: 3,
+          //             ),
+          //             TextButton(
+          //                 onPressed: () {},
+          //                 child: Text(
+          //                   "Villa",
+          //                   style: TextStyle(
+          //                       color: Colors.black26, fontSize: 10.sp),
+          //                 )),
+          //             const SizedBox(
+          //               width: 3,
+          //             ),
+          //             TextButton(
+          //                 onPressed: () {},
+          //                 child: Text(
+          //                   "Chambre",
+          //                   style: TextStyle(
+          //                       color: Colors.black26, fontSize: 10.sp),
+          //                 )),
+          //           ],
+          //         ),
+          //       )
+          // :
+          Gap(25),
           Container(
-            color: Colors.white,
+            color: Colors.white.withOpacity(0.4),
             margin: const EdgeInsets.only(left: 20),
             height: 40,
             width: 280,

@@ -1,14 +1,17 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:ahio/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
 import 'package:ahio/common/constance.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 
 class EditProfil extends StatefulWidget {
   const EditProfil({super.key});
@@ -21,6 +24,9 @@ class _EditProfilState extends State<EditProfil> {
   final _formkey = GlobalKey<FormState>();
 
   bool _obscure = true;
+
+  File? images;
+  final picker = ImagePicker();
 
   final _snackBar = const SnackBar(
     content: Text('Tous les champs sauf le email sont obligatoires'),
@@ -49,6 +55,30 @@ class _EditProfilState extends State<EditProfil> {
       phone = TextEditingController(text: telephone);
       email = TextEditingController(text: mail);
     });
+  }
+
+  Future imagepick() async {
+    try {
+      final images = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (images == null) return;
+      final imageTemp = File(images!.path);
+      setState(() {
+        this.images = imageTemp;
+        _saveImageForProfile(this.images = imageTemp);
+      });
+    } on PlatformException catch (e) {}
+  }
+
+  Future<void> _saveImageForProfile(File image) async {
+    //recuperer le repectoire d'application où l'image est rnregistrer
+    try {
+      final appDir = await getApplicationDocumentsDirectory();
+      final profileImage = File('${appDir.path}/profile.png');
+      await images!.copy(profileImage.path);
+      print('Image sauvegardée avec succès : ${profileImage.path}');
+    } catch (e) {
+      print('Erreur lors de la sauvegarde de l\'image : $e');
+    }
   }
 
   var password = TextEditingController();
@@ -105,23 +135,38 @@ class _EditProfilState extends State<EditProfil> {
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        width: 3,
-                        color: Colors.black,
+                  images != null
+                      ? ClipOval(
+                          child: Image.file(
+                            images!,
+                            width: 20,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              width: 3,
+                              color: Colors.black,
+                            ),
+                            image: const DecorationImage(
+                              fit: BoxFit.fill,
+                              image: AssetImage("images/ahio.png"),
+                            ),
+                          ),
+                        ),
+                  Positioned(
+                    top: 50,
+                    left: 34,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.photo_camera,
+                        color: Colors.white,
                       ),
-                      image: const DecorationImage(
-                        fit: BoxFit.fill,
-                        image: AssetImage("images/ahio.png"),
-                      ),
-                    ),
-                  ),
-                  const Positioned(
-                    child: Icon(
-                      Icons.photo_camera_outlined,
-                      size: 40,
+                      onPressed: () {
+                        imagepick();
+                      },
                     ),
                   ),
                 ],
@@ -239,7 +284,7 @@ class _EditProfilState extends State<EditProfil> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: const [
                                     Text(
-                                      "Email :",
+                                      "  Email :",
                                       textAlign: TextAlign.center,
                                     ),
                                   ],
