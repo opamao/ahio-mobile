@@ -156,10 +156,6 @@ class _TypeScreenState extends State<TypeScreen> {
                   ),
                 ),
                 onPressed: () {
-                  print("dddddddf");
-                  print(selected);
-                  print(libelle);
-
                   // Navigator.pushNamed(context, Routes.locator,
                   //     arguments: {"type": libelle});
                   Route route = MaterialPageRoute(

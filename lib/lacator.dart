@@ -50,8 +50,9 @@ class _MapsState extends State<Maps> {
             Expanded(
               child: FlutterMap(
                 options: MapOptions(
-                  center: LatLng(51.509364, -0.128928),
-                  // center: LatLng(7.546855, -5.5471), //pour la cote d'ivoire
+                  // center: LatLng(51.509364, -0.128928),
+
+                  center: LatLng(7.546855, -5.5471), //pour la cote d'ivoire
                   zoom: 9.2,
                 ),
                 nonRotatedChildren: [
