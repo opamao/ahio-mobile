@@ -300,8 +300,13 @@ class _InscriptionState extends State<Inscription> {
                                         WidgetSpan(
                                           child: InkWell(
                                             onTap: () {
-                                              Navigator.pushReplacementNamed(
-                                                  context, '/login');
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          Login()));
+                                              // Navigator.pushReplacementNamed(
+                                              //     context, '/login');
                                             },
                                             child: const Text(
                                               "connectez-vous",

@@ -1,8 +1,14 @@
-import 'package:ahio/home/residence/equipement_screen.dart';
 import 'package:flutter/material.dart';
 
 class CapaciteScreen extends StatefulWidget {
-  const CapaciteScreen({super.key});
+  const CapaciteScreen({
+    required String adresse,
+    required String rue,
+    required String quartier,
+    int? pays,
+    int? ville,
+    required type,
+  });
 
   @override
   State<CapaciteScreen> createState() => _CapaciteScreenState();

@@ -156,22 +156,25 @@ class _LoginState extends State<Login> {
                                               }),
                                         ),
                                         TextButton(
-                                            onPressed: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const recuppassword()));
-                                            },
-                                            child: const Text(
-                                              "Mot de passe oublié ?",
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 11,
-                                                decoration:
-                                                    TextDecoration.underline,
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const recuppassword(),
                                               ),
-                                            )),
+                                            );
+                                          },
+                                          child: const Text(
+                                            "Mot de passe oublié ?",
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 11,
+                                              decoration:
+                                                  TextDecoration.underline,
+                                            ),
+                                          ),
+                                        ),
                                         SizedBox(
                                           width: 300.0,
                                           height: 50.0,
