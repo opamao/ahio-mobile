@@ -388,7 +388,7 @@ class _EditProfilState extends State<EditProfil> {
           .showSnackBar(SnackBar(content: Text("${resp["message"]}")));
     }
   }
-/**
+/*
     void pageRoute(String phone, String password) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("phone", phone);

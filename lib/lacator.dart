@@ -272,29 +272,38 @@ class _PanelState extends State<Panel> {
                     ),
                     Column(
                       children: <Widget>[
-                        DropdownButtonFormField<Pays>(
-                          value: _selectedCountryId != null
-                              ? _pays
-                                  .firstWhere((c) => c.id == _selectedCountryId)
-                              : null,
-                          hint: const Text('Selectionner le pays'),
-                          items: _pays
-                              .map((pays) => DropdownMenuItem<Pays>(
-                                    value: pays,
-                                    child: Text(pays.name),
-                                  ))
-                              .toList(),
-                          onChanged: (pays) {
-                            setState(() {
-                              _selectedCountryId = pays?.id;
-                              _selectedCityId = null;
-                            });
-                            _fetchVille(pays!.id);
-                          },
+                        Container(
+                          child: DropdownButtonFormField<Pays>(
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(100)),
+                            ),
+                            value: _selectedCountryId != null
+                                ? _pays.firstWhere(
+                                    (c) => c.id == _selectedCountryId)
+                                : null,
+                            hint: const Text('Selectionner le pays'),
+                            items: _pays
+                                .map((pays) => DropdownMenuItem<Pays>(
+                                      value: pays,
+                                      child: Container(
+                                          width: 300, child: Text(pays.name)),
+                                    ))
+                                .toList(),
+                            onChanged: (pays) {
+                              setState(() {
+                                _selectedCountryId = pays?.id;
+                                _selectedCityId = null;
+                              });
+                              _fetchVille(pays!.id);
+                            },
+                          ),
                         ),
                         const SizedBox(height: 20),
                         DropdownButtonFormField<Ville>(
-                          decoration: const InputDecoration(),
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(100))),
                           value: _selectedCityId != null
                               ? _ville
                                   .firstWhere((c) => c.id == _selectedCityId)
@@ -341,12 +350,12 @@ class _PanelState extends State<Panel> {
                           // });
                           Route route = MaterialPageRoute(
                             builder: (context) => CapaciteScreen(
-                                adresse: adresse.text,
-                                rue: rue.text,
-                                quartier: quartier.text,
-                                pays: _selectedCountryId,
-                                ville: _selectedCityId,
-                                type: arguments["type"],
+                              adresse: adresse.text,
+                              rue: rue.text,
+                              quartier: quartier.text,
+                              pays: _selectedCountryId,
+                              ville: _selectedCityId,
+                              type: arguments["type"],
                             ),
                           );
                           Navigator.push(context, route);
