@@ -14,7 +14,7 @@ import 'package:http/http.dart' as http;
 class Maps extends StatefulWidget {
   final String type;
 
-  const Maps({required this.type});
+  const Maps({super.key, required this.type});
 
   @override
   State<Maps> createState() => _MapsState();
@@ -53,7 +53,6 @@ class _MapsState extends State<Maps> {
               child: FlutterMap(
                 options: MapOptions(
                   // center: LatLng(51.509364, -0.128928),
-
                   center: LatLng(7.546855, -5.5471), //pour la cote d'ivoire
                   zoom: 9.2,
                 ),
@@ -84,6 +83,7 @@ class _MapsState extends State<Maps> {
           return Panel(
             controller: controller,
             panelController: panelController,
+            type: widget.type,
           );
         },
       ),
@@ -124,9 +124,14 @@ class Ville {
 class Panel extends StatefulWidget {
   final ScrollController controller;
   final PanelController panelController;
+  final String type;
 
-  Panel({Key? key, required this.controller, required this.panelController})
-      : super(key: key);
+  const Panel({
+    Key? key,
+    required this.controller,
+    required this.panelController,
+    required this.type,
+  }) : super(key: key);
 
   @override
   State<Panel> createState() => _PanelState();
@@ -159,6 +164,8 @@ class _PanelState extends State<Panel> {
       type = pref.getString("token_type")!;
       _fetchPays();
     });
+
+    debugPrint(token);
   }
 
   Future<void> _fetchPays() async {
@@ -192,9 +199,6 @@ class _PanelState extends State<Panel> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments = (ModalRoute.of(context)?.settings.arguments ??
-        <String, dynamic>{}) as Map;
-
     return ListView(
       physics: const BouncingScrollPhysics(),
       controller: widget.controller,
@@ -221,7 +225,7 @@ class _PanelState extends State<Panel> {
                       textInputAction: TextInputAction.done,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(100),
+                          borderRadius: BorderRadius.circular(15.0),
                         ),
                         hintText: "adresse",
                         prefixIcon: const Padding(
@@ -241,7 +245,7 @@ class _PanelState extends State<Panel> {
                       textInputAction: TextInputAction.done,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(100),
+                          borderRadius: BorderRadius.circular(15.0),
                         ),
                         hintText: "  rue",
                         suffixIcon: const Padding(
@@ -258,7 +262,7 @@ class _PanelState extends State<Panel> {
                       textInputAction: TextInputAction.done,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(100),
+                          borderRadius: BorderRadius.circular(15.0),
                         ),
                         hintText: "  quartier",
                         suffixIcon: const Padding(
@@ -276,7 +280,8 @@ class _PanelState extends State<Panel> {
                           child: DropdownButtonFormField<Pays>(
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(100)),
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
                             ),
                             value: _selectedCountryId != null
                                 ? _pays.firstWhere(
@@ -302,8 +307,10 @@ class _PanelState extends State<Panel> {
                         const SizedBox(height: 20),
                         DropdownButtonFormField<Ville>(
                           decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(100))),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                          ),
                           value: _selectedCityId != null
                               ? _ville
                                   .firstWhere((c) => c.id == _selectedCityId)
@@ -340,25 +347,19 @@ class _PanelState extends State<Panel> {
                           ),
                         ),
                         onPressed: () {
-                          // Navigator.pushNamed(context, '/capacite', arguments: {
-                          //   "adresse": adresse.text,
-                          //   "rue": rue.text,
-                          //   "quartier": quartier.text,
-                          //   "pays": _selectedCountryId,
-                          //   "ville": _selectedCityId,
-                          //   "type": arguments["type"],
-                          // });
-                          Route route = MaterialPageRoute(
-                            builder: (context) => CapaciteScreen(
-                              adresse: adresse.text,
-                              rue: rue.text,
-                              quartier: quartier.text,
-                              pays: _selectedCountryId,
-                              ville: _selectedCityId,
-                              type: arguments["type"],
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CapaciteScreen(
+                                adresse: adresse.text,
+                                rue: rue.text,
+                                quartier: quartier.text,
+                                pays: _selectedCountryId,
+                                ville: _selectedCityId,
+                                type: widget.type,
+                              ),
                             ),
                           );
-                          Navigator.push(context, route);
                         },
                         child: const Text(
                           "   Suivant    ",

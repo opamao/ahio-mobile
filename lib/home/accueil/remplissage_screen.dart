@@ -98,8 +98,8 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
                       Radius.circular(40),
                     ),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(
+                  child: const Padding(
+                    padding: EdgeInsets.only(
                       left: 30.0,
                       bottom: 15,
                     ),
@@ -111,7 +111,7 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
+                              children: [
                                 Text(
                                   "Appartement",
                                   style: TextStyle(
@@ -162,9 +162,9 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
                     ),
                   ),
                 ),
-                Gap(20),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
+                const Gap(20),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -242,7 +242,7 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
                           ),
                         ),
                       ),
-                      Gap(10),
+                      const Gap(10),
                       Column(
                         children: [
                           TextFormField(
@@ -253,12 +253,12 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               hintText: "Début",
-                              prefixIcon: Padding(
-                                padding: const EdgeInsets.all(5.0),
+                              prefixIcon: const Padding(
+                                padding: EdgeInsets.all(5.0),
                                 child: SizedBox(
                                   width: 100,
                                   child: Row(
-                                    children: const [
+                                    children: [
                                       Icon(Icons.date_range_outlined),
                                       Text(
                                         "Début séjour :",
@@ -282,7 +282,7 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
                               }
                             },
                           ),
-                          Gap(10),
+                          const Gap(10),
                           TextFormField(
                             controller: dateFin,
                             textInputAction: TextInputAction.done,
@@ -291,12 +291,12 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               hintText: "Fin",
-                              prefixIcon: Padding(
-                                padding: const EdgeInsets.all(5.0),
+                              prefixIcon: const Padding(
+                                padding: EdgeInsets.all(5.0),
                                 child: SizedBox(
                                   width: 90,
                                   child: Row(
-                                    children: const [
+                                    children: [
                                       Icon(Icons.date_range_outlined),
                                       Text(
                                         "Fin séjour :",

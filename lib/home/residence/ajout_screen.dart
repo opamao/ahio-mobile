@@ -1,9 +1,31 @@
 import 'package:ahio/home/residence/photo_screen.dart';
 import 'package:flutter/material.dart';
 
-class AjouterScreen extends StatelessWidget {
-  const AjouterScreen({super.key});
+class AjouterScreen extends StatefulWidget {
+  final List<int> equipement;
+  final String adresse, rue, quartier, type;
+  final int? pays, ville, personne, chambre, lit, salle;
 
+  const AjouterScreen({
+    super.key,
+    required this.equipement,
+    required this.adresse,
+    required this.rue,
+    required this.quartier,
+    required this.type,
+    this.pays,
+    this.ville,
+    this.personne,
+    this.chambre,
+    this.lit,
+    this.salle,
+  });
+
+  @override
+  State<AjouterScreen> createState() => _AjouterScreenState();
+}
+
+class _AjouterScreenState extends State<AjouterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +84,26 @@ class AjouterScreen extends StatelessWidget {
                 ),
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PhotoScreen(
+                          equipement: widget.equipement,
+                          adresse: widget.adresse,
+                          rue: widget.rue,
+                          quartier: widget.quartier,
+                          type: widget.type,
+                          pays: widget.pays,
+                          ville: widget.ville,
+                          personne: widget.personne,
+                          chambre: widget.chambre,
+                          lit: widget.lit,
+                          salle: widget.salle,
+                        ),
+                      ),
+                    );
+                  },
                   icon: const Icon(
                     Icons.insert_photo_rounded,
                     color: Colors.black,
@@ -87,15 +128,32 @@ class AjouterScreen extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => PhotoScreen()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PhotoScreen(
+                        equipement: widget.equipement,
+                        adresse: widget.adresse,
+                        rue: widget.rue,
+                        quartier: widget.quartier,
+                        type: widget.type,
+                        pays: widget.pays,
+                        ville: widget.ville,
+                        personne: widget.personne,
+                        chambre: widget.chambre,
+                        lit: widget.lit,
+                        salle: widget.salle,
+                      ),
+                    ),
+                  );
                 },
                 child: const Text(
                   "Suivant",
                   style: TextStyle(
-                      fontSize: 19,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
+                    fontSize: 19,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),

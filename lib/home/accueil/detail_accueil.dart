@@ -50,17 +50,17 @@ class DetailAccueilScreen extends StatelessWidget {
                     Radius.circular(40),
                   ),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 30.0, bottom: 15),
+                child: const Padding(
+                  padding: EdgeInsets.only(left: 30.0, bottom: 15),
                   child: Column(
                     children: [
-                      const Spacer(),
+                      Spacer(),
                       Row(
                         children: [
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
+                            children: [
                               Text(
                                 "Appartement",
                                 style: TextStyle(
@@ -86,7 +86,7 @@ class DetailAccueilScreen extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.end,
-                            children: const [
+                            children: [
                               Text(
                                 "25.000 F",
                                 style: TextStyle(

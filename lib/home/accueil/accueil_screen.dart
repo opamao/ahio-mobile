@@ -48,7 +48,7 @@ class AccueilScreenContent extends State<AccueilScreen> {
             height: 50,
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(30),
+              borderRadius: BorderRadius.circular(15.0),
             ),
             child: Row(
               children: [

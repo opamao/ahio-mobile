@@ -1,14 +1,23 @@
+import 'package:ahio/home/residence/equipement_screen.dart';
 import 'package:flutter/material.dart';
 
 class CapaciteScreen extends StatefulWidget {
+  final String adresse;
+  final String rue;
+  final String quartier;
+  final String type;
+  final int? pays;
+  final int? ville;
+
   const CapaciteScreen({
-    required String adresse,
-    required String rue,
-    required String quartier,
-    int? pays,
-    int? ville,
-    required type,
-  });
+    Key? key,
+    required this.adresse,
+    required this.rue,
+    required this.quartier,
+    this.pays,
+    this.ville,
+    required this.type,
+  }) : super(key: key);
 
   @override
   State<CapaciteScreen> createState() => _CapaciteScreenState();
@@ -70,11 +79,6 @@ class _CapaciteScreenState extends State<CapaciteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments = (ModalRoute.of(context)?.settings.arguments ??
-        <String, dynamic>{}) as Map;
-
-    print(arguments["adresse"]);
-
     return Scaffold(
       backgroundColor: const Color.fromRGBO(225, 239, 216, 1.0),
       extendBodyBehindAppBar: true,
@@ -129,10 +133,13 @@ class _CapaciteScreenState extends State<CapaciteScreen> {
                       Row(
                         children: [
                           FloatingActionButton.small(
+                            heroTag: 'btn1',
                             onPressed: minus,
                             backgroundColor: Colors.white,
-                            child:
-                                const Icon(Icons.remove, color: Colors.black),
+                            child: const Icon(
+                              Icons.remove,
+                              color: Colors.black,
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(10.0),
@@ -140,6 +147,7 @@ class _CapaciteScreenState extends State<CapaciteScreen> {
                                 style: const TextStyle(fontSize: 19)),
                           ),
                           FloatingActionButton.small(
+                            heroTag: 'btn2',
                             onPressed: add,
                             backgroundColor: Colors.white,
                             child: const Icon(
@@ -169,6 +177,7 @@ class _CapaciteScreenState extends State<CapaciteScreen> {
                       Row(
                         children: [
                           FloatingActionButton.small(
+                            heroTag: 'btn3',
                             onPressed: minusCha,
                             backgroundColor: Colors.white,
                             child:
@@ -180,6 +189,7 @@ class _CapaciteScreenState extends State<CapaciteScreen> {
                                 style: const TextStyle(fontSize: 19)),
                           ),
                           FloatingActionButton.small(
+                            heroTag: 'btn4',
                             onPressed: addCha,
                             backgroundColor: Colors.white,
                             child: const Icon(
@@ -209,6 +219,7 @@ class _CapaciteScreenState extends State<CapaciteScreen> {
                       Row(
                         children: [
                           FloatingActionButton.small(
+                            heroTag: 'btn5',
                             onPressed: minusLit,
                             backgroundColor: Colors.white,
                             child:
@@ -220,6 +231,7 @@ class _CapaciteScreenState extends State<CapaciteScreen> {
                                 style: const TextStyle(fontSize: 19)),
                           ),
                           FloatingActionButton.small(
+                            heroTag: 'btn6',
                             onPressed: addLit,
                             backgroundColor: Colors.white,
                             child: const Icon(
@@ -249,6 +261,7 @@ class _CapaciteScreenState extends State<CapaciteScreen> {
                       Row(
                         children: [
                           FloatingActionButton.small(
+                            heroTag: 'btn7',
                             onPressed: minusSal,
                             backgroundColor: Colors.white,
                             child:
@@ -260,6 +273,7 @@ class _CapaciteScreenState extends State<CapaciteScreen> {
                                 style: const TextStyle(fontSize: 19)),
                           ),
                           FloatingActionButton.small(
+                            heroTag: 'btn8',
                             onPressed: addSal,
                             backgroundColor: Colors.white,
                             child: const Icon(
@@ -286,18 +300,23 @@ class _CapaciteScreenState extends State<CapaciteScreen> {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/equipement', arguments: {
-                      "adresse": arguments["type"],
-                      "rue": arguments["type"],
-                      "quartier": arguments["type"],
-                      "pays": arguments["type"],
-                      "ville": arguments["type"],
-                      "type": arguments["type"],
-                      "personne": nbrPer,
-                      "chambre": nbrCha,
-                      "lit": nbrLit,
-                      "salle": nbrSal,
-                    });
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EquipementScreen(
+                          adresse: widget.adresse,
+                          rue: widget.rue,
+                          quartier: widget.quartier,
+                          pays: widget.pays,
+                          ville: widget.ville,
+                          type: widget.type,
+                          personne: nbrPer,
+                          chambre: nbrCha,
+                          lit: nbrLit,
+                          salle: nbrSal,
+                        ),
+                      ),
+                    );
                   },
                   child: const Text(
                     "Suivant",
