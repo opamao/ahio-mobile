@@ -54,7 +54,7 @@ dependencies:
   dropdown_search: ^5.0.5
   sizer: ^2.0.15
   intl_phone_number_input: ^0.7.2
-  gap: ^2.0.1
+  gap: ^3.0.1
   auto_size_text: ^3.0.0
   percent_indicator: ^4.2.3
   datepicker_dropdown: ^0.0.7+4
