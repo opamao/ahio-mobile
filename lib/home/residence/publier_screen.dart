@@ -40,6 +40,8 @@ class PublierScreen extends StatefulWidget {
 class _PublierScreenState extends State<PublierScreen> {
   bool _isload = false;
   String? token, type, id = "";
+  late Future<void> equipmentNamesFuture;
+  late List<String> valeurs = [];
 
   @override
   void initState() {
@@ -53,7 +55,37 @@ class _PublierScreenState extends State<PublierScreen> {
       token = pref.getString("access_token");
       type = pref.getString("token_type");
       id = pref.getString("id");
+      equipmentNamesFuture = _fetchEquipmentNames();
     });
+  }
+
+  Future<void> _fetchEquipmentNames() async {
+    print("OHHH ${widget.equipement} $token");
+    print(jsonEncode(widget.equipement.toList()));
+
+    var response = await http.post(
+      Uri.parse(constance.listEquip),
+      headers: {
+        'Authorization': '$type $token',
+      },
+      body: ({
+        'equipement_id[]': jsonEncode(widget.equipement.toList()),
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonData = json.decode(response.body);
+
+      print("data $jsonData");
+
+      for (var item in jsonData) {
+        valeurs.add(item.toString());
+      }
+
+      print(valeurs);
+    } else {
+      throw Exception("Échec de récupération des noms d'équipement");
+    }
   }
 
   @override
@@ -254,8 +286,7 @@ class _PublierScreenState extends State<PublierScreen> {
                             top: 8,
                           ),
                           child: Column(
-                            children: List.generate(widget.equipement.length,
-                                (index) {
+                            children: List.generate(valeurs.length, (index) {
                               return Row(
                                 children: [
                                   Container(
@@ -270,7 +301,7 @@ class _PublierScreenState extends State<PublierScreen> {
                                   ),
                                   const Gap(10),
                                   Text(
-                                    widget.equipement[index].toString(),
+                                    valeurs[index],
                                     style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 15,
@@ -388,6 +419,24 @@ class _PublierScreenState extends State<PublierScreen> {
   }
 
   void publier() async {
+    Map<String, dynamic> getPhotoMap() {
+      Map<String, dynamic> photoMap = {};
+      for (int i = 0; i < widget.photos.length; i++) {
+        photoMap[i.toString()] = widget.photos[i];
+      }
+      return photoMap;
+    }
+
+    Map<String, dynamic> getEquipementMap() {
+      Map<String, dynamic> equipementMap = {};
+      for (int i = 0; i < widget.equipement.length; i++) {
+        equipementMap[i.toString()] = widget.equipement[i];
+      }
+      return equipementMap;
+    }
+
+    print(jsonEncode(getPhotoMap()));
+
     DateFormat originalDateFormat = DateFormat("dd/MM/yyyy");
     DateTime parsedDateDebut = originalDateFormat.parse(widget.debut);
     DateTime parsedDateFin = originalDateFormat.parse(widget.fin);
@@ -415,11 +464,11 @@ class _PublierScreenState extends State<PublierScreen> {
         'nbre_chambres': widget.chambre.toString(),
         'nbre_lits': widget.lit.toString(),
         'nbre_salle_eau': widget.salle.toString(),
-        'equipement_id[]': jsonEncode(widget.equipement.toList()),
+        'equipement_id': jsonEncode(getEquipementMap()),
         'date_debut': formattedDateDebut,
         'date_fin': formattedDateFin,
         'montant_journalier': widget.montant,
-        'photo[]': jsonEncode(widget.photos.toList()),
+        'photo': jsonEncode(getPhotoMap()),
       }),
     );
 
@@ -459,7 +508,6 @@ class _PublierScreenState extends State<PublierScreen> {
           backgroundColor: Colors.red,
         ),
       );
-      print(response.body);
 
       setState(() {
         _isload = false;
