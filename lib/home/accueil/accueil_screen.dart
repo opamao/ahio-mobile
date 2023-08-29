@@ -203,7 +203,7 @@ class AccueilScreenContent extends State<AccueilScreen> {
           // :
           Gap(25),
           Container(
-            color: Colors.white.withOpacity(0.4),
+            color: Colors.white,
             margin: const EdgeInsets.only(left: 20),
             height: 40,
             width: 280,
