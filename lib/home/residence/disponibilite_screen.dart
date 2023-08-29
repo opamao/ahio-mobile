@@ -140,7 +140,7 @@ class _DisponibiliteScreenState extends State<DisponibiliteScreen> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               hintText: "Début",
-                              prefixIcon: const Padding(
+                              prefixIcon: Padding(
                                 padding: EdgeInsets.all(5.0),
                                 child: SizedBox(
                                   width: 100,
@@ -178,7 +178,7 @@ class _DisponibiliteScreenState extends State<DisponibiliteScreen> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               hintText: "Fin",
-                              prefixIcon: const Padding(
+                              prefixIcon: Padding(
                                 padding: EdgeInsets.all(5.0),
                                 child: SizedBox(
                                   width: 90,

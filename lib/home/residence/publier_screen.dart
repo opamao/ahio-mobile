@@ -339,7 +339,7 @@ class _PublierScreenState extends State<PublierScreen> {
       bottomNavigationBar: Container(
         color: Colors.white,
         child: _isload
-            ? const Center(
+            ? Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -388,7 +388,6 @@ class _PublierScreenState extends State<PublierScreen> {
   }
 
   void publier() async {
-
     DateFormat originalDateFormat = DateFormat("dd/MM/yyyy");
     DateTime parsedDateDebut = originalDateFormat.parse(widget.debut);
     DateTime parsedDateFin = originalDateFormat.parse(widget.fin);

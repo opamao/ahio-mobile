@@ -50,7 +50,7 @@ class DetailAccueilScreen extends StatelessWidget {
                     Radius.circular(40),
                   ),
                 ),
-                child: const Padding(
+                child: Padding(
                   padding: EdgeInsets.only(left: 30.0, bottom: 15),
                   child: Column(
                     children: [

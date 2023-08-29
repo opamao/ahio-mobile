@@ -98,7 +98,7 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
                       Radius.circular(40),
                     ),
                   ),
-                  child: const Padding(
+                  child: Padding(
                     padding: EdgeInsets.only(
                       left: 30.0,
                       bottom: 15,
@@ -163,7 +163,7 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
                   ),
                 ),
                 const Gap(20),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -253,7 +253,7 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               hintText: "Début",
-                              prefixIcon: const Padding(
+                              prefixIcon: Padding(
                                 padding: EdgeInsets.all(5.0),
                                 child: SizedBox(
                                   width: 100,
@@ -291,7 +291,7 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               hintText: "Fin",
-                              prefixIcon: const Padding(
+                              prefixIcon: Padding(
                                 padding: EdgeInsets.all(5.0),
                                 child: SizedBox(
                                   width: 90,
