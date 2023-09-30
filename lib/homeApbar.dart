@@ -17,9 +17,9 @@ class HomeApbar extends StatelessWidget {
             Icons.sort,
             color: Color(0xFF475269),
           ),
-          const SizedBox(width: 230),
+          const SizedBox(width: 200),
           Padding(
-            padding: const EdgeInsets.only(left: 20),
+            padding: const EdgeInsets.only(left: 17),
             child: Image.asset(
               "images/ahiovert.png",
               width: 30,

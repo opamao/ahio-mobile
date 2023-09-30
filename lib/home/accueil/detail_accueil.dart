@@ -90,9 +90,9 @@ class DetailAccueilScreen extends StatelessWidget {
                               Text(
                                 "25.000 F",
                                 style: TextStyle(
-                                  color: Colors.green,
+                                  color: Colors.white,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 16,
+                                  fontSize: 18,
                                 ),
                               ),
                               Text(

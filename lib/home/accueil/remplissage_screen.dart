@@ -28,6 +28,7 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
 
   var dateDebut = TextEditingController();
   var dateFin = TextEditingController();
+  late DateTime minDate;
 
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     setState(() {
@@ -47,6 +48,18 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
       } else {
         _rangeCount = args.value.length.toString();
       }*/
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    minDate = DateTime.now();
+  }
+
+  void onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+    setState(() {
+      minDate = DateTime.now();
     });
   }
 
@@ -141,9 +154,9 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
                                 Text(
                                   "25.000 F",
                                   style: TextStyle(
-                                    color: Colors.green,
+                                    color: Colors.white,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 16,
+                                    fontSize: 18,
                                   ),
                                 ),
                                 Text(
@@ -186,7 +199,7 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(25.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -240,6 +253,7 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
                               const Duration(days: 3),
                             ),
                           ),
+                          minDate: minDate,
                         ),
                       ),
                       const Gap(10),

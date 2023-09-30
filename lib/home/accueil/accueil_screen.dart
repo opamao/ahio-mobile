@@ -71,95 +71,96 @@ class AccueilScreenContent extends State<AccueilScreen> {
               ],
             ),
           ),
-          // if (widget.role == 'proprietaire') ...[
-          SizedBox(
-              height: 30.h,
-              child: Stack(children: [
-                Positioned(
-                    top: 35,
-                    left: 20,
-                    child: Material(
-                      child: Container(
-                        height: 22.h,
-                        width: 92.w,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5.w),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.3),
-                              offset: const Offset(-10.0, 10.0),
-                              blurRadius: 20.0,
-                              spreadRadius: 4.0,
-                            )
-                          ],
+          if (widget.role == 'proprietaire') ...[
+            SizedBox(
+                height: 30.h,
+                child: Stack(children: [
+                  Positioned(
+                      top: 35,
+                      left: 20,
+                      child: Material(
+                        child: Container(
+                          height: 22.h,
+                          width: 92.w,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5.w),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                offset: const Offset(-10.0, 10.0),
+                                blurRadius: 20.0,
+                                spreadRadius: 4.0,
+                              )
+                            ],
+                          ),
                         ),
+                      )),
+                  Positioned(
+                    top: 0,
+                    left: 30,
+                    child: Card(
+                      elevation: 50.0,
+                      shadowColor: Colors.grey.withOpacity(0.5),
+                      color: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
                       ),
-                    )),
-                Positioned(
-                  top: 0,
-                  left: 30,
-                  child: Card(
-                    elevation: 50.0,
-                    shadowColor: Colors.grey.withOpacity(0.5),
-                    color: Colors.transparent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: Container(
-                      height: 200,
-                      width: 150,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: Assets.images.home.provider(),
+                      child: Container(
+                        height: 200,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: Assets.images.home.provider(),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                Positioned(
-                    top: 45,
-                    left: 180,
-                    child: SizedBox(
-                        height: 150,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Spacer(),
-                            Text(
-                              "Ajouter votre résidence",
-                              style: TextStyle(
-                                  fontSize: 12.sp,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            const Divider(color: Colors.blue, height: 40),
-                            const Spacer(),
-                            InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const EspaceScreen(),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                "Démarrer maintenant >",
+                  Positioned(
+                      top: 45,
+                      left: 180,
+                      child: SizedBox(
+                          height: 150,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Spacer(),
+                              Text(
+                                "Ajouter votre résidence",
                                 style: TextStyle(
-                                  fontSize: 11.sp,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  decoration: TextDecoration.underline,
+                                    fontSize: 12.sp,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              const Divider(color: Colors.blue, height: 40),
+                              const Spacer(),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const EspaceScreen(),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  "Démarrer maintenant >",
+                                  style: TextStyle(
+                                    fontSize: 11.sp,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    decoration: TextDecoration.underline,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        )))
-              ])),
-          // ],
+                            ],
+                          )))
+                ])),
+          ],
           // (widget.role == 'proprietaire')
           //     ? Container(
           //         color: Colors.white,
