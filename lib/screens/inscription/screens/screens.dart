@@ -1,0 +1,1 @@
+export 'inscription_screen.dart';

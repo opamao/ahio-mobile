@@ -1,0 +1,1 @@
+export 'favoris_screen.dart';

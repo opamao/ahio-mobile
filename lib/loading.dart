@@ -1,11 +1,9 @@
 import 'dart:async';
 
-import 'package:ahio/home_screen.dart';
-import 'package:ahio/login.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:hexcolor/hexcolor.dart';
+
+import 'screens/menu/menu.dart';
 
 class Loading extends StatefulWidget {
   const Loading({super.key});
@@ -22,7 +20,7 @@ class _LoadingState extends State<Loading> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => Home_screen(),
+          builder: (context) => const HomeScreen(),
         ),
       );
     });
@@ -41,7 +39,7 @@ class _LoadingState extends State<Loading> {
                 "images/ahio.png",
                 width: 100,
               )),
-          Center(
+          const Center(
             child: CircularProgressIndicator(
               color: Colors.black,
             ),
