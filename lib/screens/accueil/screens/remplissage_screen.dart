@@ -1,9 +1,10 @@
-import 'package:ahio/home/paiement/mode_paiement.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
+
+import '../../paiement/paiement.dart';
 
 class RempliPayerScreen extends StatefulWidget {
   const RempliPayerScreen({super.key});

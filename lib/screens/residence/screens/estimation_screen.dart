@@ -1,6 +1,7 @@
-import 'package:ahio/home/residence/publier_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+
+import '../residence.dart';
 
 class EstimationScreen extends StatefulWidget {
   final List<int> equipement;

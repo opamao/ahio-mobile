@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'dart:ui';
+
 import 'package:ahio/constants/constants.dart';
-import 'package:ahio/common/input/input.dart';
-import 'package:ahio/screens/home/screens/home_screen.dart';
 import 'package:ahio/screens/inscription/screens/inscription_screen.dart';
-import 'package:ahio/loading.dart';
-import 'package:ahio/password/recuppassword.dart';
+import 'package:ahio/screens/loading/screens/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -13,6 +11,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:sizer/sizer.dart';
 import '../../../gen/assets.gen.dart';
+import '../../../widgets/widgets.dart';
+import '../../password/password.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -146,7 +146,7 @@ class _LoginState extends State<Login> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const recuppassword(),
+                                                    const RecupPasswordScreen(),
                                               ),
                                             );
                                           },
@@ -160,43 +160,24 @@ class _LoginState extends State<Login> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(
-                                          width: 300.0,
-                                          height: 50.0,
-                                          child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  HexColor("#93E237"),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(15.0),
-                                              ),
-                                            ),
-                                            onPressed: () async {
-                                              if (_formkey.currentState!
-                                                  .validate()) {
-                                                sign();
-                                              } else {
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(_snackBar);
-                                                Clean();
-                                              }
-                                            },
-                                            child: const Text(
-                                              constance.login,
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
+                                        SubmitButton(
+                                          Constants.login,
+                                          onPressed: () async {
+                                            if (_formkey.currentState!
+                                                .validate()) {
+                                              sign();
+                                            } else {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(_snackBar);
+                                              Clean();
+                                            }
+                                          },
                                         ),
                                         const SizedBox(
                                           height: 15,
                                         ),
                                         const Text(
-                                          constance.textCreate,
+                                          Constants.textCreate,
                                           style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 11,
@@ -205,23 +186,17 @@ class _LoginState extends State<Login> {
                                         const SizedBox(
                                           height: 15,
                                         ),
-                                        OutlinedButton(
+                                        CancelButton(
+                                          Constants.register,
                                           onPressed: () {
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const Inscription(),
+                                                const Inscription(),
                                               ),
                                             );
                                           },
-                                          child: const Text(
-                                            "S'inscrire",
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
                                         ),
                                       ],
                                     ),
@@ -251,7 +226,7 @@ class _LoginState extends State<Login> {
   void sign() async {
     print(password.text);
     //call export data
-    var reponse = await http.post(Uri.parse("${constance.urlApi}login"),
+    var reponse = await http.post(Uri.parse("${ApiUrls.urlApi}login"),
         body: ({'phone': email.text, 'password': password.text}));
 
     if (reponse.statusCode == 200) {

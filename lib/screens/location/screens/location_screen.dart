@@ -1,10 +1,10 @@
-import 'package:ahio/common/theme.dart';
-import 'package:ahio/home/location/detail_location_screen.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:sizer/sizer.dart';
+
+import '../location.dart';
 
 class LocationsScreen extends StatefulWidget {
   const LocationsScreen({super.key});
@@ -20,7 +20,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
       home: DefaultTabController(
         length: 3,
         child: Scaffold(
-          backgroundColor: couleurFond,
+          backgroundColor: const Color.fromARGB(255, 239, 250, 230),
           appBar: AppBar(
             title: const Text(
               "Location",
@@ -30,9 +30,9 @@ class LocationsScreenContent extends State<LocationsScreen> {
                 color: Colors.black,
               ),
             ),
-            backgroundColor: couleurTransparant,
-            surfaceTintColor: couleurTransparant,
-            shadowColor: couleurTransparant,
+            backgroundColor: Colors.transparent,
+            surfaceTintColor: Colors.transparent,
+            shadowColor: Colors.transparent,
             bottom: const PreferredSize(
               preferredSize: Size.fromHeight(50),
               child: Align(

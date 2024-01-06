@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:ahio/home/residence/disponibilite_screen.dart';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../residence.dart';
 
 class ImageUploadModel {
   bool isUploaded;

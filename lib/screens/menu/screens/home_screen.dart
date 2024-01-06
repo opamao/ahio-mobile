@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
+import '../../accueil/accueil.dart';
+import '../../favoris/favoris.dart';
+import '../../location/location.dart';
+import '../../profil/profil.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 

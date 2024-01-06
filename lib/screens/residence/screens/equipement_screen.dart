@@ -1,11 +1,12 @@
 import 'dart:convert';
 
-import 'package:ahio/home/residence/ajout_screen.dart';
+import 'package:ahio/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ahio/constants/constants.dart';
 import 'package:http/http.dart' as http;
+
+import '../residence.dart';
 
 class EquipementScreen extends StatefulWidget {
   final String adresse, rue, quartier, type;
@@ -54,7 +55,7 @@ class _EquipementScreenState extends State<EquipementScreen> {
 
   Future<List<String>> _fetchEquipmentNames() async {
     final response = await http.get(
-      Uri.parse("${constance.urlApi}equipement"),
+      Uri.parse("${ApiUrls.urlApi}equipement"),
       headers: {'Authorization': '$type $token', 'Cache-Control': 'no-cache'},
     );
 
@@ -70,7 +71,7 @@ class _EquipementScreenState extends State<EquipementScreen> {
 
   Future<List<int>> _fetchEquipmentIds() async {
     final response = await http.get(
-      Uri.parse("${constance.urlApi}equipement"),
+      Uri.parse("${ApiUrls.urlApi}equipement"),
       headers: {'Authorization': '$type $token', 'Cache-Control': 'no-cache'},
     );
 

@@ -1,22 +1,21 @@
 import 'dart:convert';
 
-import 'package:ahio/common/theme.dart';
+import 'package:ahio/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:sizer/sizer.dart';
-import 'package:ahio/constants/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-class securityProfil extends StatefulWidget {
-  const securityProfil({super.key});
+class SecurityProfilScreen extends StatefulWidget {
+  const SecurityProfilScreen({super.key});
 
   @override
-  State<securityProfil> createState() => _securityProfilState();
+  State<SecurityProfilScreen> createState() => _SecurityProfilScreenState();
 }
 
-class _securityProfilState extends State<securityProfil> {
+class _SecurityProfilScreenState extends State<SecurityProfilScreen> {
   final _formkey = GlobalKey<FormState>();
 
   final _snackBar = const SnackBar(
@@ -55,7 +54,7 @@ class _securityProfilState extends State<securityProfil> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: couleurTransparant,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
           onPressed: () {
@@ -70,7 +69,7 @@ class _securityProfilState extends State<securityProfil> {
           ),
         ),
       ),
-      backgroundColor: couleurFond,
+      backgroundColor: const Color.fromARGB(255, 239, 250, 230),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -311,7 +310,7 @@ class _securityProfilState extends State<securityProfil> {
   void register() async {
     var reponse = await http.post(
         Uri.parse(
-          "${constance.urlApi}updateProfil",
+          "${ApiUrls.urlApi}updateProfil",
         ),
         body: ({
           'name': name.text,

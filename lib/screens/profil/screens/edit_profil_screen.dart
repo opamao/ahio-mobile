@@ -399,26 +399,25 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:ahio/common/theme.dart';
+import 'package:ahio/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
-import 'package:ahio/constants/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
-class EditProfil extends StatefulWidget {
-  const EditProfil({super.key});
+class EditProfilScreen extends StatefulWidget {
+  const EditProfilScreen({super.key});
 
   @override
-  State<EditProfil> createState() => _EditProfilState();
+  State<EditProfilScreen> createState() => _EditProfilScreenState();
 }
 
-class _EditProfilState extends State<EditProfil> {
+class _EditProfilScreenState extends State<EditProfilScreen> {
   final _formkey = GlobalKey<FormState>();
 
   bool _obscure = true;
@@ -486,7 +485,7 @@ class _EditProfilState extends State<EditProfil> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: couleurTransparant,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
           onPressed: () {
@@ -501,7 +500,7 @@ class _EditProfilState extends State<EditProfil> {
           ),
         ),
       ),
-      backgroundColor: couleurFond,
+      backgroundColor: const Color.fromARGB(255, 239, 250, 230),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -712,9 +711,10 @@ class _EditProfilState extends State<EditProfil> {
                                 child: Text(
                                   "Modifier",
                                   style: TextStyle(
-                                      fontSize: 6.w,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
+                                    fontSize: 6.w,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
@@ -735,7 +735,7 @@ class _EditProfilState extends State<EditProfil> {
   void register() async {
     var reponse = await http.post(
         Uri.parse(
-          "${constance.urlApi}updateProfil",
+          "${ApiUrls.urlApi}updateProfil",
         ),
         body: ({
           'name': name.text,

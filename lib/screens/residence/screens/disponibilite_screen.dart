@@ -1,9 +1,9 @@
-import 'package:ahio/home/residence/estimation_screen.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
+
+import '../residence.dart';
 
 class DisponibiliteScreen extends StatefulWidget {
   final List<int> equipement;

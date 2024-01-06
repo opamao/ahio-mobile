@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class InputText_ extends StatelessWidget {
   final TextEditingController controller;
@@ -27,7 +28,7 @@ class InputText_ extends StatelessWidget {
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10.w),
         ),
         fillColor: Colors.white,
         filled: true,

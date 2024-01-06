@@ -1,8 +1,8 @@
-import 'package:ahio/home/accueil/remplissage_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+
+import '../accueil.dart';
 
 class DetailAccueilScreen extends StatelessWidget {
   const DetailAccueilScreen({super.key});

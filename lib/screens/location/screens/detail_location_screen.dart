@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:sizer/sizer.dart';
 
 class DetailLocationScreen extends StatelessWidget {
   const DetailLocationScreen({super.key});

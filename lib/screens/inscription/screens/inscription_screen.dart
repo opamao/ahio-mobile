@@ -1,35 +1,24 @@
 import 'dart:convert';
 import 'dart:ui';
-import 'package:ahio/load.dart';
+
+import 'package:ahio/constants/constants.dart';
 import 'package:ahio/screens/login/screens/login_screen.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../splash/screens/splash_screen.dart';
+import '../../../widgets/widgets.dart';
+import '../../loading/loading.dart';
 
 class Inscription extends StatefulWidget {
   const Inscription({super.key});
 
   @override
   State<Inscription> createState() => _InscriptionState();
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: AnimatedSplashScreen(
-        splash: Image.asset("images/ahionoir.png"),
-        duration: 3000,
-        backgroundColor: const Color.fromRGBO(147, 226, 55, 1),
-        nextScreen: const Login(),
-      ),
-    );
-  }
 }
 
 class _InscriptionState extends State<Inscription> {
@@ -350,7 +339,7 @@ class _InscriptionState extends State<Inscription> {
                                         }
                                       },
                                       child: const Text(
-                                        constance.register,
+                                        Constants.register,
                                         style: TextStyle(
                                             fontSize: 15,
                                             color: Colors.black,
@@ -381,7 +370,7 @@ class _InscriptionState extends State<Inscription> {
   void register() async {
     print(selected.toString());
     print(phoneInicator);
-    var reponse = await http.post(Uri.parse("${constance.urlApi}register"),
+    var reponse = await http.post(Uri.parse("${ApiUrls.urlApi}register"),
         body: ({
           'name': name.text,
           'email': email.text,
@@ -424,7 +413,7 @@ class _InscriptionState extends State<Inscription> {
     await pref.setString("phone", phone);
     await pref.setString("passwword", password);
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => const Loader()),
+        MaterialPageRoute(builder: (context) => const Loading()),
         (route) => false);
   }
 }

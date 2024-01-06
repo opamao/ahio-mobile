@@ -1,5 +1,6 @@
-import 'package:ahio/common/input/input.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets.dart';
 
 class InputPassword extends StatefulWidget {
   final TextEditingController controller;
@@ -32,7 +33,7 @@ class _InputPasswordState extends State<InputPassword> {
       prefixIcon: widget.prefixIcon,
       hintText: widget.hintText,
       suffixIcon: IconButton(
-        icon: Icon(_obscure ? Icons.visibility : Icons.visibility_off),
+        icon: Icon(_obscure ? Icons.visibility_off : Icons.visibility),
         onPressed: () {
           setState(
             () {

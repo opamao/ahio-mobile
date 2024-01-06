@@ -1,15 +1,15 @@
 import 'dart:convert';
 
-import 'package:ahio/home/residence/capacite_screen.dart';
+import 'package:ahio/constants/constants.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:ahio/constants/constants.dart';
 import 'package:http/http.dart' as http;
+
+import '../../residence/residence.dart';
 
 class Maps extends StatefulWidget {
   final String type;
@@ -170,7 +170,7 @@ class _PanelState extends State<Panel> {
 
   Future<void> _fetchPays() async {
     final response =
-        await http.get(Uri.parse("${constance.urlApi}pays"), headers: {
+        await http.get(Uri.parse("${ApiUrls.urlApi}pays"), headers: {
       'Authorization': '$type $token',
     });
 
@@ -187,7 +187,7 @@ class _PanelState extends State<Panel> {
 
   Future<void> _fetchVille(int countryId) async {
     final response = await http.get(
-        Uri.parse("${constance.urlApi}getCitiesByCountry/$countryId"),
+        Uri.parse("${ApiUrls.urlApi}getCitiesByCountry/$countryId"),
         headers: {
           'Authorization': '$type $token',
         });

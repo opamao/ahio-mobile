@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../themes/themes.dart';
+
 class CancelButton extends StatelessWidget {
   final String title;
   final Function() onPressed;
@@ -21,10 +23,10 @@ class CancelButton extends StatelessWidget {
       height: height ?? 15.w,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          surfaceTintColor: colorWhite,
-          backgroundColor: colorWhite,
+          surfaceTintColor: Colors.white,
+          backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.w),
+            borderRadius: BorderRadius.circular(4.w),
             side: BorderSide(color: colorPrimary),
           ),
         ),
@@ -32,7 +34,7 @@ class CancelButton extends StatelessWidget {
         child: Text(
           title,
           style: TextStyle(
-            fontSize: fontSize ?? 12.sp,
+            fontSize: fontSize ?? 15.sp,
             color: colorPrimary,
             fontWeight: FontWeight.bold,
           ),

@@ -3,25 +3,26 @@ import 'dart:ui';
 
 import 'package:ahio/constants/constants.dart';
 import 'package:ahio/gen/assets.gen.dart';
-import 'package:ahio/password/otp.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
-import '../common/input/input_text.dart';
+import '../../../widgets/widgets.dart';
+import '../password.dart';
 
-class recuppassword extends StatefulWidget {
-  const recuppassword({super.key});
+class RecupPasswordScreen extends StatefulWidget {
+  const RecupPasswordScreen({super.key});
 
   @override
-  State<recuppassword> createState() => _recuppasswordState();
+  State<RecupPasswordScreen> createState() => _RecupPasswordScreenState();
 }
 
-class _recuppasswordState extends State<recuppassword> {
+class _RecupPasswordScreenState extends State<RecupPasswordScreen> {
   final _formkey = GlobalKey<FormState>();
 
+  @override
   void initState() {
     super.initState();
     checkpassword();
@@ -32,7 +33,7 @@ class _recuppasswordState extends State<recuppassword> {
     String? val = pref.getString("access_token");
     if (val != null) {
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => Otp()), (route) => false);
+          MaterialPageRoute(builder: (context) => OtpScreen()), (route) => false);
     }
   }
 
@@ -196,7 +197,7 @@ class _recuppasswordState extends State<recuppassword> {
 
   void recupass() async {
     var reponse = await http.post(
-        Uri.parse("${constance.urlApi}askToChangePassword"),
+        Uri.parse("${ApiUrls.urlApi}askToChangePassword"),
         body: ({'phone': phone.text}));
     print(reponse.statusCode);
     if (reponse.statusCode == 200) {
@@ -223,6 +224,6 @@ class _recuppasswordState extends State<recuppassword> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("phone", phonee);
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => const Otp()), (route) => false);
+        MaterialPageRoute(builder: (context) => const OtpScreen()), (route) => false);
   }
 }

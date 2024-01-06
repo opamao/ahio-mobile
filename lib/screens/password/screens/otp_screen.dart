@@ -1,22 +1,24 @@
 import 'dart:convert';
 import 'dart:ui';
+
+import 'package:ahio/constants/constants.dart';
 import 'package:ahio/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
-import 'changepassword.dart';
 import 'package:http/http.dart' as http;
-import 'package:ahio/constants/constants.dart';
 
-class Otp extends StatefulWidget {
-  const Otp({super.key});
+import '../password.dart';
+
+class OtpScreen extends StatefulWidget {
+  const OtpScreen({super.key});
 
   @override
-  State<Otp> createState() => _otpState();
+  State<OtpScreen> createState() => _OtpScreenState();
 }
 
-class _otpState extends State<Otp> {
+class _OtpScreenState extends State<OtpScreen> {
   final _formkey = GlobalKey<FormState>();
 
   final _fieldOne = TextEditingController();
@@ -188,7 +190,7 @@ class _otpState extends State<Otp> {
     print(telephone);
     print("ICI OH");
     var reponse = await http.post(
-        Uri.parse("${constance.urlApi}verificationCodeOtp/${telephone}"),
+        Uri.parse("${ApiUrls.urlApi}verificationCodeOtp/${telephone}"),
         body: ({
           'code_otp': (_fieldOne.text +
                   _fieldTwo.text +
@@ -229,7 +231,7 @@ class _otpState extends State<Otp> {
     await pref.setString("phone", object);
 
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => const Changepass()),
+        MaterialPageRoute(builder: (context) => const ChangePasswordScreen()),
         (route) => false);
   }
 }

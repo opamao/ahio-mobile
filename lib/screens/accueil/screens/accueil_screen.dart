@@ -1,10 +1,11 @@
 import 'package:ahio/gen/assets.gen.dart';
-import 'package:ahio/homeApbar.dart';
-import 'package:ahio/itemsWidget.dart';
+import 'package:ahio/widgets/homeApbar.dart';
+import 'package:ahio/widgets/itemsWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../residence/residence.dart';
 import '../accueil.dart';
 
 class AccueilScreen extends StatefulWidget {

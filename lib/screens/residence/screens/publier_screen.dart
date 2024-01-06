@@ -1,10 +1,10 @@
+import 'package:ahio/constants/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:ahio/constants/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -64,7 +64,7 @@ class _PublierScreenState extends State<PublierScreen> {
     print(jsonEncode(widget.equipement.toList()));
 
     var response = await http.post(
-      Uri.parse(constance.listEquip),
+      Uri.parse(ApiUrls.listEquip),
       headers: {
         'Authorization': '$type $token',
       },
@@ -446,7 +446,7 @@ class _PublierScreenState extends State<PublierScreen> {
     String formattedDateFin = targetDateFormat.format(parsedDateFin);
 
     var response = await http.post(
-      Uri.parse("${constance.urlApi}residence"),
+      Uri.parse("${ApiUrls.urlApi}residence"),
       headers: {
         'Authorization': '$type $token',
       },

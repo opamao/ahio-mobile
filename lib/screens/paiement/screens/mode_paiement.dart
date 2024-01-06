@@ -1,9 +1,5 @@
-import 'package:ahio/common/theme.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:sizer/sizer.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class ModePaiementScreen extends StatefulWidget {
   const ModePaiementScreen({super.key});
@@ -80,7 +76,7 @@ class _ModePaiementScreenState extends State<ModePaiementScreen> {
       home: DefaultTabController(
         length: 2,
         child: Scaffold(
-          backgroundColor: couleurFond,
+          backgroundColor: const Color.fromARGB(255, 239, 250, 230),
           appBar: AppBar(
             title: const Text(
               "Mode de paiement",
@@ -90,9 +86,9 @@ class _ModePaiementScreenState extends State<ModePaiementScreen> {
                 color: Colors.black,
               ),
             ),
-            backgroundColor: couleurTransparant,
-            surfaceTintColor: couleurTransparant,
-            shadowColor: couleurTransparant,
+            backgroundColor: Colors.transparent,
+            surfaceTintColor: Colors.transparent,
+            shadowColor: Colors.transparent,
             bottom: const PreferredSize(
               preferredSize: Size.fromHeight(50),
               child: Align(
@@ -162,7 +158,7 @@ class _ModePaiementScreenState extends State<ModePaiementScreen> {
             ),
           ),
         ),
-        body: SafeArea(
+        body: const SafeArea(
           child: SingleChildScrollView(
             child: Column(
               children: [],
@@ -232,7 +228,7 @@ class _ModePaiementScreenState extends State<ModePaiementScreen> {
   }
 
   carte(BuildContext context) {
-    return SingleChildScrollView(
+    return const SingleChildScrollView(
       child: Column(
         children: [],
       ),

@@ -1,6 +1,7 @@
-import 'package:ahio/home/residence/type_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import '../residence.dart';
 
 class EspaceScreen extends StatelessWidget {
   const EspaceScreen({super.key});

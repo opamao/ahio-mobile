@@ -1,11 +1,8 @@
 import 'dart:convert';
-
-import 'dart:ffi';
 import 'dart:ui';
+
 import 'package:ahio/constants/constants.dart';
-import 'package:ahio/common/input/input_password.dart';
 import 'package:ahio/gen/assets.gen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:ahio/screens/login/screens/login_screen.dart';
@@ -13,14 +10,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:sizer/sizer.dart';
 
-class Changepass extends StatefulWidget {
-  const Changepass({super.key});
+import '../../../widgets/widgets.dart';
+
+class ChangePasswordScreen extends StatefulWidget {
+  const ChangePasswordScreen({super.key});
 
   @override
-  State<Changepass> createState() => _ChangepassState();
+  State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
 }
 
-class _ChangepassState extends State<Changepass> {
+class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final _formkey = GlobalKey<FormState>();
 
   String? phone;
@@ -241,7 +240,7 @@ class _ChangepassState extends State<Changepass> {
 
   void changemdp() async {
     var reponse = await http.post(
-        Uri.parse("${constance.urlApi}changePassword/${phone}"),
+        Uri.parse("${ApiUrls.urlApi}changePassword/${phone}"),
         body: ({'password': password.text}));
 
     print(reponse.statusCode);

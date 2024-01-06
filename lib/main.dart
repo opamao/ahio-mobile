@@ -1,4 +1,6 @@
+import 'package:ahio/themes/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'screens/splash/screens/splash_screen.dart';
 
@@ -17,8 +19,9 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            primarySwatch: Colors.green,
+            colorScheme: ColorScheme.fromSeed(seedColor: colorPrimary),
             useMaterial3: true,
+            textTheme: GoogleFonts.averageSansTextTheme(),
           ),
           home: const SplashScreenn(),
         );

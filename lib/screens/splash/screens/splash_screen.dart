@@ -1,9 +1,10 @@
-import 'package:ahio/screens/home/screens/home_screen.dart';
 import 'package:ahio/screens/login/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../menu/menu.dart';
 
 class SplashScreenn extends StatelessWidget {
   const SplashScreenn({super.key});

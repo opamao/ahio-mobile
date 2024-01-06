@@ -1,5 +1,6 @@
-import 'package:ahio/home/residence/photo_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../residence.dart';
 
 class AjouterScreen extends StatefulWidget {
   final List<int> equipement;

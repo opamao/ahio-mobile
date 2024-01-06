@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-import 'screens/menu/menu.dart';
+import '../../menu/menu.dart';
 
 class Loading extends StatefulWidget {
   const Loading({super.key});
@@ -16,7 +16,7 @@ class _LoadingState extends State<Loading> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -33,12 +33,13 @@ class _LoadingState extends State<Loading> {
       child: Stack(
         children: [
           Positioned(
-              top: 290,
-              left: 150,
-              child: Image.asset(
-                "images/ahio.png",
-                width: 100,
-              )),
+            top: 290,
+            left: 150,
+            child: Image.asset(
+              "images/ahio.png",
+              width: 100,
+            ),
+          ),
           const Center(
             child: CircularProgressIndicator(
               color: Colors.black,

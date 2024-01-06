@@ -1,5 +1,6 @@
-import 'package:ahio/home/residence/equipement_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../residence.dart';
 
 class CapaciteScreen extends StatefulWidget {
   final String adresse;

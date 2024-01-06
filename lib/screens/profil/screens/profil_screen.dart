@@ -1,13 +1,11 @@
-import 'package:ahio/common/theme.dart';
-import 'package:ahio/home/profil/edit_profil.dart';
-import 'package:ahio/home/profil/profil_security.dart';
+import 'package:ahio/constants/constants.dart';
 import 'package:ahio/screens/login/screens/login_screen.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:ahio/constants/constants.dart';
-import 'package:gap/gap.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+
+import '../profil.dart';
 
 class ProfilScreen extends StatefulWidget {
   const ProfilScreen({Key? key}) : super(key: key);
@@ -35,7 +33,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: couleurFond,
+      backgroundColor: const Color.fromARGB(255, 239, 250, 230),
       body: Column(
         children: [
           const Expanded(
@@ -67,7 +65,7 @@ class _autresState extends State<_autres> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const EditProfil(),
+                builder: (context) => const EditProfilScreen(),
               ),
             );
           },
@@ -92,7 +90,7 @@ class _autresState extends State<_autres> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const securityProfil(),
+                builder: (context) => const SecurityProfilScreen(),
               ),
             );
           },
@@ -217,7 +215,7 @@ class _autresState extends State<_autres> {
 
     var reponse = await http.post(
         Uri.parse(
-          "${constance.urlApi}logout",
+          "${ApiUrls.urlApi}logout",
         ),
         headers: {
           'Authorization': "$typeToken $token",
