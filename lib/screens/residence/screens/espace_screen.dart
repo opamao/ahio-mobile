@@ -1,4 +1,6 @@
+import 'package:ahio/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:sizer/sizer.dart';
 
 import '../residence.dart';
@@ -28,11 +30,11 @@ class EspaceScreen extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Text(
+        child: Padding(
+          padding: EdgeInsets.all(4.w),
+          child: Column(
+            children: [
+              Text(
                 "Bienvenue dans l’espace d’ajout\n    de vos residence. ",
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -40,43 +42,29 @@ class EspaceScreen extends StatelessWidget {
                   fontSize: 25.sp,
                 ),
               ),
-            ),
-            const SizedBox(height: 25),
-            SizedBox(height: 5.h),
-            Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.only(left: 10.w, right: 10.w),
-              child: Image.asset(
-                "images/images.png",
+              const Spacer(),
+              Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.only(left: 10.w, right: 10.w),
+                child: Image.asset(
+                  "images/images.png",
+                ),
               ),
-            ),
-            const Spacer(),
-            SizedBox(
-              width: 272,
-              height: 50,
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromRGBO(147, 226, 55, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
+              const Spacer(),
+              SubmitButton(
+                "Démarrer",
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const TypeScreen(),
                     ),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const TypeScreen()));
-                  },
-                  child: Text(
-                    "Démarrer",
-                    style: TextStyle(
-                        fontSize: 15.sp,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
-                  )),
-            ),
-            const Spacer(),
-          ],
+                  );
+                },
+              ),
+              const Spacer(),
+            ],
+          ),
         ),
       ),
     );

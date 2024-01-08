@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:ahio/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -13,22 +14,24 @@ class HomeApbar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
       child: Row(
         children: [
-          const Icon(
-            Icons.sort,
-            color: Color(0xFF475269),
-          ),
-          const SizedBox(width: 200),
-          Padding(
-            padding: const EdgeInsets.only(left: 17),
-            child: Image.asset(
-              "images/ahiovert.png",
-              width: 30,
-              height: 30,
+          IconButton(
+            icon: Icon(
+              Icons.sort,
+              color: colorIcon,
             ),
+            onPressed: () {},
+          ),
+          const Spacer(),
+          Image.asset(
+            "images/ahiovert.png",
+            width: 30,
+            height: 30,
           ),
           IconButton(
-            icon: const Icon(Icons.notification_add_outlined),
-            color: const Color(0xFF475269),
+            icon: Icon(
+              Icons.notification_add_outlined,
+              color: colorIcon,
+            ),
             onPressed: () {},
           ),
         ],

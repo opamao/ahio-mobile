@@ -315,20 +315,25 @@ class _LoginState extends State<Login> {
       var message = resp["message"];
 
       if (response == 'SUCCESS') {
-        var accessToken = resp["access_token"];
-        var tokenType = resp["token_type"];
+        var accessToken = resp["object"]["access_token"];
+        var tokenType = resp["object"]["token_type"];
         var name = resp["object"]["name"];
-        var email = resp["object"]["email"];
+        var email = resp["object"]["email"] ?? "";
         var phone = resp["object"]["phone"];
         var role = resp["object"]["role_as"].toString();
         var id = resp["object"]["id"].toString();
-
-        print(name + " " + email + " " + phone + " " + role);
+        var mobileMoney = resp["object"]["phone_mobile_money"] ?? "";
+        var photo = resp["object"]["photo_identity"] ?? "";
+        var piece = resp["object"]["piece_identity"] ?? "";
+        var activation = resp["object"]["is_active"].toString();
+        var proprietaireId = resp["object"]["proprietaire_id"].toString();
+        var garantId = resp["object"]["gerant_id"].toString();
 
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("$message")));
 
-        pageRoute(accessToken, tokenType, name, email, phone, role, id);
+        pageRoute(accessToken, tokenType, name, email, phone, role, id,
+            mobileMoney, photo, piece, activation, proprietaireId, garantId);
       } else if (response == 'ERREUR') {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("$message")));
@@ -339,8 +344,21 @@ class _LoginState extends State<Login> {
     }
   }
 
-  void pageRoute(String accessToken, String tokenType, String name,
-      String email, String phone, String role, String id) async {
+  void pageRoute(
+    String accessToken,
+    String tokenType,
+    String name,
+    String email,
+    String phone,
+    String role,
+    String id,
+    String mobileMoney,
+    String photo,
+    String piece,
+    String activation,
+    String proprietaireId,
+    String garantId,
+  ) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("access_token", accessToken);
     await pref.setString("token_type", tokenType);
@@ -349,6 +367,13 @@ class _LoginState extends State<Login> {
     await pref.setString("phone", phone);
     await pref.setString("role", role);
     await pref.setString("id", id);
+    await pref.setString("mobile_money", mobileMoney);
+    await pref.setString("photo", photo);
+    await pref.setString("piece", piece);
+    await pref.setString("activation", activation);
+    await pref.setString("proprietaire_id", proprietaireId);
+    await pref.setString("garant_id", garantId);
+
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => const Loading()),
         (route) => false);

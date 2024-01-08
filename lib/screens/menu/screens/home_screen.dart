@@ -16,9 +16,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   int selectedIndex = 0;
-  final Widget _accueil = AccueilScreen(
-    role: const ['proprietaire', 'client'],
-  );
+  final Widget _accueil = AccueilScreen();
 
   final Widget _favoris = const FavorisScreen();
   final Widget _location = const LocationsScreen();

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../widgets/widgets.dart';
+
 class TypeScreen extends StatefulWidget {
   const TypeScreen({super.key});
 
@@ -15,8 +17,8 @@ class _TypeScreenState extends State<TypeScreen> {
   int selected = 0;
   String libelle = "";
 
-  Widget customRadio(String image, String titre, String description,
-      int index) {
+  Widget customRadio(
+      String image, String titre, String description, int index) {
     return OutlinedButton(
       onPressed: () {
         setState(() {
@@ -96,81 +98,78 @@ class _TypeScreenState extends State<TypeScreen> {
       body: SafeArea(
         child: Hero(
           tag: 'type',
-          child: Column(
-            children: [
-              const Gap(10),
-              Text(
-                "Quel est le type de Résidence disposez-vous ?",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const Gap(20),
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      child: customRadio(
-                        "images/appartement.png",
-                        "Un appartement",
-                        "",
-                        1,
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      child: customRadio(
-                        "images/villas.png",
-                        "Une villa",
-                        "",
-                        2,
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      child: customRadio(
-                        "images/chambre.png",
-                        "Une chambre",
-                        "",
-                        3,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Spacer(),
-              SizedBox(
-                width: 272,
-                height: 50,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromRGBO(147, 226, 55, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
+          child: Padding(
+            padding: EdgeInsets.all(2.w),
+            child: Column(
+              children: [
+                Text(
+                  "Quel est le type de Résidence disposez-vous ?",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.bold,
                   ),
+                ),
+                const Gap(20),
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        child: customRadio(
+                          "images/appartement.png",
+                          "Un appartement",
+                          "",
+                          1,
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        child: customRadio(
+                          "images/villas.png",
+                          "Une villa",
+                          "",
+                          2,
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        child: customRadio(
+                          "images/chambre.png",
+                          "Une chambre",
+                          "",
+                          3,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Spacer(),
+                SubmitButton(
+                  "Suivant",
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => Maps(type: libelle),
-                    ),);
+                    if (libelle == "") {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Veuillez un type de résidence"),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Maps(type: libelle),
+                        ),
+                      );
+                    }
                   },
-                  child: Text(
-                    "Suivant",
-                    style: TextStyle(
-                      fontSize: 15.sp,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                 ),
-              ),
-              const Spacer(),
-            ],
+                const Spacer(),
+              ],
+            ),
           ),
         ),
       ),

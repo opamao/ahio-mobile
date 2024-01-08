@@ -9,6 +9,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../widgets/widgets.dart';
 import '../../residence/residence.dart';
 
 class Maps extends StatefulWidget {
@@ -53,7 +54,8 @@ class _MapsState extends State<Maps> {
               child: FlutterMap(
                 options: const MapOptions(
                   // center: LatLng(51.509364, -0.128928),
-                  initialCenter: LatLng(7.546855, -5.5471), //pour la cote d'ivoire
+                  initialCenter: LatLng(7.546855, -5.5471),
+                  //pour la cote d'ivoire
                   initialZoom: 9.2,
                 ),
                 // nonRotatedChildren: [
@@ -177,11 +179,12 @@ class _PanelState extends State<Panel> {
     print("RETOUR ${response.body}");
 
     final jsonData = json.decode(response.body)["object"] as List;
-// On doit enlever avant la mise en prod
-    print("RETOUR ${jsonData}");
+
+    List<Pays> paysList = jsonData.map((item) => Pays.fromJson(item)).toList();
+    paysList.sort((a, b) => a.name.compareTo(b.name));
 
     setState(() {
-      _pays = jsonData.map((item) => Pays.fromJson(item)).toList();
+      _pays = paysList;
     });
   }
 
@@ -191,9 +194,15 @@ class _PanelState extends State<Panel> {
         headers: {
           'Authorization': '$type $token',
         });
+
     final jsonData = json.decode(response.body)['object'] as List;
+
+    List<Ville> villeList =
+        jsonData.map((item) => Ville.fromJson(item)).toList();
+    villeList.sort((a, b) => a.name.compareTo(b.name));
+
     setState(() {
-      _ville = jsonData.map((item) => Ville.fromJson(item)).toList();
+      _ville = villeList;
     });
   }
 
@@ -214,8 +223,10 @@ class _PanelState extends State<Panel> {
                   children: <Widget>[
                     const Text(
                       "Saisir votre adresse",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
                     ),
                     const SizedBox(
                       height: 20,
@@ -289,11 +300,15 @@ class _PanelState extends State<Panel> {
                                 : null,
                             hint: const Text('Selectionner le pays'),
                             items: _pays
-                                .map((pays) => DropdownMenuItem<Pays>(
-                                      value: pays,
-                                      child: Container(
-                                          width: 300, child: Text(pays.name)),
-                                    ))
+                                .map(
+                                  (pays) => DropdownMenuItem<Pays>(
+                                    value: pays,
+                                    child: SizedBox(
+                                      width: 300,
+                                      child: Text(pays.name),
+                                    ),
+                                  ),
+                                )
                                 .toList(),
                             onChanged: (pays) {
                               setState(() {
@@ -336,40 +351,23 @@ class _PanelState extends State<Panel> {
                     const SizedBox(
                       height: 20,
                     ),
-                    SizedBox(
-                      width: 300.0,
-                      height: 50.0,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: HexColor("#93E237"),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CapaciteScreen(
-                                adresse: adresse.text,
-                                rue: rue.text,
-                                quartier: quartier.text,
-                                pays: _selectedCountryId,
-                                ville: _selectedCityId,
-                                type: widget.type,
-                              ),
+                    SubmitButton(
+                      "Suivant",
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CapaciteScreen(
+                              adresse: adresse.text,
+                              rue: rue.text,
+                              quartier: quartier.text,
+                              pays: _selectedCountryId,
+                              ville: _selectedCityId,
+                              type: widget.type,
                             ),
-                          );
-                        },
-                        child: const Text(
-                          "   Suivant    ",
-                          style: TextStyle(
-                            fontSize: 19,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
                   ],
                 ),
