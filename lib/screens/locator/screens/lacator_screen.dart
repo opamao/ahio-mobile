@@ -51,17 +51,17 @@ class _MapsState extends State<Maps> {
           children: [
             Expanded(
               child: FlutterMap(
-                options: MapOptions(
+                options: const MapOptions(
                   // center: LatLng(51.509364, -0.128928),
-                  center: LatLng(7.546855, -5.5471), //pour la cote d'ivoire
-                  zoom: 9.2,
+                  initialCenter: LatLng(7.546855, -5.5471), //pour la cote d'ivoire
+                  initialZoom: 9.2,
                 ),
-                nonRotatedChildren: [
-                  AttributionWidget.defaultWidget(
-                    source: 'OpenStreetMap contributors',
-                    onSourceTapped: null,
-                  ),
-                ],
+                // nonRotatedChildren: [
+                //   AttributionWidget.defaultWidget(
+                //     source: 'OpenStreetMap contributors',
+                //     onSourceTapped: null,
+                //   ),
+                // ],
                 children: [
                   TileLayer(
                     urlTemplate:

@@ -30,7 +30,7 @@ class InputText extends StatelessWidget {
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.w),
+          borderRadius: BorderRadius.circular(4.w),
         ),
         fillColor: Colors.white,
         filled: true,

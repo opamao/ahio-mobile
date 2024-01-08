@@ -3,8 +3,10 @@ import 'dart:ui';
 
 import 'package:ahio/constants/constants.dart';
 import 'package:ahio/screens/login/screens/login_screen.dart';
+import 'package:ahio/themes/themes.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -22,6 +24,7 @@ class Inscription extends StatefulWidget {
 }
 
 class _InscriptionState extends State<Inscription> {
+
   final _formkey = GlobalKey<FormState>();
 
   @override
@@ -157,39 +160,48 @@ class _InscriptionState extends State<Inscription> {
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  InternationalPhoneNumberInput(
-                                    onInputChanged: (PhoneNumber number) {
-                                      print(number.phoneNumber);
-                                      phoneInicator = number.phoneNumber!;
-                                    },
-                                    onInputValidated: (bool value) {
-                                      print(value);
-                                    },
-                                    errorMessage: "Le numéro est invalide",
-                                    hintText: "Numéro de téléphone",
-                                    selectorConfig: const SelectorConfig(
-                                      selectorType:
-                                          PhoneInputSelectorType.BOTTOM_SHEET,
+                                  Container(
+                                    padding: EdgeInsets.only(left: 4.w),
+                                    decoration: BoxDecoration(
+                                        color: colorWhite,
+                                        borderRadius:
+                                            BorderRadius.circular(4.w),
+                                        border: Border.all()),
+                                    child: InternationalPhoneNumberInput(
+                                      onInputChanged: (PhoneNumber number) {
+                                        print(number.phoneNumber);
+                                        phoneInicator = number.phoneNumber!;
+                                      },
+                                      onInputValidated: (bool value) {
+                                        print(value);
+                                      },
+                                      errorMessage: "Le numéro est invalide",
+                                      hintText: "Numéro de téléphone",
+                                      selectorConfig: const SelectorConfig(
+                                        selectorType:
+                                            PhoneInputSelectorType.BOTTOM_SHEET,
+                                      ),
+                                      ignoreBlank: false,
+                                      autoValidateMode:
+                                          AutovalidateMode.disabled,
+                                      selectorTextStyle: const TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                      initialValue: number,
+                                      textFieldController: phone,
+                                      formatInput: true,
+                                      keyboardType:
+                                          const TextInputType.numberWithOptions(
+                                        signed: true,
+                                        decimal: true,
+                                      ),
+                                      inputBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                      ),
+                                      onSaved: (PhoneNumber number) {
+                                        print('On Saved: $number');
+                                      },
                                     ),
-                                    ignoreBlank: false,
-                                    autoValidateMode: AutovalidateMode.disabled,
-                                    selectorTextStyle: const TextStyle(
-                                      color: Colors.black,
-                                    ),
-                                    initialValue: number,
-                                    textFieldController: phone,
-                                    formatInput: true,
-                                    keyboardType:
-                                        const TextInputType.numberWithOptions(
-                                      signed: true,
-                                      decimal: true,
-                                    ),
-                                    inputBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    onSaved: (PhoneNumber number) {
-                                      print('On Saved: $number');
-                                    },
                                   ),
                                   const SizedBox(
                                     height: 10,
@@ -227,129 +239,78 @@ class _InscriptionState extends State<Inscription> {
                                         'Votre mot de passe doit être de 8 caractères',
                                   ),
                                   const SizedBox(
-                                    height: 15,
+                                    height: 10,
                                   ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Text(
-                                        "Etes-vous?",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 25,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 5),
-                                      Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Expanded(
-                                              child: Container(
-                                                child: customRadio(
-                                                    "Propriétaire", 1),
-                                              ),
-                                            ),
-                                            const SizedBox(width: 10),
-                                            Expanded(
-                                              child: Container(
-                                                child: customRadio("Client", 3),
-                                              ),
-                                            ),
-                                          ]),
-                                      const SizedBox(height: 8),
-                                      InputText_(
-                                        keyboardType: TextInputType.number,
-                                        controller: mobile,
-                                        hintText:
-                                            "Si proprietaire, numéro mobile money",
-                                        prefixIcon: const Padding(
-                                          padding: EdgeInsets.all(0),
-                                          child: Icon(Icons.phone),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 10),
-                                  RichText(
-                                    text: TextSpan(
-                                      style: const TextStyle(
-                                          color: Colors.black, fontSize: 14),
-                                      children: [
-                                        const TextSpan(
-                                          text: "si vous avez deja un compte",
-                                        ),
-                                        const WidgetSpan(
-                                          child: SizedBox(width: 5),
-                                        ),
-                                        WidgetSpan(
-                                          child: InkWell(
-                                            onTap: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          Login()));
-                                              // Navigator.pushReplacementNamed(
-                                              //     context, '/login');
-                                            },
-                                            child: const Text(
-                                              "connectez-vous",
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                decoration:
-                                                    TextDecoration.underline,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ],
+                                  Text(
+                                    "Etes-vous?",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15.sp,
                                     ),
                                   ),
-                                  const SizedBox(height: 10),
-                                  SizedBox(
-                                    width: 300.0,
-                                    height: 50.0,
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: HexColor("#93E237"),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(15.0),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: Container(
+                                            child: customRadio(
+                                              "Propriétaire",
+                                              1,
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                      onPressed: () async {
-                                        if (_formkey.currentState!.validate()) {
-                                          register();
-
-                                          // Navigator.push(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) =>
-                                          //             Loader()));
-                                          // Navigator.push(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) =>
-                                          //             Login()));
-                                        } else {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(_snackBar);
-                                        }
-                                      },
-                                      child: const Text(
-                                        Constants.register,
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      ),
+                                        const SizedBox(width: 10),
+                                        Expanded(
+                                          child: Container(
+                                            child: customRadio(
+                                              "Client",
+                                              3,
+                                            ),
+                                          ),
+                                        ),
+                                      ]),
+                                  if(selected == 1)
+                                  InputText_(
+                                    keyboardType: TextInputType.number,
+                                    controller: mobile,
+                                    hintText: "Numéro mobile money",
+                                    prefixIcon: const Padding(
+                                      padding: EdgeInsets.all(0),
+                                      child: Icon(Icons.phone),
+                                    ),
+                                  ),
+                                  Gap(2.h),
+                                  SubmitButton(
+                                    Constants.register,
+                                    onPressed: () async {
+                                      if (_formkey.currentState!.validate()) {
+                                        register();
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(_snackBar);
+                                      }
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Text(
+                                    "Si vous avez deja un compte, connectez-vous",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 11,
                                     ),
                                   ),
                                   const SizedBox(
-                                    height: 25,
-                                  )
+                                    height: 10,
+                                  ),
+                                  CancelButton(
+                                    Constants.login,
+                                    onPressed: () => Navigator.pop(context),
+                                  ),
                                 ],
                               ),
                             ),
@@ -368,8 +329,6 @@ class _InscriptionState extends State<Inscription> {
   }
 
   void register() async {
-    print(selected.toString());
-    print(phoneInicator);
     var reponse = await http.post(Uri.parse("${ApiUrls.urlApi}register"),
         body: ({
           'name': name.text,
@@ -380,16 +339,11 @@ class _InscriptionState extends State<Inscription> {
           'phone_mobile_money': mobile.text.toString()
         }));
 
-    print(reponse.statusCode);
-
     if (reponse.statusCode == 200) {
-      print("ICI");
       var resp = json.decode(reponse.body);
 
       var response = resp["response"];
       var message = resp["message"];
-
-      print(resp);
 
       if (response == 'SUCCESS') {
         ScaffoldMessenger.of(context)

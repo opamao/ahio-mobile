@@ -6,11 +6,13 @@ import 'package:ahio/screens/inscription/screens/inscription_screen.dart';
 import 'package:ahio/screens/loading/screens/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:hexcolor/hexcolor.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:sizer/sizer.dart';
+
 import '../../../gen/assets.gen.dart';
+import '../../../themes/themes.dart';
 import '../../../widgets/widgets.dart';
 import '../../password/password.dart';
 
@@ -24,6 +26,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final _formkey = GlobalKey<FormState>();
 
+  bool showPhoneField = false;
   bool _obscure = true;
 
   var email = TextEditingController();
@@ -33,6 +36,10 @@ class _LoginState extends State<Login> {
     content: Text('Tous les champs sont obligatoires'),
     backgroundColor: Colors.red,
   );
+
+  String phoneInicator = "";
+  String initialCountry = 'CI';
+  PhoneNumber number = PhoneNumber(isoCode: 'CI');
 
   @override
   Widget build(BuildContext context) {
@@ -107,19 +114,90 @@ class _LoginState extends State<Login> {
                                         const SizedBox(
                                           height: 10,
                                         ),
-                                        InputText(
-                                          keyboardType: TextInputType.text,
-                                          controller: email,
-                                          hintText: "adresse email",
-                                          prefixIcon: const Padding(
-                                            padding: EdgeInsets.all(0),
-                                            child: Icon(Icons.email),
+                                        if (showPhoneField)
+                                          Container(
+                                            padding: EdgeInsets.only(left: 4.w),
+                                            decoration: BoxDecoration(
+                                                color: colorWhite,
+                                                borderRadius:
+                                                    BorderRadius.circular(4.w),
+                                                border: Border.all()),
+                                            child:
+                                                InternationalPhoneNumberInput(
+                                              onInputChanged:
+                                                  (PhoneNumber number) {
+                                                print(number.phoneNumber);
+                                                phoneInicator =
+                                                    number.phoneNumber!;
+                                              },
+                                              onInputValidated: (bool value) {
+                                                print(value);
+                                              },
+                                              errorMessage:
+                                                  "Le numéro est invalide",
+                                              hintText: "Numéro de téléphone",
+                                              selectorConfig:
+                                                  const SelectorConfig(
+                                                selectorType:
+                                                    PhoneInputSelectorType
+                                                        .BOTTOM_SHEET,
+                                              ),
+                                              ignoreBlank: false,
+                                              autoValidateMode:
+                                                  AutovalidateMode.disabled,
+                                              selectorTextStyle:
+                                                  const TextStyle(
+                                                color: Colors.black,
+                                              ),
+                                              initialValue: number,
+                                              textFieldController: email,
+                                              formatInput: true,
+                                              keyboardType: const TextInputType
+                                                  .numberWithOptions(
+                                                signed: true,
+                                                decimal: true,
+                                              ),
+                                              inputBorder:
+                                                  const OutlineInputBorder(
+                                                borderSide: BorderSide.none,
+                                              ),
+                                              onSaved: (PhoneNumber number) {
+                                                print('On Saved: $number');
+                                              },
+                                            ),
                                           ),
-                                          validatorMessage:
-                                              "Veuillez saisir votre téléphone ou mail",
-                                        ),
-                                        const SizedBox(
-                                          height: 15,
+                                        if (!showPhoneField)
+                                          InputText(
+                                            keyboardType: TextInputType.text,
+                                            controller: email,
+                                            hintText: "Adresse email",
+                                            prefixIcon: const Padding(
+                                              padding: EdgeInsets.all(0),
+                                              child: Icon(Icons.email),
+                                            ),
+                                            validatorMessage:
+                                                "Veuillez saisir votre téléphone ou mail",
+                                          ),
+                                        TextButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              showPhoneField = !showPhoneField;
+                                            });
+                                          },
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              !showPhoneField
+                                                  ? "Connecter par téléphone"
+                                                  : "Retour à l'adresse email",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: colorBlack,
+                                                fontStyle: FontStyle.italic,
+                                                fontWeight: FontWeight.normal,
+                                              ), // Change to your color
+                                            ),
+                                          ),
                                         ),
                                         InputPassword(
                                           controller: password,
@@ -169,7 +247,6 @@ class _LoginState extends State<Login> {
                                             } else {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(_snackBar);
-                                              Clean();
                                             }
                                           },
                                         ),
@@ -193,7 +270,7 @@ class _LoginState extends State<Login> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                const Inscription(),
+                                                    const Inscription(),
                                               ),
                                             );
                                           },
@@ -218,20 +295,22 @@ class _LoginState extends State<Login> {
     );
   }
 
-  void Clean() {
-    password.clear();
-    email.clear();
-  }
-
   void sign() async {
-    print(password.text);
-    //call export data
-    var reponse = await http.post(Uri.parse("${ApiUrls.urlApi}login"),
-        body: ({'phone': email.text, 'password': password.text}));
+    Map<String, String> requestBody = {
+      'phone': phoneInicator.isEmpty ? email.text : phoneInicator,
+      'password': password.text,
+    };
 
-    if (reponse.statusCode == 200) {
-      var resp = json.decode(reponse.body);
+    var response = await http.post(
+      Uri.parse("${ApiUrls.urlApi}login"),
+      body: requestBody,
+    );
 
+    var resp = json.decode(response.body);
+
+    print(resp);
+
+    if (response.statusCode == 200) {
       var response = resp["response"].toString();
       var message = resp["message"];
 
@@ -255,8 +334,6 @@ class _LoginState extends State<Login> {
             .showSnackBar(SnackBar(content: Text("$message")));
       }
     } else {
-      var resp = json.decode(reponse.body);
-
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("${resp["message"]}")));
     }
