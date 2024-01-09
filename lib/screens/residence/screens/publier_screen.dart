@@ -140,8 +140,8 @@ class _PublierScreenState extends State<PublierScreen> {
                     image: MemoryImage(Uint8List.fromList(widget.photos![0])),
                     fit: BoxFit.cover,
                   ),
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(40),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(4.w),
                   ),
                 ),
                 child: Padding(
@@ -418,7 +418,6 @@ class _PublierScreenState extends State<PublierScreen> {
   }
 
   Future<void> publier(BuildContext context) async {
-
     // Map<String, dynamic> getPhotoMap() {
     //   Map<String, dynamic> photoMap = {};
     //   for (int i = 0; i < widget.photos!.length; i++) {
@@ -504,26 +503,37 @@ class _PublierScreenState extends State<PublierScreen> {
 
       print(resp);
 
-    if (response.statusCode == 200) {
+      if (response.statusCode == 200) {
+        var reponse = resp["response"];
+        var message = resp["message"];
 
-      var reponse = resp["response"];
-      var message = resp["message"];
+        if (reponse == 'SUCCESS') {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("$message"),
+              backgroundColor: Colors.green,
+            ),
+          );
 
-      if (reponse == 'SUCCESS') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("$message"),
-            backgroundColor: Colors.green,
-          ),
-        );
+          setState(() {
+            _isload = false;
+          });
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("$message"),
+              backgroundColor: Colors.red,
+            ),
+          );
 
-        setState(() {
-          _isload = false;
-        });
+          setState(() {
+            _isload = false;
+          });
+        }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("$message"),
+          const SnackBar(
+            content: Text("Impossible de publier, veuillez réessayer"),
             backgroundColor: Colors.red,
           ),
         );
@@ -532,20 +542,8 @@ class _PublierScreenState extends State<PublierScreen> {
           _isload = false;
         });
       }
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Impossible de publier, veuillez réessayer"),
-          backgroundColor: Colors.red,
-        ),
-      );
-
-      setState(() {
-        _isload = false;
-      });
+    } catch (e) {
+      print('Erreur lors de l\'envoi de la requête: $e');
     }
-  } catch (e) {
-  print('Erreur lors de l\'envoi de la requête: $e');
-  }
   }
 }
