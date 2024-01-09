@@ -494,6 +494,7 @@ class _PublierScreenState extends State<PublierScreen> {
     request.fields['date_debut'] = formattedDateDebut;
     request.fields['date_fin'] = formattedDateFin;
     request.fields['montant_journalier'] = widget.montant!;
+    request.fields['devise'] = "FCFA";
 
     try {
       final streamedResponse = await request.send();
