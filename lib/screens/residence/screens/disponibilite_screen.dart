@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:sizer/sizer.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
 
+import '../../../widgets/widgets.dart';
 import '../residence.dart';
 
 class DisponibiliteScreen extends StatefulWidget {
   final List<int> equipement;
-  final List<String> photos;
+  final List<List<int>>? photos;
+  final List<String>? photosType;
+  final List<String>? photosNom;
   final String adresse, rue, quartier, type;
   int? pays, ville, personne, chambre, lit, salle;
 
@@ -25,6 +29,8 @@ class DisponibiliteScreen extends StatefulWidget {
     required this.lit,
     required this.salle,
     required this.photos,
+    required this.photosType,
+    required this.photosNom,
   });
 
   @override
@@ -87,143 +93,137 @@ class _DisponibiliteScreenState extends State<DisponibiliteScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Form(
-            key: _formkey,
-            child: Column(
-              children: [
-                const Gap(20),
-                const Text(
-                  "Quelle est la disponibilité De votre bien ?",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                  ),
-                ),
-                const Gap(10),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        decoration: const BoxDecoration(
-                          color: Color.fromRGBO(0, 0, 0, .16),
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                        ),
-                        child: SfDateRangePicker(
-                          onSelectionChanged: _onSelectionChanged,
-                          view: DateRangePickerView.month,
-                          selectionMode: DateRangePickerSelectionMode.range,
-                          startRangeSelectionColor: Colors.green,
-                          endRangeSelectionColor: Colors.green,
-                          rangeSelectionColor: Colors.lightGreen,
-                          initialSelectedRange: PickerDateRange(
-                            DateTime.now().subtract(
-                              const Duration(days: 4),
-                            ),
-                            DateTime.now().add(
-                              const Duration(days: 3),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Gap(10),
-                      Column(
-                        children: [
-                          TextFormField(
-                            controller: dateDebut,
-                            textInputAction: TextInputAction.done,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              hintText: "Début",
-                              prefixIcon: Padding(
-                                padding: EdgeInsets.all(5.0),
-                                child: SizedBox(
-                                  width: 100,
-                                  child: Row(
-                                    children: [
-                                      Icon(Icons.date_range_outlined),
-                                      Text(
-                                        "Début séjour :",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            keyboardType: TextInputType.text,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Veuillez sélectionner la date de début séjour";
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                          const Gap(10),
-                          TextFormField(
-                            controller: dateFin,
-                            textInputAction: TextInputAction.done,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              hintText: "Fin",
-                              prefixIcon: Padding(
-                                padding: EdgeInsets.all(5.0),
-                                child: SizedBox(
-                                  width: 90,
-                                  child: Row(
-                                    children: [
-                                      Icon(Icons.date_range_outlined),
-                                      Text(
-                                        "Fin séjour :",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            keyboardType: TextInputType.text,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Veuillez sélectionner la date de fin séjour";
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                const Gap(10),
-                SizedBox(
-                  width: 272,
-                  height: 56,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromRGBO(147, 226, 55, 1),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
+          child: Padding(
+            padding: EdgeInsets.all(2.w),
+            child: Form(
+              key: _formkey,
+              child: Column(
+                children: [
+                  const Gap(20),
+                  const Text(
+                    "Quelle est la disponibilité De votre bien ?",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
                     ),
-                    onPressed: () async {
+                  ),
+                  const Gap(10),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          decoration: const BoxDecoration(
+                            color: Color.fromRGBO(0, 0, 0, .16),
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                          ),
+                          child: SfDateRangePicker(
+                            onSelectionChanged: _onSelectionChanged,
+                            view: DateRangePickerView.month,
+                            selectionMode: DateRangePickerSelectionMode.range,
+                            startRangeSelectionColor: Colors.green,
+                            endRangeSelectionColor: Colors.green,
+                            rangeSelectionColor: Colors.lightGreen,
+                            initialSelectedRange: PickerDateRange(
+                              DateTime.now().subtract(
+                                const Duration(days: 4),
+                              ),
+                              DateTime.now().add(
+                                const Duration(days: 3),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const Gap(10),
+                        Column(
+                          children: [
+                            TextFormField(
+                              controller: dateDebut,
+                              textInputAction: TextInputAction.done,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                hintText: "Début",
+                                prefixIcon: const Padding(
+                                  padding: EdgeInsets.all(5.0),
+                                  child: SizedBox(
+                                    width: 100,
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.date_range_outlined),
+                                        Text(
+                                          "Début séjour :",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              keyboardType: TextInputType.text,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Veuillez sélectionner la date de début séjour";
+                                } else {
+                                  return null;
+                                }
+                              },
+                            ),
+                            const Gap(10),
+                            TextFormField(
+                              controller: dateFin,
+                              textInputAction: TextInputAction.done,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                hintText: "Fin",
+                                prefixIcon: const Padding(
+                                  padding: EdgeInsets.all(5.0),
+                                  child: SizedBox(
+                                    width: 90,
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.date_range_outlined),
+                                        Text(
+                                          "Fin séjour :",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              keyboardType: TextInputType.text,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Veuillez sélectionner la date de fin séjour";
+                                } else {
+                                  return null;
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Gap(10),
+                  SubmitButton(
+                    "Suivant",
+                    onPressed: () {
                       if (_formkey.currentState!.validate()) {
                         Navigator.push(
                           context,
@@ -243,6 +243,8 @@ class _DisponibiliteScreenState extends State<DisponibiliteScreen> {
                               photos: widget.photos,
                               debut: dateDebut.text,
                               fin: dateFin.text,
+                              photosType: widget.photosType,
+                              photosNom: widget.photosNom,
                             ),
                           ),
                         );
@@ -250,17 +252,9 @@ class _DisponibiliteScreenState extends State<DisponibiliteScreen> {
                         ScaffoldMessenger.of(context).showSnackBar(_snackBar);
                       }
                     },
-                    child: const Text(
-                      "Suivant",
-                      style: TextStyle(
-                        fontSize: 19,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

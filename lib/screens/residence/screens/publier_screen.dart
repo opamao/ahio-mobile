@@ -1,36 +1,46 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:ahio/constants/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
+
+import '../../../widgets/widgets.dart';
 
 class PublierScreen extends StatefulWidget {
-  final List<int> equipement;
-  final List<String> photos;
-  final String adresse, rue, quartier, type, debut, fin, montant;
+  final List<int>? equipement;
+  final List<List<int>>? photos;
+  final List<String>? photosType;
+  final List<String>? photosNom;
+  final String? adresse, rue, quartier, type, debut, fin, montant;
   int? pays, ville, personne, chambre, lit, salle;
 
   PublierScreen({
     super.key,
-    required this.equipement,
-    required this.adresse,
-    required this.rue,
-    required this.quartier,
-    required this.type,
-    required this.pays,
-    required this.ville,
-    required this.personne,
-    required this.chambre,
-    required this.lit,
-    required this.salle,
-    required this.photos,
-    required this.debut,
-    required this.fin,
-    required this.montant,
+    this.equipement,
+    this.adresse,
+    this.rue,
+    this.quartier,
+    this.type,
+    this.pays,
+    this.ville,
+    this.personne,
+    this.chambre,
+    this.lit,
+    this.salle,
+    this.photos,
+    this.debut,
+    this.fin,
+    this.montant,
+    this.photosType,
+    this.photosNom,
   });
 
   @override
@@ -61,7 +71,7 @@ class _PublierScreenState extends State<PublierScreen> {
 
   Future<void> _fetchEquipmentNames() async {
     print("OHHH ${widget.equipement} $token");
-    print(jsonEncode(widget.equipement.toList()));
+    print(jsonEncode(widget.equipement!.toList()));
 
     var response = await http.post(
       Uri.parse(ApiUrls.listEquip),
@@ -69,7 +79,7 @@ class _PublierScreenState extends State<PublierScreen> {
         'Authorization': '$type $token',
       },
       body: ({
-        'equipement_id[]': jsonEncode(widget.equipement.toList()),
+        'equipement_id[]': jsonEncode(widget.equipement!.toList()),
       }),
     );
 
@@ -90,7 +100,6 @@ class _PublierScreenState extends State<PublierScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Uint8List bytes = base64Decode(widget.photos[0]);
     return Scaffold(
       backgroundColor: const Color.fromRGBO(225, 239, 216, 1.0),
       extendBodyBehindAppBar: true,
@@ -98,7 +107,10 @@ class _PublierScreenState extends State<PublierScreen> {
         centerTitle: true,
         title: const Text(
           "Recap de votre offre",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.normal),
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.normal,
+          ),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -125,7 +137,7 @@ class _PublierScreenState extends State<PublierScreen> {
                 decoration: BoxDecoration(
                   color: Colors.transparent,
                   image: DecorationImage(
-                    image: MemoryImage(bytes),
+                    image: MemoryImage(Uint8List.fromList(widget.photos![0])),
                     fit: BoxFit.cover,
                   ),
                   borderRadius: const BorderRadius.all(
@@ -147,7 +159,7 @@ class _PublierScreenState extends State<PublierScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            widget.type,
+                            widget.type!,
                             style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -370,7 +382,7 @@ class _PublierScreenState extends State<PublierScreen> {
       bottomNavigationBar: Container(
         color: Colors.white,
         child: _isload
-            ? Center(
+            ? const Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -390,90 +402,108 @@ class _PublierScreenState extends State<PublierScreen> {
                 ),
               )
             : Padding(
-                padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromRGBO(147, 226, 55, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
+                padding: EdgeInsets.all(2.w),
+                child: SubmitButton(
+                  "Publier",
                   onPressed: () {
                     setState(() {
                       _isload = true;
                     });
-                    publier();
+                    publier(context);
                   },
-                  child: const Text(
-                    "Publier",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                 ),
               ),
       ),
     );
   }
 
-  void publier() async {
-    Map<String, dynamic> getPhotoMap() {
-      Map<String, dynamic> photoMap = {};
-      for (int i = 0; i < widget.photos.length; i++) {
-        photoMap[i.toString()] = widget.photos[i];
-      }
-      return photoMap;
-    }
+  Future<void> publier(BuildContext context) async {
+
+    // Map<String, dynamic> getPhotoMap() {
+    //   Map<String, dynamic> photoMap = {};
+    //   for (int i = 0; i < widget.photos!.length; i++) {
+    //     photoMap[i.toString()] = widget.photos![i];
+    //   }
+    //   return photoMap;
+    // }
 
     Map<String, dynamic> getEquipementMap() {
       Map<String, dynamic> equipementMap = {};
-      for (int i = 0; i < widget.equipement.length; i++) {
-        equipementMap[i.toString()] = widget.equipement[i];
+      for (int i = 0; i < widget.equipement!.length; i++) {
+        equipementMap[i.toString()] = widget.equipement![i];
       }
       return equipementMap;
     }
 
-    print(jsonEncode(getPhotoMap()));
+    // print(jsonEncode(getPhotoMap()));
 
     DateFormat originalDateFormat = DateFormat("dd/MM/yyyy");
-    DateTime parsedDateDebut = originalDateFormat.parse(widget.debut);
-    DateTime parsedDateFin = originalDateFormat.parse(widget.fin);
+    DateTime parsedDateDebut = originalDateFormat.parse(widget.debut!);
+    DateTime parsedDateFin = originalDateFormat.parse(widget.fin!);
 
     DateFormat targetDateFormat = DateFormat("yyyy-MM-dd");
     String formattedDateDebut = targetDateFormat.format(parsedDateDebut);
     String formattedDateFin = targetDateFormat.format(parsedDateFin);
 
-    var response = await http.post(
+    var request = http.MultipartRequest(
+      'POST',
       Uri.parse("${ApiUrls.urlApi}residence"),
-      headers: {
-        'Authorization': '$type $token',
-      },
-      body: ({
-        'type_residence_id': widget.type,
-        'proprietaire_id': id.toString(),
-        'longitude': "5.3600",
-        'latitude': "4.0083",
-        'adresse': widget.adresse,
-        'rue': widget.rue,
-        'quartier': widget.quartier,
-        'pays_id': widget.pays.toString(),
-        'ville_id': widget.ville.toString(),
-        'nbre_personnes': widget.personne.toString(),
-        'nbre_chambres': widget.chambre.toString(),
-        'nbre_lits': widget.lit.toString(),
-        'nbre_salle_eau': widget.salle.toString(),
-        'equipement_id': jsonEncode(getEquipementMap()),
-        'date_debut': formattedDateDebut,
-        'date_fin': formattedDateFin,
-        'montant_journalier': widget.montant,
-        'photo': jsonEncode(getPhotoMap()),
-      }),
     );
 
-    if (response.statusCode == 200) {
+    List<http.MultipartFile> imageFiles = [];
+
+    List<List<int>>? photo = widget.photos;
+    List<String>? photoType = widget.photosType;
+    List<String>? photoNom = widget.photosNom;
+
+    for (int i = 0; i < photo!.length; i++) {
+      List<int> bytes = photo[i];
+      String type = photoType![i];
+      String nom = photoNom![i];
+
+      http.MultipartFile imagePart = http.MultipartFile.fromBytes(
+        'photo[]',
+        Uint8List.fromList(bytes),
+        filename: nom,
+        contentType: MediaType('image', type),
+      );
+      imageFiles.add(imagePart);
+    }
+
+    request.headers['Content-Type'] = 'multipart/form-data';
+    request.headers['Authorization'] = '$type $token';
+
+    for (var imageFile in imageFiles) {
+      request.files.add(imageFile);
+    }
+
+    request.fields['type_residence_id'] = widget.type!;
+    request.fields['proprietaire_id'] = id.toString();
+    request.fields['longitude'] = "5.3600";
+    request.fields['latitude'] = "4.0083";
+    request.fields['adresse'] = widget.adresse!;
+    request.fields['rue'] = widget.rue!;
+    request.fields['quartier'] = widget.quartier!;
+    request.fields['pays_id'] = widget.pays.toString();
+    request.fields['ville_id'] = widget.ville.toString();
+    request.fields['nbre_personnes'] = widget.personne.toString();
+    request.fields['nbre_chambres'] = widget.chambre.toString();
+    request.fields['nbre_lits'] = widget.lit.toString();
+    request.fields['nbre_salle_eau'] = widget.salle.toString();
+    request.fields['equipement_id'] = jsonEncode(getEquipementMap());
+    request.fields['date_debut'] = formattedDateDebut;
+    request.fields['date_fin'] = formattedDateFin;
+    request.fields['montant_journalier'] = widget.montant!;
+
+    try {
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
       var resp = json.decode(response.body);
+
+      print(resp);
+
+    if (response.statusCode == 200) {
 
       var reponse = resp["response"];
       var message = resp["message"];
@@ -513,5 +543,8 @@ class _PublierScreenState extends State<PublierScreen> {
         _isload = false;
       });
     }
+  } catch (e) {
+  print('Erreur lors de l\'envoi de la requête: $e');
+  }
   }
 }

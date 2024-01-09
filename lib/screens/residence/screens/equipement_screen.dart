@@ -1,29 +1,32 @@
 import 'dart:convert';
 
 import 'package:ahio/constants/constants.dart';
+import 'package:ahio/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:sizer/sizer.dart';
 
+import '../../../widgets/widgets.dart';
 import '../residence.dart';
 
 class EquipementScreen extends StatefulWidget {
-  final String adresse, rue, quartier, type;
+  final String? adresse, rue, quartier, type;
   final int? pays, ville, personne, chambre, lit, salle;
 
   const EquipementScreen({
     Key? key,
-    required this.adresse,
-    required this.rue,
-    required this.quartier,
-    required this.pays,
-    required this.ville,
-    required this.personne,
-    required this.chambre,
-    required this.lit,
-    required this.salle,
-    required this.type,
+    this.adresse,
+    this.rue,
+    this.quartier,
+    this.pays,
+    this.ville,
+    this.personne,
+    this.chambre,
+    this.lit,
+    this.salle,
+    this.type,
   }) : super(key: key);
 
   @override
@@ -107,86 +110,77 @@ class _EquipementScreenState extends State<EquipementScreen> {
         ),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            const Text(
-              "Disposez-vous d’équipements spécifiques ?",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 20),
-            FutureBuilder(
-              future: Future.wait([equipmentNamesFuture, equipmentIdsFuture]),
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<dynamic>> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return Center(child: Text('Erreur: ${snapshot.error}'));
-                } else {
-                  List<String> equipmentNames = snapshot.data![0];
-                  List<int> equipmentIds = snapshot.data![1];
-                  return Center(
-                    child: SingleChildScrollView(
-                      child: CustomCheckBoxGroup(
-                        buttonTextStyle: const ButtonTextStyle(
-                          selectedColor: Colors.white,
-                          unSelectedColor: Colors.black,
-                          textStyle: TextStyle(
-                            fontSize: 10,
-                          ),
-                        ),
-                        autoWidth: false,
-                        enableButtonWrap: true,
-                        wrapAlignment: WrapAlignment.center,
-                        unSelectedColor: Theme.of(context).canvasColor,
-                        buttonLables: equipmentNames,
-                        buttonValuesList: equipmentIds,
-                        checkBoxButtonValues: (values) {
-                          print(values);
-                          valeurs = values;
-                        },
-                        horizontal: false,
-                        width: 120,
-                        //height: 50,
-                        selectedColor:
-                        const Color.fromRGBO(147, 226, 55, 1).withOpacity(.5),
-                        padding: 5,
-                        enableShape: true,
-                      ),
-                    ),
-                  );
-                  // Utilisez vos données ici pour construire l'interface
-
-                }
-              },
-            ),
-            const Spacer(),
-            SizedBox(
-              width: 272,
-              height: 56,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromRGBO(147, 226, 55, 1),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
+        child: Padding(
+          padding: EdgeInsets.all(2.w),
+          child: Column(
+            children: [
+              Text(
+                "Disposez-vous d’équipements spécifiques ?",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: colorBlack,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
                 ),
+              ),
+              const SizedBox(height: 20),
+              FutureBuilder(
+                future: Future.wait([equipmentNamesFuture, equipmentIdsFuture]),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<dynamic>> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Erreur: ${snapshot.error}'));
+                  } else {
+                    List<String> equipmentNames = snapshot.data![0];
+                    List<int> equipmentIds = snapshot.data![1];
+                    return Center(
+                      child: SingleChildScrollView(
+                        child: CustomCheckBoxGroup(
+                          buttonTextStyle: const ButtonTextStyle(
+                            selectedColor: Colors.white,
+                            unSelectedColor: Colors.black,
+                            textStyle: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          autoWidth: false,
+                          enableButtonWrap: true,
+                          wrapAlignment: WrapAlignment.center,
+                          unSelectedColor: Theme.of(context).canvasColor,
+                          buttonLables: equipmentNames,
+                          buttonValuesList: equipmentIds,
+                          checkBoxButtonValues: (values) {
+                            print(values);
+                            valeurs = values;
+                          },
+                          horizontal: false,
+                          width: 120,
+                          //height: 50,
+                          selectedColor: const Color.fromRGBO(12, 126, 196, 1.0),
+                          padding: 5,
+                          enableShape: true,
+                        ),
+                      ),
+                    );
+                  }
+                },
+              ),
+              const Spacer(),
+              SubmitButton(
+                "Suivant",
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => AjouterScreen(
                         equipement: valeurs,
-                        adresse: widget.adresse,
-                        rue: widget.rue,
-                        quartier: widget.quartier,
-                        type: widget.type,
+                        adresse: widget.adresse!,
+                        rue: widget.rue!,
+                        quartier: widget.quartier!,
+                        type: widget.type!,
                         pays: widget.pays,
                         ville: widget.ville,
                         personne: widget.personne,
@@ -197,18 +191,10 @@ class _EquipementScreenState extends State<EquipementScreen> {
                     ),
                   );
                 },
-                child: const Text(
-                  "Suivant",
-                  style: TextStyle(
-                    fontSize: 19,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
               ),
-            ),
-            const Spacer(),
-          ],
+              const Spacer(),
+            ],
+          ),
         ),
       ),
     );

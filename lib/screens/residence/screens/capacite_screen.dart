@@ -1,5 +1,8 @@
+import 'package:ahio/themes/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
+import '../../../widgets/widgets.dart';
 import '../residence.dart';
 
 class CapaciteScreen extends StatefulWidget {
@@ -79,6 +82,11 @@ class _CapaciteScreenState extends State<CapaciteScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(225, 239, 216, 1.0),
@@ -100,235 +108,222 @@ class _CapaciteScreenState extends State<CapaciteScreen> {
         ),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            const Text(
-              "Quelle est la capacité de votre résidence ?",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Image.asset(
-                        "images/nbrepers.png",
-                        height: 60,
-                        width: 80,
-                      ),
-                      const Text(
-                        "Nombre \nde personne",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Row(
-                        children: [
-                          FloatingActionButton.small(
-                            heroTag: 'btn1',
-                            onPressed: minus,
-                            backgroundColor: Colors.white,
-                            child: const Icon(
-                              Icons.remove,
-                              color: Colors.black,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text('$nbrPer',
-                                style: const TextStyle(fontSize: 19)),
-                          ),
-                          FloatingActionButton.small(
-                            heroTag: 'btn2',
-                            onPressed: add,
-                            backgroundColor: Colors.white,
-                            child: const Icon(
-                              Icons.add,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Image.asset(
-                        "images/nbrecha.png",
-                        height: 60,
-                        width: 80,
-                      ),
-                      const Text(
-                        "Nombre \nde chambre",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Row(
-                        children: [
-                          FloatingActionButton.small(
-                            heroTag: 'btn3',
-                            onPressed: minusCha,
-                            backgroundColor: Colors.white,
-                            child:
-                                const Icon(Icons.remove, color: Colors.black),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text('$nbrCha',
-                                style: const TextStyle(fontSize: 19)),
-                          ),
-                          FloatingActionButton.small(
-                            heroTag: 'btn4',
-                            onPressed: addCha,
-                            backgroundColor: Colors.white,
-                            child: const Icon(
-                              Icons.add,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Image.asset(
-                        "images/nbrelit.png",
-                        height: 60,
-                        width: 80,
-                      ),
-                      const Text(
-                        "Nombre de \nlit",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Row(
-                        children: [
-                          FloatingActionButton.small(
-                            heroTag: 'btn5',
-                            onPressed: minusLit,
-                            backgroundColor: Colors.white,
-                            child:
-                                const Icon(Icons.remove, color: Colors.black),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text('$nbrLit',
-                                style: const TextStyle(fontSize: 19)),
-                          ),
-                          FloatingActionButton.small(
-                            heroTag: 'btn6',
-                            onPressed: addLit,
-                            backgroundColor: Colors.white,
-                            child: const Icon(
-                              Icons.add,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Image.asset(
-                        "images/nbresalle.png",
-                        height: 60,
-                        width: 80,
-                      ),
-                      const Text(
-                        "Nombre de \nsalle d’eau",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Row(
-                        children: [
-                          FloatingActionButton.small(
-                            heroTag: 'btn7',
-                            onPressed: minusSal,
-                            backgroundColor: Colors.white,
-                            child:
-                                const Icon(Icons.remove, color: Colors.black),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text('$nbrSal',
-                                style: const TextStyle(fontSize: 19)),
-                          ),
-                          FloatingActionButton.small(
-                            heroTag: 'btn8',
-                            onPressed: addSal,
-                            backgroundColor: Colors.white,
-                            child: const Icon(
-                              Icons.add,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ],
+        child: Padding(
+          padding: EdgeInsets.all(4.w),
+          child: Column(
+            children: [
+              Text(
+                "Quelle est la capacité de votre résidence ?",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: colorBlack,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,),
               ),
-            ),
-            const Spacer(),
-            SizedBox(
-              width: 272,
-              height: 56,
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromRGBO(147, 226, 55, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EquipementScreen(
-                          adresse: widget.adresse,
-                          rue: widget.rue,
-                          quartier: widget.quartier,
-                          pays: widget.pays,
-                          ville: widget.ville,
-                          type: widget.type,
-                          personne: nbrPer,
-                          chambre: nbrCha,
-                          lit: nbrLit,
-                          salle: nbrSal,
+              const SizedBox(height: 20),
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Image.asset(
+                          "images/nbrepers.png",
+                          height: 60,
+                          width: 80,
                         ),
+                        const Text(
+                          "Nombre \nde personne",
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Row(
+                          children: [
+                            FloatingActionButton.small(
+                              heroTag: 'btn1',
+                              onPressed: minus,
+                              backgroundColor: Colors.white,
+                              child: const Icon(
+                                Icons.remove,
+                                color: Colors.black,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text('$nbrPer',
+                                  style: const TextStyle(fontSize: 19)),
+                            ),
+                            FloatingActionButton.small(
+                              heroTag: 'btn2',
+                              onPressed: add,
+                              backgroundColor: Colors.white,
+                              child: const Icon(
+                                Icons.add,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Image.asset(
+                          "images/nbrecha.png",
+                          height: 60,
+                          width: 80,
+                        ),
+                        const Text(
+                          "Nombre \nde chambre",
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Row(
+                          children: [
+                            FloatingActionButton.small(
+                              heroTag: 'btn3',
+                              onPressed: minusCha,
+                              backgroundColor: Colors.white,
+                              child:
+                                  const Icon(Icons.remove, color: Colors.black),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text('$nbrCha',
+                                  style: const TextStyle(fontSize: 19)),
+                            ),
+                            FloatingActionButton.small(
+                              heroTag: 'btn4',
+                              onPressed: addCha,
+                              backgroundColor: Colors.white,
+                              child: const Icon(
+                                Icons.add,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Image.asset(
+                          "images/nbrelit.png",
+                          height: 60,
+                          width: 80,
+                        ),
+                        const Text(
+                          "Nombre de \nlit",
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Row(
+                          children: [
+                            FloatingActionButton.small(
+                              heroTag: 'btn5',
+                              onPressed: minusLit,
+                              backgroundColor: Colors.white,
+                              child:
+                                  const Icon(Icons.remove, color: Colors.black),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text('$nbrLit',
+                                  style: const TextStyle(fontSize: 19)),
+                            ),
+                            FloatingActionButton.small(
+                              heroTag: 'btn6',
+                              onPressed: addLit,
+                              backgroundColor: Colors.white,
+                              child: const Icon(
+                                Icons.add,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Image.asset(
+                          "images/nbresalle.png",
+                          height: 60,
+                          width: 80,
+                        ),
+                        const Text(
+                          "Nombre de \nsalle d’eau",
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Row(
+                          children: [
+                            FloatingActionButton.small(
+                              heroTag: 'btn7',
+                              onPressed: minusSal,
+                              backgroundColor: Colors.white,
+                              child:
+                                  const Icon(Icons.remove, color: Colors.black),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text('$nbrSal',
+                                  style: const TextStyle(fontSize: 19)),
+                            ),
+                            FloatingActionButton.small(
+                              heroTag: 'btn8',
+                              onPressed: addSal,
+                              backgroundColor: Colors.white,
+                              child: const Icon(
+                                Icons.add,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const Spacer(),
+              SubmitButton(
+                "Suivant",
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EquipementScreen(
+                        adresse: widget.adresse,
+                        rue: widget.rue,
+                        quartier: widget.quartier,
+                        pays: widget.pays,
+                        ville: widget.ville,
+                        type: widget.type,
+                        personne: nbrPer,
+                        chambre: nbrCha,
+                        lit: nbrLit,
+                        salle: nbrSal,
                       ),
-                    );
-                  },
-                  child: const Text(
-                    "Suivant",
-                    style: TextStyle(
-                        fontSize: 19,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
-                  )),
-            ),
-            const Spacer(),
-          ],
+                    ),
+                  );
+                },
+              ),
+              const Spacer(),
+            ],
+          ),
         ),
       ),
     );

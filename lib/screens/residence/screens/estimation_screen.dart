@@ -1,30 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:sizer/sizer.dart';
 
+import '../../../widgets/widgets.dart';
 import '../residence.dart';
 
 class EstimationScreen extends StatefulWidget {
-  final List<int> equipement;
-  final List<String> photos;
-  final String adresse, rue, quartier, type, debut, fin;
+  final List<int>? equipement;
+  final List<List<int>>? photos;
+  final List<String>? photosType;
+  final List<String>? photosNom;
+  final String? adresse, rue, quartier, type, debut, fin;
   int? pays, ville, personne, chambre, lit, salle;
 
   EstimationScreen({
     super.key,
-    required this.equipement,
-    required this.adresse,
-    required this.rue,
-    required this.quartier,
-    required this.type,
-    required this.pays,
-    required this.ville,
-    required this.personne,
-    required this.chambre,
-    required this.lit,
-    required this.salle,
-    required this.photos,
-    required this.debut,
-    required this.fin,
+    this.equipement,
+    this.adresse,
+    this.rue,
+    this.quartier,
+    this.type,
+    this.pays,
+    this.ville,
+    this.personne,
+    this.chambre,
+    this.lit,
+    this.salle,
+    this.photos,
+    this.debut,
+    this.fin,
+    this.photosType,
+    this.photosNom,
   });
 
   @override
@@ -64,110 +70,103 @@ class _EstimationScreenState extends State<EstimationScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Form(
-            key: _formkey,
-            child: Column(
-              children: [
-                const Gap(20),
-                const Text(
-                  "A combien estimez-vous votre résidence ?",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                  ),
-                ),
-                const Gap(20),
-                Text(
-                  "Montant par nuit :",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black.withOpacity(.43),
-                    fontSize: 13,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-                  child: TextFormField(
-                    style: const TextStyle(
-                      fontSize: 20,
+          child: Padding(
+            padding: EdgeInsets.all(2.w),
+            child: Form(
+              key: _formkey,
+              child: Column(
+                children: [
+                  const Text(
+                    "A combien estimez-vous votre résidence ?",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
                       color: Colors.black,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),
-                    controller: montant,
-                    textInputAction: TextInputAction.done,
-                    decoration: InputDecoration(
-                      hintStyle: const TextStyle(fontSize: 20),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
+                  ),
+                  const Gap(20),
+                  Text(
+                    "Montant par nuit :",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black.withOpacity(.43),
+                      fontSize: 13,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                    child: TextFormField(
+                      style: const TextStyle(
+                        fontSize: 20,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
                       ),
-                      hintText: "20000",
-                      suffixIcon: const Padding(
-                        padding: EdgeInsets.all(5.0),
-                        child: SizedBox(
-                          width: 100,
-                          child: Center(
-                            child: Text(
-                              "Fcfa",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.normal,
+                      controller: montant,
+                      textInputAction: TextInputAction.done,
+                      decoration: InputDecoration(
+                        hintStyle: const TextStyle(fontSize: 20),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        hintText: "20000",
+                        suffixIcon: const Padding(
+                          padding: EdgeInsets.all(5.0),
+                          child: SizedBox(
+                            width: 100,
+                            child: Center(
+                              child: Text(
+                                "Fcfa",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.normal,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Veuillez sélectionner la date de début séjour";
+                        } else {
+                          return null;
+                        }
+                      },
                     ),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Veuillez sélectionner la date de début séjour";
-                      } else {
-                        return null;
-                      }
-                    },
                   ),
-                ),
-                const Gap(50),
-                Card(
-                  color: const Color(0xFF3744E2).withOpacity(.17),
-                  child: const SizedBox(
-                    width: 300,
-                    height: 100,
-                    child: Center(
-                      child: Text(
-                        "L’estimation de votre résidence sera soumise à notre administrateur.",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color(0xFF3744E2),
+                  const Gap(50),
+                  Card(
+                    color: const Color(0xFF3744E2).withOpacity(.17),
+                    child: const SizedBox(
+                      width: 300,
+                      height: 100,
+                      child: Center(
+                        child: Text(
+                          "L’estimation de votre résidence sera soumise à notre administrateur.",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color(0xFF3744E2),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                const Gap(10),
-                SizedBox(
-                  width: 272,
-                  height: 56,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromRGBO(147, 226, 55, 1),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                    ),
-                    onPressed: () async {
+                  const Gap(10),
+                  SubmitButton(
+                    "Suivant",
+                    onPressed: () {
                       if (_formkey.currentState!.validate()) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => PublierScreen(
-                              equipement: widget.equipement,
-                              adresse: widget.adresse,
-                              rue: widget.rue,
-                              quartier: widget.quartier,
-                              type: widget.type,
+                              equipement: widget.equipement!,
+                              adresse: widget.adresse!,
+                              rue: widget.rue!,
+                              quartier: widget.quartier!,
+                              type: widget.type!,
                               pays: widget.pays,
                               ville: widget.ville,
                               personne: widget.personne,
@@ -175,9 +174,11 @@ class _EstimationScreenState extends State<EstimationScreen> {
                               lit: widget.lit,
                               salle: widget.salle,
                               photos: widget.photos,
-                              debut: widget.debut,
-                              fin: widget.fin,
+                              debut: widget.debut!,
+                              fin: widget.fin!,
                               montant: montant.text,
+                              photosType: widget.photosType,
+                              photosNom: widget.photosNom,
                             ),
                           ),
                         );
@@ -185,17 +186,9 @@ class _EstimationScreenState extends State<EstimationScreen> {
                         ScaffoldMessenger.of(context).showSnackBar(_snackBar);
                       }
                     },
-                    child: const Text(
-                      "Suivant",
-                      style: TextStyle(
-                        fontSize: 19,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

@@ -1,11 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:ahio/themes/themes.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sizer/sizer.dart';
 
+import '../../../widgets/widgets.dart';
 import '../residence.dart';
 
 class ImageUploadModel {
@@ -23,23 +26,23 @@ class ImageUploadModel {
 }
 
 class PhotoScreen extends StatefulWidget {
-  final List<int> equipement;
-  final String adresse, rue, quartier, type;
+  final List<int>? equipement;
+  final String? adresse, rue, quartier, type;
   int? pays, ville, personne, chambre, lit, salle;
 
   PhotoScreen({
     super.key,
-    required this.equipement,
-    required this.adresse,
-    required this.rue,
-    required this.quartier,
-    required this.type,
-    required this.pays,
-    required this.ville,
-    required this.personne,
-    required this.chambre,
-    required this.lit,
-    required this.salle,
+    this.equipement,
+    this.adresse,
+    this.rue,
+    this.quartier,
+    this.type,
+    this.pays,
+    this.ville,
+    this.personne,
+    this.chambre,
+    this.lit,
+    this.salle,
   });
 
   @override
@@ -48,7 +51,9 @@ class PhotoScreen extends StatefulWidget {
 
 class _PhotoScreenState extends State<PhotoScreen> {
   late List<ImageUploadModel> images;
-  List<String> imageBase64List = [];
+  List<List<int>> imageBase64List = [];
+  List<String> imageType = [];
+  List<String> imageNom = [];
 
   @override
   void initState() {
@@ -62,7 +67,6 @@ class _PhotoScreenState extends State<PhotoScreen> {
 
     if (imageFile != null) {
       final bytes = await imageFile.readAsBytes();
-      final imageBase64 = base64Encode(bytes);
 
       setState(() {
         if (index < images.length) {
@@ -82,7 +86,11 @@ class _PhotoScreenState extends State<PhotoScreen> {
             ),
           );
         }
-        imageBase64List.add(imageBase64);
+        final extension = imageFile.path.split('.').last;
+        final nom = imageFile.path.split('/').last;
+        imageBase64List.add(bytes);
+        imageType.add(extension);
+        imageNom.add(nom);
       });
     }
   }
@@ -112,113 +120,106 @@ class _PhotoScreenState extends State<PhotoScreen> {
         child: SingleChildScrollView(
           child: Hero(
             tag: "photo",
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-                const Text(
-                  "Pour mieux mettre en avant votre résidence, merci de sélection au moins 4 photos",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  "Ajouter des photos",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 15,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                GridView.count(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  crossAxisCount: 2,
-                  childAspectRatio: 1,
-                  children: List.generate(images.length + 1, (index) {
-                    if (index < images.length) {
-                      return Card(
-                        clipBehavior: Clip.antiAlias,
-                        child: Stack(
-                          children: <Widget>[
-                            Image.file(
-                              images[index].imageFile,
-                              width: 300,
-                              height: 300,
-                              fit: BoxFit.cover,
-                            ),
-                            Positioned(
-                              right: 5,
-                              top: 5,
-                              child: InkWell(
-                                child: const Icon(
-                                  Icons.remove_circle,
-                                  size: 20,
-                                  color: Colors.red,
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    images.removeAt(index);
-                                  });
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    } else {
-                      return DottedBorder(
-                        dashPattern: const [10, 6],
-                        borderType: BorderType.RRect,
-                        radius: const Radius.circular(15),
-                        color: const Color(0xFF707070),
-                        strokeWidth: 1,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Colors.grey.withOpacity(.6),
-                          ),
-                          width: double.infinity,
-                          height: double.infinity,
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.add_photo_alternate_outlined,
-                              size: 50,
-                            ),
-                            onPressed: () {
-                              _selectImage(index);
-                            },
-                          ),
-                        ),
-                      );
-                    }
-                  }),
-                ),
-                const Gap(10),
-                SizedBox(
-                  width: 272,
-                  height: 56,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromRGBO(147, 226, 55, 1),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
+            child: Padding(
+              padding: EdgeInsets.all(4.w),
+              child: Column(
+                children: [
+                  Text(
+                    "Pour mieux mettre en avant votre résidence, merci de sélection au moins 4 photos",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: colorBlack,
+                      fontSize: 20,
                     ),
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    "Ajouter des photos",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  GridView.count(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    crossAxisCount: 2,
+                    childAspectRatio: 1,
+                    children: List.generate(images.length + 1, (index) {
+                      if (index < images.length) {
+                        return Card(
+                          clipBehavior: Clip.antiAlias,
+                          child: Stack(
+                            children: <Widget>[
+                              Image.file(
+                                images[index].imageFile,
+                                width: 300,
+                                height: 300,
+                                fit: BoxFit.cover,
+                              ),
+                              Positioned(
+                                right: 5,
+                                top: 5,
+                                child: InkWell(
+                                  child: const Icon(
+                                    Icons.remove_circle,
+                                    size: 20,
+                                    color: Colors.red,
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+                                      images.removeAt(index);
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      } else {
+                        return DottedBorder(
+                          dashPattern: const [10, 6],
+                          borderType: BorderType.RRect,
+                          radius: const Radius.circular(15),
+                          color: const Color(0xFF707070),
+                          strokeWidth: 1,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: Colors.grey.withOpacity(.6),
+                            ),
+                            width: double.infinity,
+                            height: double.infinity,
+                            child: IconButton(
+                              icon: const Icon(
+                                Icons.add_photo_alternate_outlined,
+                                size: 50,
+                              ),
+                              onPressed: () {
+                                _selectImage(index);
+                              },
+                            ),
+                          ),
+                        );
+                      }
+                    }),
+                  ),
+                  const Gap(10),
+                  SubmitButton(
+                    "Suivant",
                     onPressed: () {
                       if (imageBase64List.length >= 4) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => DisponibiliteScreen(
-                              equipement: widget.equipement,
-                              adresse: widget.adresse,
-                              rue: widget.rue,
-                              quartier: widget.quartier,
-                              type: widget.type,
+                              equipement: widget.equipement!,
+                              adresse: widget.adresse!,
+                              rue: widget.rue!,
+                              quartier: widget.quartier!,
+                              type: widget.type!,
                               pays: widget.pays,
                               ville: widget.ville,
                               personne: widget.personne,
@@ -226,13 +227,11 @@ class _PhotoScreenState extends State<PhotoScreen> {
                               lit: widget.lit,
                               salle: widget.salle,
                               photos: imageBase64List,
+                              photosType: imageType,
+                              photosNom: imageNom,
                             ),
                           ),
                         );
-                        // debugPrint("COMPLET $imageBase64List");
-                        // for (String imageBase64 in imageBase64List) {
-                        //   debugPrint("BASE64 $imageBase64");
-                        // }
                       } else {
                         showDialog(
                           context: context,
@@ -242,12 +241,15 @@ class _PhotoScreenState extends State<PhotoScreen> {
                                 "Erreur",
                                 style: TextStyle(
                                   color: Colors.red,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              content: const Text(
+                              content: Text(
                                 "Veuillez sélectionner au moins 4 photos.",
                                 style: TextStyle(
-                                  color: Colors.red,
+                                  color: colorBlack,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12.sp,
                                 ),
                               ),
                               actions: [
@@ -255,7 +257,14 @@ class _PhotoScreenState extends State<PhotoScreen> {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  child: const Text("OK"),
+                                  child: Text(
+                                    "OK",
+                                    style: TextStyle(
+                                      color: colorBlack,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12.sp,
+                                    ),
+                                  ),
                                 ),
                               ],
                             );
@@ -263,17 +272,9 @@ class _PhotoScreenState extends State<PhotoScreen> {
                         );
                       }
                     },
-                    child: const Text(
-                      "Suivant",
-                      style: TextStyle(
-                        fontSize: 19,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
