@@ -461,7 +461,7 @@ class _PublierScreenState extends State<PublierScreen> {
       String nom = photoNom![i];
 
       http.MultipartFile imagePart = http.MultipartFile.fromBytes(
-        'photo[]',
+        'photos[]',
         Uint8List.fromList(bytes),
         filename: nom,
         contentType: MediaType('image', type),
