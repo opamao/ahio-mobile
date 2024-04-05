@@ -58,7 +58,7 @@ class _EquipementScreenState extends State<EquipementScreen> {
 
   Future<List<String>> _fetchEquipmentNames() async {
     final response = await http.get(
-      Uri.parse("${ApiUrls.urlApi}equipement"),
+      Uri.parse(ApiUrls.getListEquipments),
       headers: {'Authorization': '$type $token', 'Cache-Control': 'no-cache'},
     );
 
@@ -74,7 +74,7 @@ class _EquipementScreenState extends State<EquipementScreen> {
 
   Future<List<int>> _fetchEquipmentIds() async {
     final response = await http.get(
-      Uri.parse("${ApiUrls.urlApi}equipement"),
+      Uri.parse(ApiUrls.getListEquipments),
       headers: {'Authorization': '$type $token', 'Cache-Control': 'no-cache'},
     );
 

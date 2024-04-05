@@ -74,7 +74,7 @@ class _PublierScreenState extends State<PublierScreen> {
     print(jsonEncode(widget.equipement!.toList()));
 
     var response = await http.post(
-      Uri.parse(ApiUrls.listEquip),
+      Uri.parse(ApiUrls.getListEquipments),
       headers: {
         'Authorization': '$type $token',
       },
@@ -446,7 +446,7 @@ class _PublierScreenState extends State<PublierScreen> {
 
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse("${ApiUrls.urlApi}residence"),
+      Uri.parse(ApiUrls.postCreateResidence),
     );
 
     List<http.MultipartFile> imageFiles = [];

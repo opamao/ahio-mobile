@@ -2,9 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:ahio/constants/constants.dart';
-import 'package:ahio/screens/login/screens/login_screen.dart';
 import 'package:ahio/themes/themes.dart';
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -24,7 +22,6 @@ class Inscription extends StatefulWidget {
 }
 
 class _InscriptionState extends State<Inscription> {
-
   final _formkey = GlobalKey<FormState>();
 
   @override
@@ -41,7 +38,7 @@ class _InscriptionState extends State<Inscription> {
   var phone = TextEditingController();
   var email = TextEditingController();
   var mobile = TextEditingController();
-  int selected = 0;
+  String selected = "";
   String phoneInicator = "";
 
   final _snackBar = const SnackBar(
@@ -49,7 +46,7 @@ class _InscriptionState extends State<Inscription> {
     backgroundColor: Colors.red,
   );
 
-  Widget customRadio(String titre, int index) {
+  Widget customRadio(String titre, String index) {
     return OutlinedButton(
       onPressed: () {
         setState(() {
@@ -258,7 +255,7 @@ class _InscriptionState extends State<Inscription> {
                                           child: Container(
                                             child: customRadio(
                                               "Propriétaire",
-                                              1,
+                                              "owner",
                                             ),
                                           ),
                                         ),
@@ -267,21 +264,21 @@ class _InscriptionState extends State<Inscription> {
                                           child: Container(
                                             child: customRadio(
                                               "Client",
-                                              3,
+                                              "customer",
                                             ),
                                           ),
                                         ),
                                       ]),
-                                  if(selected == 1)
-                                  InputText_(
-                                    keyboardType: TextInputType.number,
-                                    controller: mobile,
-                                    hintText: "Numéro mobile money",
-                                    prefixIcon: const Padding(
-                                      padding: EdgeInsets.all(0),
-                                      child: Icon(Icons.phone),
+                                  if (selected == "owner")
+                                    InputText_(
+                                      keyboardType: TextInputType.number,
+                                      controller: mobile,
+                                      hintText: "Numéro mobile money",
+                                      prefixIcon: const Padding(
+                                        padding: EdgeInsets.all(0),
+                                        child: Icon(Icons.phone),
+                                      ),
                                     ),
-                                  ),
                                   Gap(2.h),
                                   SubmitButton(
                                     Constants.register,
@@ -329,15 +326,23 @@ class _InscriptionState extends State<Inscription> {
   }
 
   void register() async {
-    var reponse = await http.post(Uri.parse("${ApiUrls.urlApi}register"),
-        body: ({
-          'name': name.text,
-          'email': email.text,
-          'phone': phoneInicator,
-          'password': password.text,
-          'role_as': selected.toString(),
-          'phone_mobile_money': mobile.text.toString()
-        }));
+    var reponse = await http.post(
+      Uri.parse(ApiUrls.postCreateAccount),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: ({
+        'name': name.text,
+        'email': email.text,
+        'contact': phoneInicator,
+        'password': password.text,
+        'password_confirmation': password.text,
+        'role': selected,
+        'address': "",
+        'city': "",
+      }),
+    );
 
     if (reponse.statusCode == 200) {
       var resp = json.decode(reponse.body);

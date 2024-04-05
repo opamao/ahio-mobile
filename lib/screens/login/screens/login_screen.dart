@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:ahio/constants/constants.dart';
@@ -243,7 +244,7 @@ class _LoginState extends State<Login> {
                                           onPressed: () async {
                                             if (_formkey.currentState!
                                                 .validate()) {
-                                              sign();
+                                              sign(context);
                                             } else {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(_snackBar);
@@ -295,22 +296,34 @@ class _LoginState extends State<Login> {
     );
   }
 
-  void sign() async {
-    Map<String, String> requestBody = {
-      'phone': phoneInicator.isEmpty ? email.text : phoneInicator,
-      'password': password.text,
-    };
+  Future<void> sign(BuildContext context) async {
 
-    var response = await http.post(
-      Uri.parse("${ApiUrls.urlApi}login"),
-      body: requestBody,
+    const CircularProgressIndicator.adaptive(
+      semanticsLabel: "Veuillez patienter...",
     );
 
-    var resp = json.decode(response.body);
+    HttpClient().badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+
+    final http.Response respons = await http.post(
+      Uri.parse(ApiUrls.postLoginAuth),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: jsonEncode({
+        'login': phoneInicator.isEmpty ? email.text : phoneInicator,
+        'password': password.text,
+      }),
+    );
+
+    Navigator.pop(context);
+
+    var resp = jsonDecode(respons.body);
 
     print(resp);
 
-    if (response.statusCode == 200) {
+    if (resp.statusCode == 200) {
       var response = resp["response"].toString();
       var message = resp["message"];
 
@@ -332,8 +345,25 @@ class _LoginState extends State<Login> {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("$message")));
 
-        pageRoute(accessToken, tokenType, name, email, phone, role, id,
-            mobileMoney, photo, piece, activation, proprietaireId, garantId);
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        await pref.setString("access_token", accessToken);
+        await pref.setString("token_type", tokenType);
+        await pref.setString("nom", name);
+        await pref.setString("email", email);
+        await pref.setString("phone", phone);
+        await pref.setString("role", role);
+        await pref.setString("id", id);
+        await pref.setString("mobile_money", mobileMoney);
+        await pref.setString("photo", photo);
+        await pref.setString("piece", piece);
+        await pref.setString("activation", activation);
+        await pref.setString("proprietaire_id", proprietaireId);
+        await pref.setString("garant_id", garantId);
+
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => const Loading()),
+                (route) => false,);
+
       } else if (response == 'ERREUR') {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("$message")));
@@ -342,40 +372,5 @@ class _LoginState extends State<Login> {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("${resp["message"]}")));
     }
-  }
-
-  void pageRoute(
-    String accessToken,
-    String tokenType,
-    String name,
-    String email,
-    String phone,
-    String role,
-    String id,
-    String mobileMoney,
-    String photo,
-    String piece,
-    String activation,
-    String proprietaireId,
-    String garantId,
-  ) async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    await pref.setString("access_token", accessToken);
-    await pref.setString("token_type", tokenType);
-    await pref.setString("nom", name);
-    await pref.setString("email", email);
-    await pref.setString("phone", phone);
-    await pref.setString("role", role);
-    await pref.setString("id", id);
-    await pref.setString("mobile_money", mobileMoney);
-    await pref.setString("photo", photo);
-    await pref.setString("piece", piece);
-    await pref.setString("activation", activation);
-    await pref.setString("proprietaire_id", proprietaireId);
-    await pref.setString("garant_id", garantId);
-
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => const Loading()),
-        (route) => false);
   }
 }

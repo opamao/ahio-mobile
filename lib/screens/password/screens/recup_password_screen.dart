@@ -197,7 +197,7 @@ class _RecupPasswordScreenState extends State<RecupPasswordScreen> {
 
   void recupass() async {
     var reponse = await http.post(
-        Uri.parse("${ApiUrls.urlApi}askToChangePassword"),
+        Uri.parse("${ApiUrls.baseUrlApi}askToChangePassword"),
         body: ({'phone': phone.text}));
     print(reponse.statusCode);
     if (reponse.statusCode == 200) {

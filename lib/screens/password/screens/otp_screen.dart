@@ -190,7 +190,7 @@ class _OtpScreenState extends State<OtpScreen> {
     print(telephone);
     print("ICI OH");
     var reponse = await http.post(
-        Uri.parse("${ApiUrls.urlApi}verificationCodeOtp/${telephone}"),
+        Uri.parse("${ApiUrls.baseUrlApi}verificationCodeOtp/$telephone"),
         body: ({
           'code_otp': (_fieldOne.text +
                   _fieldTwo.text +

@@ -215,7 +215,7 @@ class _autresState extends State<_autres> {
 
     var reponse = await http.post(
         Uri.parse(
-          "${ApiUrls.urlApi}logout",
+          ApiUrls.postLogoutAuth,
         ),
         headers: {
           'Authorization': "$typeToken $token",

@@ -6,7 +6,6 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../widgets/widgets.dart';
@@ -172,7 +171,7 @@ class _PanelState extends State<Panel> {
 
   Future<void> _fetchPays() async {
     final response =
-        await http.get(Uri.parse("${ApiUrls.urlApi}pays"), headers: {
+        await http.get(Uri.parse("${ApiUrls.baseUrlApi}pays"), headers: {
       'Authorization': '$type $token',
     });
 
@@ -190,7 +189,7 @@ class _PanelState extends State<Panel> {
 
   Future<void> _fetchVille(int countryId) async {
     final response = await http.get(
-        Uri.parse("${ApiUrls.urlApi}getCitiesByCountry/$countryId"),
+        Uri.parse("${ApiUrls.baseUrlApi}getCitiesByCountry/$countryId"),
         headers: {
           'Authorization': '$type $token',
         });

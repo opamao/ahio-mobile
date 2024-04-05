@@ -310,7 +310,7 @@ class _SecurityProfilScreenState extends State<SecurityProfilScreen> {
   void register() async {
     var reponse = await http.post(
         Uri.parse(
-          "${ApiUrls.urlApi}updateProfil",
+          ApiUrls.postUpdateAccount,
         ),
         body: ({
           'name': name.text,

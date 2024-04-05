@@ -240,7 +240,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   void changemdp() async {
     var reponse = await http.post(
-        Uri.parse("${ApiUrls.urlApi}changePassword/${phone}"),
+        Uri.parse("${ApiUrls.baseUrlApi}changePassword/${phone}"),
         body: ({'password': password.text}));
 
     print(reponse.statusCode);

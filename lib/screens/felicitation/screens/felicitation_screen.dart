@@ -82,8 +82,17 @@ class _FelicitationState extends State<Felicitation> {
   }
 
   void sign() async {
-    var reponse = await http.post(Uri.parse("${ApiUrls.urlApi}login"),
-        body: ({'phone': telephone, 'password': password}));
+    var reponse = await http.post(
+      Uri.parse(ApiUrls.postLoginAuth),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: ({
+        'login': telephone,
+        'password': password,
+      }),
+    );
 
     if (reponse.statusCode == 200) {
       var resp = json.decode(reponse.body);
