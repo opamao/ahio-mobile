@@ -8,6 +8,7 @@ import 'package:ahio/screens/loading/screens/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:sizer/sizer.dart';
@@ -15,6 +16,7 @@ import 'package:sizer/sizer.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../themes/themes.dart';
 import '../../../widgets/widgets.dart';
+import '../../menu/menu.dart';
 import '../../password/password.dart';
 
 class Login extends StatefulWidget {
@@ -297,9 +299,12 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> sign(BuildContext context) async {
-
-    const CircularProgressIndicator.adaptive(
-      semanticsLabel: "Veuillez patienter...",
+    QuickAlert.show(
+      disableBackBtn: true,
+      context: context,
+      type: QuickAlertType.warning,
+      title: "Veuillez patienter...",
+      showConfirmBtn: false,
     );
 
     HttpClient().badCertificateCallback =
@@ -312,7 +317,7 @@ class _LoginState extends State<Login> {
         'Accept': 'application/json',
       },
       body: jsonEncode({
-        'login': phoneInicator.isEmpty ? email.text : phoneInicator,
+        'username': phoneInicator.isEmpty ? email.text : phoneInicator,
         'password': password.text,
       }),
     );
@@ -321,56 +326,34 @@ class _LoginState extends State<Login> {
 
     var resp = jsonDecode(respons.body);
 
-    print(resp);
+    if (respons.statusCode == 200) {
 
-    if (resp.statusCode == 200) {
-      var response = resp["response"].toString();
-      var message = resp["message"];
+      print(resp["data"]["token"]);
 
-      if (response == 'SUCCESS') {
-        var accessToken = resp["object"]["access_token"];
-        var tokenType = resp["object"]["token_type"];
-        var name = resp["object"]["name"];
-        var email = resp["object"]["email"] ?? "";
-        var phone = resp["object"]["phone"];
-        var role = resp["object"]["role_as"].toString();
-        var id = resp["object"]["id"].toString();
-        var mobileMoney = resp["object"]["phone_mobile_money"] ?? "";
-        var photo = resp["object"]["photo_identity"] ?? "";
-        var piece = resp["object"]["piece_identity"] ?? "";
-        var activation = resp["object"]["is_active"].toString();
-        var proprietaireId = resp["object"]["proprietaire_id"].toString();
-        var garantId = resp["object"]["gerant_id"].toString();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.green,
+          content: Text("Vous êtes connecté avec succès"),
+        ),
+      );
 
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("$message")));
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      await pref.setString("access_token", resp["data"]["token"]);
 
-        SharedPreferences pref = await SharedPreferences.getInstance();
-        await pref.setString("access_token", accessToken);
-        await pref.setString("token_type", tokenType);
-        await pref.setString("nom", name);
-        await pref.setString("email", email);
-        await pref.setString("phone", phone);
-        await pref.setString("role", role);
-        await pref.setString("id", id);
-        await pref.setString("mobile_money", mobileMoney);
-        await pref.setString("photo", photo);
-        await pref.setString("piece", piece);
-        await pref.setString("activation", activation);
-        await pref.setString("proprietaire_id", proprietaireId);
-        await pref.setString("garant_id", garantId);
-
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => const Loading()),
-                (route) => false,);
-
-      } else if (response == 'ERREUR') {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("$message")));
-      }
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomeScreen(),
+        ),
+        (route) => false,
+      );
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("${resp["message"]}")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text("Impossible de vous connectez. Veuillez réessayer"),
+        ),
+      );
     }
   }
 }

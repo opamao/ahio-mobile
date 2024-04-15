@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:ahio/constants/constants.dart';
@@ -6,13 +7,12 @@ import 'package:ahio/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../widgets/widgets.dart';
-import '../../loading/loading.dart';
 
 class Inscription extends StatefulWidget {
   const Inscription({super.key});
@@ -29,8 +29,6 @@ class _InscriptionState extends State<Inscription> {
     super.initState();
   }
 
-  List<String> role = ['proprietaire', 'client'];
-
   int? selectedOption;
   bool _obscure = true;
   var password = TextEditingController();
@@ -39,7 +37,8 @@ class _InscriptionState extends State<Inscription> {
   var email = TextEditingController();
   var mobile = TextEditingController();
   String selected = "";
-  String phoneInicator = "";
+  String phoneIndicator = "";
+  String mobileIndicator = "";
 
   final _snackBar = const SnackBar(
     content: Text("Vérifiez vos champs!"),
@@ -166,8 +165,9 @@ class _InscriptionState extends State<Inscription> {
                                         border: Border.all()),
                                     child: InternationalPhoneNumberInput(
                                       onInputChanged: (PhoneNumber number) {
+                                        print(number);
                                         print(number.phoneNumber);
-                                        phoneInicator = number.phoneNumber!;
+                                        phoneIndicator = number.phoneNumber!;
                                       },
                                       onInputValidated: (bool value) {
                                         print(value);
@@ -270,13 +270,47 @@ class _InscriptionState extends State<Inscription> {
                                         ),
                                       ]),
                                   if (selected == "owner")
-                                    InputText_(
-                                      keyboardType: TextInputType.number,
-                                      controller: mobile,
-                                      hintText: "Numéro mobile money",
-                                      prefixIcon: const Padding(
-                                        padding: EdgeInsets.all(0),
-                                        child: Icon(Icons.phone),
+                                    Container(
+                                      padding: EdgeInsets.only(left: 4.w),
+                                      decoration: BoxDecoration(
+                                          color: colorWhite,
+                                          borderRadius:
+                                              BorderRadius.circular(4.w),
+                                          border: Border.all()),
+                                      child: InternationalPhoneNumberInput(
+                                        onInputChanged: (PhoneNumber number) {
+                                          print(number.phoneNumber);
+                                          mobileIndicator = number.phoneNumber!;
+                                        },
+                                        onInputValidated: (bool value) {
+                                          print(value);
+                                        },
+                                        errorMessage: "Le numéro est invalide",
+                                        hintText: "Numéro de téléphone",
+                                        selectorConfig: const SelectorConfig(
+                                          selectorType: PhoneInputSelectorType
+                                              .BOTTOM_SHEET,
+                                        ),
+                                        ignoreBlank: false,
+                                        autoValidateMode:
+                                            AutovalidateMode.disabled,
+                                        selectorTextStyle: const TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                        initialValue: number,
+                                        textFieldController: mobile,
+                                        formatInput: true,
+                                        keyboardType: const TextInputType
+                                            .numberWithOptions(
+                                          signed: true,
+                                          decimal: true,
+                                        ),
+                                        inputBorder: const OutlineInputBorder(
+                                          borderSide: BorderSide.none,
+                                        ),
+                                        onSaved: (PhoneNumber number) {
+                                          print('On Saved: $number');
+                                        },
                                       ),
                                     ),
                                   Gap(2.h),
@@ -284,7 +318,7 @@ class _InscriptionState extends State<Inscription> {
                                     Constants.register,
                                     onPressed: () async {
                                       if (_formkey.currentState!.validate()) {
-                                        register();
+                                        register(context);
                                       } else {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(_snackBar);
@@ -325,54 +359,54 @@ class _InscriptionState extends State<Inscription> {
     );
   }
 
-  void register() async {
+  Future<void> register(BuildContext context) async {
+    QuickAlert.show(
+      disableBackBtn: true,
+      context: context,
+      type: QuickAlertType.warning,
+      title: "Veuillez patienter...",
+      showConfirmBtn: false,
+    );
+
+    HttpClient().badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+
     var reponse = await http.post(
       Uri.parse(ApiUrls.postCreateAccount),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: ({
+      body: jsonEncode({
         'name': name.text,
         'email': email.text,
-        'contact': phoneInicator,
+        'contact': phoneIndicator,
         'password': password.text,
         'password_confirmation': password.text,
         'role': selected,
         'address': "",
         'city': "",
+        'mobile_money_contact': mobileIndicator,
       }),
     );
 
-    if (reponse.statusCode == 200) {
-      var resp = json.decode(reponse.body);
+    Navigator.pop(context);
 
-      var response = resp["response"];
-      var message = resp["message"];
-
-      if (response == 'SUCCESS') {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("${message}")));
-
-        pageRoute(phone.text, password.text);
-      } else if (response == 'ERREUR') {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("${resp["object"]}")));
-      }
+    if (reponse.statusCode == 201) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.green,
+          content: Text("Votre compte a été créé"),
+        ),
+      );
+      Navigator.pop(context);
     } else {
-      var resp = json.decode(reponse.body);
-
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("${resp["message"]}")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text("Impossible de créer cotre compte. Veuillez reessayer"),
+        ),
+      );
     }
-  }
-
-  void pageRoute(String phone, String password) async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    await pref.setString("phone", phone);
-    await pref.setString("passwword", password);
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => const Loading()),
-        (route) => false);
   }
 }

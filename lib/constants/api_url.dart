@@ -1,7 +1,7 @@
 class ApiUrls {
   ApiUrls._();
 
-  static const baseUrlApi = "http://ahio.roomcodetraining.com/api/v1/";
+  static const baseUrlApi = "https://ahio.roomcodetraining.com/api/v1/";
 
   static const account = "${baseUrlApi}account/";
   static const postCreateAccount = "${account}create";
