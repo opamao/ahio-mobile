@@ -1,7 +1,13 @@
+import 'dart:convert';
+
+import 'package:ahio/constants/api_url.dart';
+import 'package:ahio/models/add_residence/list_type_residence_model.dart';
 import 'package:ahio/screens/locator/screens/lacator_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../widgets/widgets.dart';
@@ -14,11 +20,46 @@ class TypeScreen extends StatefulWidget {
 }
 
 class _TypeScreenState extends State<TypeScreen> {
-  int selected = 0;
+  String selected = "";
   String libelle = "";
 
-  Widget customRadio(
-      String image, String titre, String description, int index) {
+  late Future<List<ListResidenceModel>> _residenceFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _residenceFuture = fetchResidence();
+  }
+
+  Future<List<ListResidenceModel>> fetchResidence() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? accessToken = pref.getString("access_token");
+
+    final http.Response response = await http.get(
+      Uri.parse(ApiUrls.getListTypeResidence),
+      headers: {
+        'Authorization': "Bearer $accessToken",
+      },
+    );
+
+    debugPrint(response.body.toString(), wrapWidth: 1024);
+
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+
+      final List<dynamic> dataList = jsonResponse['data'];
+
+      List<ListResidenceModel> listType =
+          dataList.map((item) => ListResidenceModel.fromJson(item)).toList();
+
+      return listType;
+    } else {
+      throw Exception(
+          "Une erreur s'est produite lors de la requête HTTP: ${response.statusCode}");
+    }
+  }
+
+  Widget customRadio(String titre, String index) {
     return OutlinedButton(
       onPressed: () {
         setState(() {
@@ -42,32 +83,19 @@ class _TypeScreenState extends State<TypeScreen> {
       ),
       child: Row(
         children: [
-          Image.asset(
+          /*Image.network(
             image,
             height: 100,
             width: 100,
-          ),
-          Column(
-            children: [
-              Text(
-                titre,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                description,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black45,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.normal,
-                ),
-              )
-            ],
+          ),*/
+          Text(
+            titre.toString(),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 18.sp,
+              fontWeight: FontWeight.bold,
+            ),
           )
         ],
       ),
@@ -112,41 +140,39 @@ class _TypeScreenState extends State<TypeScreen> {
                   ),
                 ),
                 const Gap(20),
-                Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        child: customRadio(
-                          "images/appartement.png",
-                          "Un appartement",
-                          "",
-                          1,
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        child: customRadio(
-                          "images/villas.png",
-                          "Une villa",
-                          "",
-                          2,
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        child: customRadio(
-                          "images/chambre.png",
-                          "Une chambre",
-                          "",
-                          3,
-                        ),
-                      ),
-                    ],
+                Expanded(
+                  child: FutureBuilder<List<ListResidenceModel>>(
+                    future: _residenceFuture,
+                    builder: (context,
+                        AsyncSnapshot<List<ListResidenceModel>> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError || snapshot.data == null) {
+                        return Center(
+                          child: Text('Erreur: ${snapshot.error}'),
+                        );
+                      } else {
+                        return ListView.builder(
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            final ListResidenceModel type =
+                                snapshot.data![index];
+                            return Container(
+                              padding: const EdgeInsets.all(5),
+                              child: customRadio(
+                                //type.image!,
+                                type.name!,
+                                type.id!,
+                              ),
+                            );
+                          },
+                        );
+                      }
+                    },
                   ),
                 ),
-                const Spacer(),
                 SubmitButton(
                   "Suivant",
                   onPressed: () {
@@ -161,13 +187,12 @@ class _TypeScreenState extends State<TypeScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Maps(type: libelle),
+                          builder: (context) => Maps(type: selected),
                         ),
                       );
                     }
                   },
                 ),
-                const Spacer(),
               ],
             ),
           ),

@@ -6,12 +6,12 @@ import '../../../widgets/widgets.dart';
 import '../residence.dart';
 
 class EstimationScreen extends StatefulWidget {
-  final List<int>? equipement;
+  final List<String>? equipement;
   final List<List<int>>? photos;
   final List<String>? photosType;
   final List<String>? photosNom;
-  final String? adresse, rue, quartier, type, debut, fin;
-  int? pays, ville, personne, chambre, lit, salle;
+  final String? adresse, rue, quartier, type, debut, fin, pays, ville;
+  int? personne, chambre, lit, salle;
 
   EstimationScreen({
     super.key,

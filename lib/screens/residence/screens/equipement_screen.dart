@@ -12,11 +12,11 @@ import '../../../widgets/widgets.dart';
 import '../residence.dart';
 
 class EquipementScreen extends StatefulWidget {
-  final String? adresse, rue, quartier, type;
-  final int? pays, ville, personne, chambre, lit, salle;
+  final String? adresse, rue, quartier, type, pays, ville;
+  final int? personne, chambre, lit, salle;
 
   const EquipementScreen({
-    Key? key,
+    super.key,
     this.adresse,
     this.rue,
     this.quartier,
@@ -27,7 +27,7 @@ class EquipementScreen extends StatefulWidget {
     this.lit,
     this.salle,
     this.type,
-  }) : super(key: key);
+  });
 
   @override
   State<EquipementScreen> createState() => _EquipementScreenState();
@@ -35,10 +35,10 @@ class EquipementScreen extends StatefulWidget {
 
 class _EquipementScreenState extends State<EquipementScreen> {
   late Future<List<String>> equipmentNamesFuture;
-  late Future<List<int>> equipmentIdsFuture;
-  late List<int> valeurs = [];
+  late Future<List<String>> equipmentIdsFuture;
+  late List<String> valeurs = [];
 
-  String? token, type = "";
+  String? token;
 
   @override
   void initState() {
@@ -50,7 +50,6 @@ class _EquipementScreenState extends State<EquipementScreen> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     setState(() {
       token = pref.getString("access_token");
-      type = pref.getString("token_type");
       equipmentNamesFuture = _fetchEquipmentNames();
       equipmentIdsFuture = _fetchEquipmentIds();
     });
@@ -59,11 +58,11 @@ class _EquipementScreenState extends State<EquipementScreen> {
   Future<List<String>> _fetchEquipmentNames() async {
     final response = await http.get(
       Uri.parse(ApiUrls.getListEquipments),
-      headers: {'Authorization': '$type $token', 'Cache-Control': 'no-cache'},
+      headers: {'Authorization': "Bearer $token", 'Cache-Control': 'no-cache'},
     );
 
     if (response.statusCode == 200) {
-      final jsonData = json.decode(response.body)["object"] as List;
+      final jsonData = json.decode(response.body) as List;
       List<String> equipmentNames =
           jsonData.map((item) => item["name"] as String).toList();
       return equipmentNames;
@@ -72,16 +71,16 @@ class _EquipementScreenState extends State<EquipementScreen> {
     }
   }
 
-  Future<List<int>> _fetchEquipmentIds() async {
+  Future<List<String>> _fetchEquipmentIds() async {
     final response = await http.get(
       Uri.parse(ApiUrls.getListEquipments),
-      headers: {'Authorization': '$type $token', 'Cache-Control': 'no-cache'},
+      headers: {'Authorization': "Bearer $token", 'Cache-Control': 'no-cache'},
     );
 
     if (response.statusCode == 200) {
-      final jsonData = json.decode(response.body)["object"] as List;
-      List<int> equipmentIds =
-          jsonData.map<int>((item) => item["id"] as int).toList();
+      final jsonData = json.decode(response.body) as List;
+      List<String> equipmentIds =
+          jsonData.map<String>((item) => item["id"] as String).toList();
       return equipmentIds;
     } else {
       throw Exception("Échec de récupération des IDs d'équipement");
@@ -124,51 +123,52 @@ class _EquipementScreenState extends State<EquipementScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              FutureBuilder(
-                future: Future.wait([equipmentNamesFuture, equipmentIdsFuture]),
-                builder: (BuildContext context,
-                    AsyncSnapshot<List<dynamic>> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return Center(child: Text('Erreur: ${snapshot.error}'));
-                  } else {
-                    List<String> equipmentNames = snapshot.data![0];
-                    List<int> equipmentIds = snapshot.data![1];
-                    return Center(
-                      child: SingleChildScrollView(
-                        child: CustomCheckBoxGroup(
-                          buttonTextStyle: const ButtonTextStyle(
-                            selectedColor: Colors.white,
-                            unSelectedColor: Colors.black,
-                            textStyle: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
+              Expanded(
+                child: FutureBuilder(
+                  future: Future.wait([equipmentNamesFuture, equipmentIdsFuture]),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<dynamic>> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Center(child: Text('Erreur: ${snapshot.error}'));
+                    } else {
+                      List<String> equipmentNames = snapshot.data![0];
+                      List<String> equipmentIds = snapshot.data![1];
+                      return Center(
+                        child: SingleChildScrollView(
+                          child: CustomCheckBoxGroup(
+                            buttonTextStyle: const ButtonTextStyle(
+                              selectedColor: Colors.white,
+                              unSelectedColor: Colors.black,
+                              textStyle: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
+                            autoWidth: false,
+                            enableButtonWrap: true,
+                            wrapAlignment: WrapAlignment.center,
+                            unSelectedColor: Theme.of(context).canvasColor,
+                            buttonLables: equipmentNames,
+                            buttonValuesList: equipmentIds,
+                            checkBoxButtonValues: (values) {
+                              print(values);
+                              valeurs = values.cast<String>();
+                            },
+                            horizontal: false,
+                            width: 120,
+                            //height: 50,
+                            selectedColor: const Color.fromRGBO(12, 126, 196, 1.0),
+                            padding: 5,
+                            enableShape: true,
                           ),
-                          autoWidth: false,
-                          enableButtonWrap: true,
-                          wrapAlignment: WrapAlignment.center,
-                          unSelectedColor: Theme.of(context).canvasColor,
-                          buttonLables: equipmentNames,
-                          buttonValuesList: equipmentIds,
-                          checkBoxButtonValues: (values) {
-                            print(values);
-                            valeurs = values;
-                          },
-                          horizontal: false,
-                          width: 120,
-                          //height: 50,
-                          selectedColor: const Color.fromRGBO(12, 126, 196, 1.0),
-                          padding: 5,
-                          enableShape: true,
                         ),
-                      ),
-                    );
-                  }
-                },
+                      );
+                    }
+                  },
+                ),
               ),
-              const Spacer(),
               SubmitButton(
                 "Suivant",
                 onPressed: () {
@@ -192,7 +192,6 @@ class _EquipementScreenState extends State<EquipementScreen> {
                   );
                 },
               ),
-              const Spacer(),
             ],
           ),
         ),

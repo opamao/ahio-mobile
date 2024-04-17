@@ -13,14 +13,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../widgets/widgets.dart';
+import '../../menu/menu.dart';
 
 class PublierScreen extends StatefulWidget {
-  final List<int>? equipement;
+  final List<String>? equipement;
   final List<List<int>>? photos;
   final List<String>? photosType;
   final List<String>? photosNom;
-  final String? adresse, rue, quartier, type, debut, fin, montant;
-  int? pays, ville, personne, chambre, lit, salle;
+  final String? adresse, rue, quartier, type, debut, fin, montant, pays, ville;
+  int? personne, chambre, lit, salle;
 
   PublierScreen({
     super.key,
@@ -49,7 +50,7 @@ class PublierScreen extends StatefulWidget {
 
 class _PublierScreenState extends State<PublierScreen> {
   bool _isload = false;
-  String? token, type, id = "";
+  String? token = "";
   late Future<void> equipmentNamesFuture;
   late List<String> valeurs = [];
 
@@ -63,8 +64,6 @@ class _PublierScreenState extends State<PublierScreen> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     setState(() {
       token = pref.getString("access_token");
-      type = pref.getString("token_type");
-      id = pref.getString("id");
       equipmentNamesFuture = _fetchEquipmentNames();
     });
   }
@@ -76,7 +75,7 @@ class _PublierScreenState extends State<PublierScreen> {
     var response = await http.post(
       Uri.parse(ApiUrls.getListEquipments),
       headers: {
-        'Authorization': '$type $token',
+        'Authorization': "Bearer $token",
       },
       body: ({
         'equipement_id[]': jsonEncode(widget.equipement!.toList()),
@@ -159,7 +158,7 @@ class _PublierScreenState extends State<PublierScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            widget.type!,
+                            widget.quartier!,
                             style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -167,7 +166,7 @@ class _PublierScreenState extends State<PublierScreen> {
                             ),
                           ),
                           AutoSizeText(
-                            "${widget.quartier} ${widget.adresse} ${widget.rue}",
+                            "${widget.adresse} ${widget.rue}",
                             maxLines: 3,
                             style: const TextStyle(
                               color: Colors.white,
@@ -418,23 +417,6 @@ class _PublierScreenState extends State<PublierScreen> {
   }
 
   Future<void> publier(BuildContext context) async {
-    // Map<String, dynamic> getPhotoMap() {
-    //   Map<String, dynamic> photoMap = {};
-    //   for (int i = 0; i < widget.photos!.length; i++) {
-    //     photoMap[i.toString()] = widget.photos![i];
-    //   }
-    //   return photoMap;
-    // }
-
-    Map<String, dynamic> getEquipementMap() {
-      Map<String, dynamic> equipementMap = {};
-      for (int i = 0; i < widget.equipement!.length; i++) {
-        equipementMap[i.toString()] = widget.equipement![i];
-      }
-      return equipementMap;
-    }
-
-    // print(jsonEncode(getPhotoMap()));
 
     DateFormat originalDateFormat = DateFormat("dd/MM/yyyy");
     DateTime parsedDateDebut = originalDateFormat.parse(widget.debut!);
@@ -470,70 +452,59 @@ class _PublierScreenState extends State<PublierScreen> {
     }
 
     request.headers['Content-Type'] = 'multipart/form-data';
-    request.headers['Authorization'] = '$type $token';
+    request.headers['Accept'] = 'application/json';
+    request.headers['Authorization'] = "Bearer $token";
 
     for (var imageFile in imageFiles) {
       request.files.add(imageFile);
     }
 
-    request.fields['type_residence_id'] = widget.type!;
-    request.fields['proprietaire_id'] = id.toString();
+    request.fields['residence_type_id'] = widget.type!;
     request.fields['longitude'] = "5.3600";
     request.fields['latitude'] = "4.0083";
-    request.fields['adresse'] = widget.adresse!;
-    request.fields['rue'] = widget.rue!;
-    request.fields['quartier'] = widget.quartier!;
-    request.fields['pays_id'] = widget.pays.toString();
-    request.fields['ville_id'] = widget.ville.toString();
-    request.fields['nbre_personnes'] = widget.personne.toString();
-    request.fields['nbre_chambres'] = widget.chambre.toString();
-    request.fields['nbre_lits'] = widget.lit.toString();
-    request.fields['nbre_salle_eau'] = widget.salle.toString();
-    request.fields['equipement_id'] = jsonEncode(getEquipementMap());
-    request.fields['date_debut'] = formattedDateDebut;
-    request.fields['date_fin'] = formattedDateFin;
-    request.fields['montant_journalier'] = widget.montant!;
-    request.fields['devise'] = "FCFA";
+    request.fields['address'] = widget.adresse!;
+    request.fields['street'] = widget.rue!;
+    request.fields['district'] = widget.quartier!;
+    request.fields['country_id'] = widget.pays.toString();
+    request.fields['city_id'] = widget.ville.toString();
+    request.fields['persons_supported'] = widget.personne.toString();
+    request.fields['rooms'] = widget.chambre.toString();
+    request.fields['beds'] = widget.lit.toString();
+    request.fields['bathrooms'] = widget.salle.toString();
+    request.fields['equipments[]'] = jsonEncode(widget.equipement);
+    request.fields['available_at'] = formattedDateDebut;
+    request.fields['available_until'] = formattedDateFin;
+    request.fields['price'] = widget.montant!;
+    request.fields['description'] = "";
 
     try {
       final streamedResponse = await request.send();
       final response = await http.Response.fromStream(streamedResponse);
 
-      var resp = json.decode(response.body);
+      if (response.statusCode == 201) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Votre résidence a été ajouté"),
+            backgroundColor: Colors.green,
+          ),
+        );
 
-      print(resp);
+        setState(() {
+          _isload = false;
+        });
 
-      if (response.statusCode == 200) {
-        var reponse = resp["response"];
-        var message = resp["message"];
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ),
+              (route) => false,
+        );
 
-        if (reponse == 'SUCCESS') {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text("$message"),
-              backgroundColor: Colors.green,
-            ),
-          );
-
-          setState(() {
-            _isload = false;
-          });
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text("$message"),
-              backgroundColor: Colors.red,
-            ),
-          );
-
-          setState(() {
-            _isload = false;
-          });
-        }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text("Impossible de publier, veuillez réessayer"),
+            content: Text("Impossible d'enregistrer, veuillez réessayer"),
             backgroundColor: Colors.red,
           ),
         );

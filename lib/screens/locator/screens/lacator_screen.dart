@@ -14,7 +14,10 @@ import '../../residence/residence.dart';
 class Maps extends StatefulWidget {
   final String type;
 
-  const Maps({super.key, required this.type});
+  const Maps({
+    super.key,
+    required this.type,
+  });
 
   @override
   State<Maps> createState() => _MapsState();
@@ -93,10 +96,13 @@ class _MapsState extends State<Maps> {
 }
 
 class Pays {
-  int id;
+  String id;
   String name;
 
-  Pays({required this.id, required this.name});
+  Pays({
+    required this.id,
+    required this.name,
+  });
 
   factory Pays.fromJson(Map<String, dynamic> json) {
     return Pays(
@@ -107,17 +113,18 @@ class Pays {
 }
 
 class Ville {
-  final int id;
+  final String id;
   final String name;
-  final int countryId;
 
-  Ville({required this.id, required this.name, required this.countryId});
+  Ville({
+    required this.id,
+    required this.name,
+  });
 
   factory Ville.fromJson(Map<String, dynamic> json) {
     return Ville(
       id: json['id'],
       name: json['name'],
-      countryId: json['pays_id'],
     );
   }
 }
@@ -147,8 +154,8 @@ class _PanelState extends State<Panel> {
 
   List<Pays> _pays = [];
   List<Ville> _ville = [];
-  int? _selectedCountryId;
-  int? _selectedCityId;
+  String? _selectedCountryId;
+  String? _selectedCityId;
 
   late String token, type = "";
 
@@ -162,22 +169,21 @@ class _PanelState extends State<Panel> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     setState(() {
       token = pref.getString("access_token")!;
-      type = pref.getString("token_type")!;
       _fetchPays();
     });
-
-    debugPrint(token);
   }
 
   Future<void> _fetchPays() async {
-    final response =
-        await http.get(Uri.parse("${ApiUrls.baseUrlApi}pays"), headers: {
-      'Authorization': '$type $token',
-    });
+    final response = await http.get(
+      Uri.parse(ApiUrls.getListPays),
+      headers: {
+        'Authorization': "Bearer $token",
+      },
+    );
 
     print("RETOUR ${response.body}");
 
-    final jsonData = json.decode(response.body)["object"] as List;
+    final jsonData = json.decode(response.body) as List<dynamic>;
 
     List<Pays> paysList = jsonData.map((item) => Pays.fromJson(item)).toList();
     paysList.sort((a, b) => a.name.compareTo(b.name));
@@ -187,14 +193,15 @@ class _PanelState extends State<Panel> {
     });
   }
 
-  Future<void> _fetchVille(int countryId) async {
+  Future<void> _fetchVille(String countryId) async {
     final response = await http.get(
-        Uri.parse("${ApiUrls.baseUrlApi}getCitiesByCountry/$countryId"),
-        headers: {
-          'Authorization': '$type $token',
-        });
+      Uri.parse("${ApiUrls.getListVille}$countryId"),
+      headers: {
+        'Authorization': "Bearer $token",
+      },
+    );
 
-    final jsonData = json.decode(response.body)['object'] as List;
+    final jsonData = json.decode(response.body) as List<dynamic>;
 
     List<Ville> villeList =
         jsonData.map((item) => Ville.fromJson(item)).toList();

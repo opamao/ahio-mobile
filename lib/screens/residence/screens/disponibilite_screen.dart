@@ -8,12 +8,12 @@ import '../../../widgets/widgets.dart';
 import '../residence.dart';
 
 class DisponibiliteScreen extends StatefulWidget {
-  final List<int> equipement;
+  final List<String> equipement;
   final List<List<int>>? photos;
   final List<String>? photosType;
   final List<String>? photosNom;
-  final String adresse, rue, quartier, type;
-  int? pays, ville, personne, chambre, lit, salle;
+  final String adresse, rue, quartier, type, pays, ville;
+  int? personne, chambre, lit, salle;
 
   DisponibiliteScreen({
     super.key,
@@ -101,7 +101,7 @@ class _DisponibiliteScreenState extends State<DisponibiliteScreen> {
                 children: [
                   const Gap(20),
                   const Text(
-                    "Quelle est la disponibilité De votre bien ?",
+                    "Quelle est la disponibilité de votre bien ?",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.black,

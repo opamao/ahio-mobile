@@ -26,9 +26,9 @@ class ImageUploadModel {
 }
 
 class PhotoScreen extends StatefulWidget {
-  final List<int>? equipement;
-  final String? adresse, rue, quartier, type;
-  int? pays, ville, personne, chambre, lit, salle;
+  final List<String>? equipement;
+  final String? adresse, rue, quartier, type, pays, ville;
+  int? personne, chambre, lit, salle;
 
   PhotoScreen({
     super.key,
@@ -220,8 +220,8 @@ class _PhotoScreenState extends State<PhotoScreen> {
                               rue: widget.rue!,
                               quartier: widget.quartier!,
                               type: widget.type!,
-                              pays: widget.pays,
-                              ville: widget.ville,
+                              pays: widget.pays!,
+                              ville: widget.ville!,
                               personne: widget.personne,
                               chambre: widget.chambre,
                               lit: widget.lit,

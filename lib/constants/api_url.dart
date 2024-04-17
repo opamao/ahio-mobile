@@ -40,4 +40,7 @@ class ApiUrls {
   static const getNbrTotalResidenceCancelled = "${statistic}residences/inactive";
 
   static const getListEquipments = "${baseUrlApi}equipments";
+
+  static const getListPays = "${baseUrlApi}countries";
+  static const getListVille = "${baseUrlApi}countries/";
 }

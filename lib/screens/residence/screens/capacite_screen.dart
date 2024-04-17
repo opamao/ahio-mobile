@@ -10,18 +10,18 @@ class CapaciteScreen extends StatefulWidget {
   final String rue;
   final String quartier;
   final String type;
-  final int? pays;
-  final int? ville;
+  final String? pays;
+  final String? ville;
 
   const CapaciteScreen({
-    Key? key,
+    super.key,
     required this.adresse,
     required this.rue,
     required this.quartier,
     this.pays,
     this.ville,
     required this.type,
-  }) : super(key: key);
+  });
 
   @override
   State<CapaciteScreen> createState() => _CapaciteScreenState();

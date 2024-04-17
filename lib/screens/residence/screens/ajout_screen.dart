@@ -5,9 +5,9 @@ import '../../../widgets/widgets.dart';
 import '../residence.dart';
 
 class AjouterScreen extends StatefulWidget {
-  final List<int>? equipement;
-  final String? adresse, rue, quartier, type;
-  final int? pays, ville, personne, chambre, lit, salle;
+  final List<String>? equipement;
+  final String? adresse, rue, quartier, type, pays, ville;
+  final int? personne, chambre, lit, salle;
 
   const AjouterScreen({
     super.key,
