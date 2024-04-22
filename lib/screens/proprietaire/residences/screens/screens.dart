@@ -1,0 +1,1 @@
+export 'residence_screen.dart';

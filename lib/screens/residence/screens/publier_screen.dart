@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:ahio/constants/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -13,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../widgets/widgets.dart';
-import '../../menu/menu.dart';
+import '../../proprietaire/menus/menus.dart';
 
 class PublierScreen extends StatefulWidget {
   final List<String>? equipement;
@@ -496,7 +495,7 @@ class _PublierScreenState extends State<PublierScreen> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
+            builder: (context) => const MenuScreen(),
           ),
               (route) => false,
         );
