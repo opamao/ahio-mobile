@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:ahio/constants/api_url.dart';
-import 'package:ahio/models/add_residence/list_type_residence_model.dart';
 import 'package:ahio/screens/locator/screens/lacator_screen.dart';
 
 import 'package:flutter/material.dart';
@@ -10,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../models/client/list_type_residence_model.dart';
 import '../../../widgets/widgets.dart';
 
 class TypeScreen extends StatefulWidget {

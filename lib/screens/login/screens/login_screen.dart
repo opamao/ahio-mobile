@@ -18,6 +18,7 @@ import '../../../themes/themes.dart';
 import '../../../widgets/widgets.dart';
 import '../../menu/menu.dart';
 import '../../password/password.dart';
+import '../../proprietaire/menus/menus.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -326,9 +327,9 @@ class _LoginState extends State<Login> {
 
     var resp = jsonDecode(respons.body);
 
-    if (respons.statusCode == 200) {
+    print(resp);
 
-      print(resp["data"]["token"]);
+    if (respons.statusCode == 200) {
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -339,14 +340,25 @@ class _LoginState extends State<Login> {
 
       SharedPreferences pref = await SharedPreferences.getInstance();
       await pref.setString("access_token", resp["data"]["token"]);
+      await pref.setString("role", resp["data"]["role"]);
 
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
-        ),
-        (route) => false,
-      );
+      if (resp["data"]["role"] == 'customer') {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ),
+          (route) => false,
+        );
+      } else {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MenuScreen(),
+          ),
+          (route) => false,
+        );
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

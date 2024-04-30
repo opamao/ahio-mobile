@@ -2,6 +2,7 @@ import 'package:ahio/constants/constants.dart';
 import 'package:ahio/screens/login/screens/login_screen.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -207,54 +208,55 @@ class _autresState extends State<_autres> {
   }
 
   void logout() async {
+    QuickAlert.show(
+      disableBackBtn: true,
+      context: context,
+      type: QuickAlertType.warning,
+      title: "Déconnexion...",
+      showConfirmBtn: false,
+    );
+
     SharedPreferences pref = await SharedPreferences.getInstance();
-    String typeToken = pref.getString("token_type")!;
     String token = pref.getString("access_token")!;
 
-    print(typeToken + ' ' + token);
+    print(token);
 
     var reponse = await http.post(
-        Uri.parse(
-          ApiUrls.postLogoutAuth,
-        ),
-        headers: {
-          'Authorization': "$typeToken $token",
-        });
+      Uri.parse(
+        ApiUrls.postLogoutAuth,
+      ),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': "Bearer $token",
+      },
+    );
 
     print(reponse.statusCode);
 
+    Navigator.pop(context);
+
     if (reponse.statusCode == 200) {
-      var resp = json.decode(reponse.body);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.green,
+          content: Text("Vous êtes déconnecter"),
+        ),
+      );
 
-      print(resp);
-
-      var response = resp["response"];
-      var message = resp["message"];
-
-      if (response == 'SUCCESS') {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("$message")));
-
-        pageRoute();
-      } else if (response == 'ERREUR') {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text("Une erreur s'est produite, veuillez ressayer")));
-      }
-    } else {
-      var resp = json.decode(reponse.body);
-
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("${resp["message"]}")));
-    }
-  }
-
-  void pageRoute() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    await pref.clear();
-
-    Navigator.of(context).pushAndRemoveUntil(
+      await pref.clear();
+      Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => const Login()),
-        (route) => false);
+        (route) => false,
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text("Impossible de vous déconnecter. Veuillez réessayer"),
+        ),
+      );
+    }
   }
 }
 
@@ -354,7 +356,7 @@ class _TopPortionState extends State<_TopPortion> {
           Text(
             nom,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.normal,
             ),

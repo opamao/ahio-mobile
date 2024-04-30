@@ -10,7 +10,7 @@ import '../../residence/residence.dart';
 import '../accueil.dart';
 
 class AccueilScreen extends StatefulWidget {
-  AccueilScreen({
+  const AccueilScreen({
     super.key,
   });
 
@@ -74,140 +74,6 @@ class AccueilScreenContent extends State<AccueilScreen> {
               ],
             ),
           ),
-          SizedBox(
-            height: 30.h,
-            child: Stack(
-              children: [
-                Positioned(
-                  top: 35,
-                  left: 20,
-                  child: Material(
-                    child: Container(
-                      height: 22.h,
-                      width: 92.w,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5.w),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
-                            offset: const Offset(-10.0, 10.0),
-                            blurRadius: 20.0,
-                            spreadRadius: 4.0,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 0,
-                  left: 30,
-                  child: Card(
-                    elevation: 50.0,
-                    shadowColor: Colors.grey.withOpacity(0.5),
-                    color: Colors.transparent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: Container(
-                      height: 200,
-                      width: 150,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: Assets.images.home.provider(),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 45,
-                  left: 180,
-                  child: Container(
-                    margin: EdgeInsets.only(left: 3.w),
-                    height: 150,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Ajouter votre résidence",
-                          style: TextStyle(
-                            fontSize: 12.sp,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const EspaceScreen(),
-                              ),
-                            );
-                          },
-                          child: Text(
-                            "Démarrer maintenant >",
-                            style: TextStyle(
-                              fontSize: 11.sp,
-                              color: colorIcon,
-                              fontWeight: FontWeight.bold,
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          // (widget.role == 'proprietaire')
-          //     ? Container(
-          //         color: Colors.white,
-          //         margin: const EdgeInsets.only(left: 20),
-          //         height: 40,
-          //         width: 280,
-          //         child: ListView(
-          //           scrollDirection: Axis.horizontal,
-          //           children: [
-          //             TextButton(
-          //               onPressed: () {},
-          //               child: Text(
-          //                 "Appartement",
-          //                 style:
-          //                     TextStyle(color: Colors.black26, fontSize: 10.sp),
-          //               ),
-          //             ),
-          //             const SizedBox(
-          //               width: 3,
-          //             ),
-          //             TextButton(
-          //                 onPressed: () {},
-          //                 child: Text(
-          //                   "Villa",
-          //                   style: TextStyle(
-          //                       color: Colors.black26, fontSize: 10.sp),
-          //                 )),
-          //             const SizedBox(
-          //               width: 3,
-          //             ),
-          //             TextButton(
-          //                 onPressed: () {},
-          //                 child: Text(
-          //                   "Chambre",
-          //                   style: TextStyle(
-          //                       color: Colors.black26, fontSize: 10.sp),
-          //                 )),
-          //           ],
-          //         ),
-          //       )
-          // :
           Gap(2.h),
           Container(
             color: Colors.white,
