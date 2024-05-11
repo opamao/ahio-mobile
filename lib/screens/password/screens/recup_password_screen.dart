@@ -33,7 +33,11 @@ class _RecupPasswordScreenState extends State<RecupPasswordScreen> {
     String? val = pref.getString("access_token");
     if (val != null) {
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => OtpScreen()), (route) => false);
+        MaterialPageRoute(
+          builder: (context) => const OtpScreen(),
+        ),
+        (route) => false,
+      );
     }
   }
 
@@ -89,7 +93,7 @@ class _RecupPasswordScreenState extends State<RecupPasswordScreen> {
                                     Container(
                                       margin: const EdgeInsets.only(
                                           left: 5, top: 50, bottom: 10),
-                                      child: Column(
+                                      child: const Column(
                                         children: [
                                           Text(
                                             "Gestion de mot de passe oublié",
@@ -224,6 +228,7 @@ class _RecupPasswordScreenState extends State<RecupPasswordScreen> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("phone", phonee);
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => const OtpScreen()), (route) => false);
+        MaterialPageRoute(builder: (context) => const OtpScreen()),
+        (route) => false);
   }
 }

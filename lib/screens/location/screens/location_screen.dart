@@ -16,8 +16,8 @@ class LocationsScreen extends StatefulWidget {
 class LocationsScreenContent extends State<LocationsScreen> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
+    return Scaffold(
+      body: DefaultTabController(
         length: 3,
         child: Scaffold(
           backgroundColor: const Color.fromARGB(255, 239, 250, 230),

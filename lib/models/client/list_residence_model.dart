@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class ResidenceClient {
   String? id;
   String? createdAt;
@@ -18,11 +16,11 @@ class ResidenceClient {
   String? availableAt;
   String? availableUntil;
   String? mainPhoto;
-  OtherPhotos? otherPhotos;
+  List<String>? photos;
   String? category;
   String? country;
   String? city;
-  List<String>? equipments;
+  List<Equipments>? equipments;
 
   ResidenceClient({
     this.id,
@@ -42,7 +40,7 @@ class ResidenceClient {
     this.availableAt,
     this.availableUntil,
     this.mainPhoto,
-    this.otherPhotos,
+    this.photos,
     this.category,
     this.country,
     this.city,
@@ -67,16 +65,14 @@ class ResidenceClient {
     availableAt = json['available_at'];
     availableUntil = json['available_until'];
     mainPhoto = json['main_photo'];
-    otherPhotos = json['other_photos'] != null
-        ? new OtherPhotos.fromJson(json['other_photos'])
-        : null;
+    photos = json['photos'].cast<String>();
     category = json['category'];
     country = json['country'];
     city = json['city'];
-    if (json['equipments'] != empty) {
-      equipments = <String>[];
+    if (json['equipments'] != null) {
+      equipments = <Equipments>[];
       json['equipments'].forEach((v) {
-        equipments!.add(new String.fromJson(v));
+        equipments!.add(new Equipments.fromJson(v));
       });
     }
   }
@@ -100,9 +96,7 @@ class ResidenceClient {
     data['available_at'] = availableAt;
     data['available_until'] = availableUntil;
     data['main_photo'] = mainPhoto;
-    if (otherPhotos != null) {
-      data['other_photos'] = otherPhotos!.toJson();
-    }
+    data['photos'] = photos;
     data['category'] = category;
     data['country'] = country;
     data['city'] = city;
@@ -113,24 +107,18 @@ class ResidenceClient {
   }
 }
 
-class OtherPhotos {
-  String? s1;
-  String? s2;
-  String? s3;
+class Equipments {
+  String? name;
 
-  OtherPhotos({this.s1, this.s2, this.s3});
+  Equipments({this.name});
 
-  OtherPhotos.fromJson(Map<String, dynamic> json) {
-    s1 = json['1'];
-    s2 = json['2'];
-    s3 = json['3'];
+  Equipments.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['1'] = s1;
-    data['2'] = s2;
-    data['3'] = s3;
+    data['name'] = name;
     return data;
   }
 }

@@ -1,8 +1,29 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:ahio/models/client/list_residence_model.dart';
 import 'package:flutter/material.dart';
+import 'package:quickalert/quickalert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
+import 'package:http/http.dart' as http;
+
+import '../../../constants/constants.dart';
+import '../../../utils/utils.dart';
+import '../../../widgets/widgets.dart';
+import '../../menu/menu.dart';
 
 class ModePaiementScreen extends StatefulWidget {
-  const ModePaiementScreen({super.key});
+  ResidenceClient? residence;
+  String? dateDebut;
+  String? dateFin;
+
+  ModePaiementScreen({
+    super.key,
+    this.residence,
+    this.dateDebut,
+    this.dateFin,
+  });
 
   @override
   State<ModePaiementScreen> createState() => _ModePaiementScreenState();
@@ -11,19 +32,12 @@ class ModePaiementScreen extends StatefulWidget {
 class _ModePaiementScreenState extends State<ModePaiementScreen> {
   final _formkey = GlobalKey<FormState>();
 
-  final _snackBar = const SnackBar(
-    content:
-        Text('Les dates début séjour et fin séjour doivent être sélectionner'),
-    backgroundColor: Colors.red,
-  );
-
   var dateFin = TextEditingController();
 
   int selected = 0;
   String libelle = "";
 
-  Widget customRadio(
-      String image, String titre, int index) {
+  Widget customRadio(String image, String titre, int index) {
     return OutlinedButton(
       onPressed: () {
         setState(() {
@@ -72,8 +86,8 @@ class _ModePaiementScreenState extends State<ModePaiementScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
+    return Scaffold(
+      body: DefaultTabController(
         length: 2,
         child: Scaffold(
           backgroundColor: const Color.fromARGB(255, 239, 250, 230),
@@ -128,42 +142,13 @@ class _ModePaiementScreenState extends State<ModePaiementScreen> {
           ),
         ),
       ),
-    );
-    return Form(
-      key: _formkey,
-      child: Scaffold(
-        backgroundColor: const Color.fromRGBO(225, 239, 216, 1.0),
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text(
-            "Remplir et Payer",
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.normal,
-            ),
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Icon(
-                Icons.arrow_back,
-                color: Colors.black,
-              ),
-            ),
-          ),
-        ),
-        body: const SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [],
-            ),
-          ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.all(4.w),
+        child: SubmitButton(
+          Constants.reserver,
+          onPressed: () {
+              reserve(context);
+          },
         ),
       ),
     );
@@ -233,5 +218,68 @@ class _ModePaiementScreenState extends State<ModePaiementScreen> {
         children: [],
       ),
     );
+  }
+
+  Future<void> reserve(BuildContext context) async {
+    QuickAlert.show(
+      disableBackBtn: true,
+      context: context,
+      type: QuickAlertType.warning,
+      title: "Veuillez patienter...",
+      showConfirmBtn: false,
+    );
+
+    SharedPreferences pref = await SharedPreferences.getInstance();
+
+    HttpClient().badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+
+    final http.Response respons = await http.post(
+      Uri.parse(ApiUrls.postCreateReservation),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': "Bearer ${pref.getString("access_token")}",
+      },
+      body: jsonEncode({
+        'residence_id': widget.residence!.id,
+        'start_date': formatDateTime(widget.dateDebut!),
+        'end_date': formatDateTime(widget.dateFin!),
+        'persons': widget.residence!.personsSupported,
+      }),
+    );
+
+    Navigator.pop(context);
+
+    var resp = jsonDecode(respons.body);
+
+    print(resp);
+    print(respons.statusCode);
+
+    if (respons.statusCode == 201) {
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.green,
+          content: Text("Votre réservation a été prise en compte"),
+        ),
+      );
+
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomeScreen(),
+        ),
+            (route) => false,
+      );
+
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text("Impossible de faire la réservation. Veuillez réessayer"),
+        ),
+      );
+    }
   }
 }

@@ -5,4 +5,5 @@ class Constants {
   static const register = "S'inscrire";
   static const textCreate = "Pas de compte, créez votre compte";
   static const oubliePassword = "Mot de passe oublié ?";
+  static const reserver = "Reserver";
 }

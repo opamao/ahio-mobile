@@ -1,13 +1,21 @@
+import 'package:ahio/models/client/list_residence_model.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:sizer/sizer.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
 
+import '../../../themes/themes.dart';
 import '../../paiement/paiement.dart';
 
 class RempliPayerScreen extends StatefulWidget {
-  const RempliPayerScreen({super.key});
+  ResidenceClient? residence;
+
+  RempliPayerScreen({
+    super.key,
+    this.residence,
+  });
 
   @override
   State<RempliPayerScreen> createState() => _RempliPayerScreenState();
@@ -37,10 +45,10 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
         _range =
             '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} - ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
         dateDebut = TextEditingController(
-            text: "${DateFormat('dd/MM/yyyy').format(args.value.startDate)}");
+            text: DateFormat('dd/MM/yyyy').format(args.value.startDate));
         dateFin = TextEditingController(
-            text:
-                "${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}");
+            text: DateFormat('dd/MM/yyyy')
+                .format(args.value.endDate ?? args.value.startDate));
       }
       /*else if (args.value is DateTime) {
         _selectedDate = args.value.toString();
@@ -102,82 +110,89 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
                 Container(
                   width: 400,
                   height: 200,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: Colors.transparent,
                     image: DecorationImage(
-                      image: AssetImage("images/sal2.png"),
+                      image: NetworkImage(widget.residence!.mainPhoto!),
                       fit: BoxFit.cover,
                     ),
                     borderRadius: BorderRadius.all(
-                      Radius.circular(40),
+                      Radius.circular(3.w),
                     ),
                   ),
                   child: Padding(
-                    padding: EdgeInsets.only(
-                      left: 30.0,
-                      bottom: 15,
-                    ),
+                    padding: const EdgeInsets.only(left: 30.0, bottom: 15),
                     child: Column(
                       children: [
                         Spacer(),
-                        Row(
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Appartement",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 23,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 200,
-                                  child: AutoSizeText(
-                                    "Abidjan / Cocody cité des arts rue L109",
-                                    maxLines: 2,
+                        Container(
+                          padding: EdgeInsets.all(2.w),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(3.w),
+                              bottomLeft: Radius.circular(3.w),
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    widget.residence!.category!,
                                     style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 14,
+                                      color: colorBlack,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15.sp,
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  "25.000 F",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
+                                  SizedBox(
+                                    width: 200,
+                                    child: AutoSizeText(
+                                      "${widget.residence!.city!} ${widget.residence!.district!} \n${widget.residence!.country!}",
+                                      maxLines: 2,
+                                      style: TextStyle(
+                                        color: colorBlack,
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 12.sp,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  " / nuit",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 14,
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    "${widget.residence!.price!} F",
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14.sp,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                  Text(
+                                    " /nuit",
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 12.sp,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ),
                 const Gap(20),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -205,35 +220,6 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      /*Container(
-                        decoration: const BoxDecoration(
-                          color: Color.fromRGBO(0, 0, 0, .16),
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                        ),
-                        child: DropdownDatePicker(
-                          locale: 'fr_FR',
-                          isDropdownHideUnderline: true,
-                          isFormValidator: true,
-                          startYear: 1900,
-                          endYear: 3000,
-                          width: 10,
-                          selectedMonth: 01,
-                          selectedYear: 2023,
-                          onChangedMonth: (value) =>
-                              print('onChangedMonth: $value'),
-                          onChangedYear: (value) =>
-                              print('onChangedYear: $value'),
-                          //boxDecoration: BoxDecoration(
-                          // border: Border.all(color: Colors.grey, width: 1.0)), // optional
-                          showDay: false,
-                          // dayFlex: 2,// optional
-                          // locale: "zh_CN",// optional
-                          // hintDay: 'Day', // optional
-                          // hintMonth: 'Month', // optional
-                          // hintYear: 'Year', // optional
-                          // hintTextStyle: TextStyle(color: Colors.grey), // optional
-                        ),
-                      ),*/
                       Container(
                         decoration: const BoxDecoration(
                           color: Color.fromRGBO(0, 0, 0, .16),
@@ -268,7 +254,7 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               hintText: "Début",
-                              prefixIcon: Padding(
+                              prefixIcon: const Padding(
                                 padding: EdgeInsets.all(5.0),
                                 child: SizedBox(
                                   width: 100,
@@ -306,7 +292,7 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               hintText: "Fin",
-                              prefixIcon: Padding(
+                              prefixIcon: const Padding(
                                 padding: EdgeInsets.all(5.0),
                                 child: SizedBox(
                                   width: 90,
@@ -371,7 +357,11 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const ModePaiementScreen(),
+                      builder: (context) => ModePaiementScreen(
+                        residence: widget.residence!,
+                        dateDebut: dateDebut.text,
+                        dateFin: dateFin.text,
+                      ),
                     ),
                   );
                 } else {

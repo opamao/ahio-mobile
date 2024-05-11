@@ -1,11 +1,20 @@
+import 'package:ahio/models/client/list_residence_model.dart';
+import 'package:ahio/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:sizer/sizer.dart';
 
+import '../../../utils/utils.dart';
 import '../accueil.dart';
 
 class DetailAccueilScreen extends StatelessWidget {
-  const DetailAccueilScreen({super.key});
+  ResidenceClient? residence;
+
+  DetailAccueilScreen({
+    super.key,
+    this.residence,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +24,7 @@ class DetailAccueilScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "Détail - bien",
+          "Détails",
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.normal),
         ),
         backgroundColor: Colors.transparent,
@@ -40,72 +49,82 @@ class DetailAccueilScreen extends StatelessWidget {
               Container(
                 width: 400,
                 height: 200,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: Colors.transparent,
                   image: DecorationImage(
-                    image: AssetImage("images/sal2.png"),
+                    image: NetworkImage(residence!.mainPhoto!),
                     fit: BoxFit.cover,
                   ),
                   borderRadius: BorderRadius.all(
-                    Radius.circular(40),
+                    Radius.circular(3.w),
                   ),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.only(left: 30.0, bottom: 15),
+                  padding: const EdgeInsets.only(left: 30.0, bottom: 15),
                   child: Column(
                     children: [
-                      Spacer(),
-                      Row(
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Appartement",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 23,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 200,
-                                child: AutoSizeText(
-                                  "Abidjan / Cocody cité des arts rue L109",
-                                  maxLines: 2,
+                      const Spacer(),
+                      Container(
+                        padding: EdgeInsets.all(2.w),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(3.w),
+                            bottomLeft: Radius.circular(3.w),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  residence!.category!,
                                   style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 14,
+                                    color: colorBlack,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15.sp,
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                "25.000 F",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                                SizedBox(
+                                  width: 200,
+                                  child: AutoSizeText(
+                                    "${residence!.city!} ${residence!.district!} \n${residence!.country!}",
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                      color: colorBlack,
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 12.sp,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                " / nuit",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 14,
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  "${residence!.price!} F",
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14.sp,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
+                                Text(
+                                  " /nuit",
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 12.sp,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -147,10 +166,10 @@ class DetailAccueilScreen extends StatelessWidget {
                                     height: 30,
                                     width: 30,
                                   ),
-                                  const Text(
-                                    "5 Personnes",
+                                  Text(
+                                    "${residence!.personsSupported!} Personnes",
                                     style: TextStyle(
-                                      fontSize: 15,
+                                      fontSize: 11.sp,
                                       color: Colors.black,
                                       fontWeight: FontWeight.normal,
                                     ),
@@ -164,10 +183,10 @@ class DetailAccueilScreen extends StatelessWidget {
                                     height: 30,
                                     width: 30,
                                   ),
-                                  const Text(
-                                    "2 Chambres",
+                                  Text(
+                                    "${residence!.rooms!} Chambres",
                                     style: TextStyle(
-                                      fontSize: 15,
+                                      fontSize: 11.sp,
                                       color: Colors.black,
                                       fontWeight: FontWeight.normal,
                                     ),
@@ -181,10 +200,10 @@ class DetailAccueilScreen extends StatelessWidget {
                                     height: 30,
                                     width: 30,
                                   ),
-                                  const Text(
-                                    "2 Lits",
+                                  Text(
+                                    "${residence!.beds!} Lits",
                                     style: TextStyle(
-                                      fontSize: 15,
+                                      fontSize: 11.sp,
                                       color: Colors.black,
                                       fontWeight: FontWeight.normal,
                                     ),
@@ -198,10 +217,10 @@ class DetailAccueilScreen extends StatelessWidget {
                                     height: 30,
                                     width: 30,
                                   ),
-                                  const Text(
-                                    "2 Salles d'eau",
+                                  Text(
+                                    "${residence!.bathrooms!} Salles d'eau",
                                     style: TextStyle(
-                                      fontSize: 15,
+                                      fontSize: 11.sp,
                                       color: Colors.black,
                                       fontWeight: FontWeight.normal,
                                     ),
@@ -225,169 +244,7 @@ class DetailAccueilScreen extends StatelessWidget {
                             top: 8,
                           ),
                           child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 10,
-                                    height: 10,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(50),
-                                      ),
-                                    ),
-                                  ),
-                                  const Gap(10),
-                                  const Text(
-                                    "Parking",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 10,
-                                    height: 10,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(50),
-                                      ),
-                                    ),
-                                  ),
-                                  const Gap(10),
-                                  const Text(
-                                    "Climatisation",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 10,
-                                    height: 10,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(50),
-                                      ),
-                                    ),
-                                  ),
-                                  const Gap(10),
-                                  const Text(
-                                    "Piscine",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 10,
-                                    height: 10,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(50),
-                                      ),
-                                    ),
-                                  ),
-                                  const Gap(10),
-                                  const Text(
-                                    "Concierge",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 10,
-                                    height: 10,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(50),
-                                      ),
-                                    ),
-                                  ),
-                                  const Gap(10),
-                                  const Text(
-                                    "Wifi",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 10,
-                                    height: 10,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(50),
-                                      ),
-                                    ),
-                                  ),
-                                  const Gap(10),
-                                  const Text(
-                                    "Bar",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 10,
-                                    height: 10,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(50),
-                                      ),
-                                    ),
-                                  ),
-                                  const Gap(10),
-                                  const Text(
-                                    "Lave linge",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                            children: buildEquipmentWidgets(residence!.equipments!),
                           ),
                         ),
                         const Gap(20),
@@ -398,14 +255,14 @@ class DetailAccueilScreen extends StatelessWidget {
                             fontSize: 18,
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(
+                         Padding(
+                          padding: const EdgeInsets.only(
                             left: 20,
                             top: 8,
                           ),
                           child: Text(
-                            "Du 08 Jan au 18 Jan",
-                            style: TextStyle(
+                              "Du ${formatDates(residence!.availableAt!)} au ${formatDates(residence!.availableUntil!)}",
+                            style: const TextStyle(
                               color: Colors.green,
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
@@ -470,7 +327,7 @@ class DetailAccueilScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const RempliPayerScreen(),
+                      builder: (context) => RempliPayerScreen(residence: residence),
                     ),
                   );
                 },
@@ -489,4 +346,39 @@ class DetailAccueilScreen extends StatelessWidget {
       ),
     );
   }
+
+  List<Widget> buildEquipmentWidgets(List<Equipments>? equipments) {
+    List<Widget> widgets = [];
+
+    for (var equipment in equipments!) {
+      widgets.add(
+        Row(
+          children: [
+            Container(
+              width: 10,
+              height: 10,
+              decoration: const BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(50),
+                ),
+              ),
+            ),
+            const Gap(10),
+            Text(
+              equipment.name!, // Affiche le nom de l'équipement
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 15,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return widgets;
+  }
+
 }

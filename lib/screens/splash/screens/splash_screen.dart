@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../menu/menu.dart';
+import '../../proprietaire/menus/menus.dart';
 
 class SplashScreenn extends StatelessWidget {
   const SplashScreenn({super.key});
@@ -21,7 +22,7 @@ class SplashScreenn extends StatelessWidget {
 }
 
 class TestScreen extends StatefulWidget {
-  const TestScreen({Key? key}) : super(key: key);
+  const TestScreen({super.key});
 
   @override
   State<TestScreen> createState() => _TestScreenState();
@@ -38,11 +39,20 @@ class _TestScreenState extends State<TestScreen> {
 
   void checkLogin() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    String? val = pref.getString("access_token");
-    if (val != null) {
+    String? role = pref.getString("role");
+    if (role != null && role == 'customer') {
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ),
           (route) => false);
+    } else if (role != null && role != 'customer') {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => const MenuScreen(),
+        ),
+        (route) => false,
+      );
     }
   }
 
@@ -131,11 +141,11 @@ class _TestScreenState extends State<TestScreen> {
 
 class TestScreenContent extends StatelessWidget {
   const TestScreenContent({
-    Key? key,
+    super.key,
     required this.logo,
     required this.image,
     required this.titre,
-  }) : super(key: key);
+  });
 
   final String logo, image, titre;
 
@@ -200,9 +210,9 @@ final List<Onboard> demoData = [
 
 class DotIndicator extends StatelessWidget {
   const DotIndicator({
-    Key? key,
+    super.key,
     this.isActive = false,
-  }) : super(key: key);
+  });
 
   final bool isActive;
 
