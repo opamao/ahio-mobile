@@ -1,9 +1,32 @@
+import 'package:ahio/models/client/list_reservation_model.dart';
+import 'package:ahio/utils/utils.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:sizer/sizer.dart';
+
+import '../../../themes/themes.dart';
 
 class DetailLocationScreen extends StatelessWidget {
-  const DetailLocationScreen({super.key});
+  ListReservationClient? location;
+
+  final DateTime startDate;
+  final DateTime endDate;
+
+  DetailLocationScreen({
+    super.key,
+    required this.location,
+  })  : startDate = location != null &&
+                location.startDate != null &&
+                location.endDate != null
+            ? DateTime.parse(location.startDate!.split('-').reversed.join())
+            : DateTime.now(),
+        endDate = location != null &&
+                location.startDate != null &&
+                location.endDate != null
+            ? DateTime.parse(location.endDate!.split('-').reversed.join())
+            : DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -38,36 +61,81 @@ class DetailLocationScreen extends StatelessWidget {
               Container(
                 width: 400,
                 height: 200,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
                   image: DecorationImage(
-                    image: AssetImage("images/sal2.png"),
+                    image: NetworkImage(location!.residence!.mainPhoto!),
                     fit: BoxFit.cover,
                   ),
                   borderRadius: BorderRadius.all(
-                    Radius.circular(40),
+                    Radius.circular(3.w),
                   ),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 30.0, bottom: 15),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Spacer(),
-                      Text(
-                        "Appartement",
-                        style: TextStyle(
+                    children: [
+                      const Spacer(),
+                      Container(
+                        padding: EdgeInsets.all(2.w),
+                        decoration: BoxDecoration(
                           color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(3.w),
+                            bottomLeft: Radius.circular(3.w),
+                          ),
                         ),
-                      ),
-                      Text(
-                        "Abidjan / Cocody cité des arts rue L109",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 16,
+                        child: Row(
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  location!.residence!.district!,
+                                  style: TextStyle(
+                                    color: colorBlack,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15.sp,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 200,
+                                  child: AutoSizeText(
+                                    "${location!.residence!.code!} ${location!.residence!.street}",
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                      color: colorBlack,
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 12.sp,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  "${location!.residence!.price!} F",
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14.sp,
+                                  ),
+                                ),
+                                Text(
+                                  " /nuit",
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 12.sp,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -124,20 +192,22 @@ class DetailLocationScreen extends StatelessWidget {
                                 ],
                               ),
                               Row(
-                                children: const [
+                                children: [
                                   Text(
-                                    "Du 08 Jan au 18 Jan = ",
-                                    style: TextStyle(
+                                    "Du ${formatDates(location!.startDate!)} au ${formatDates(location!.endDate!)} = ",
+                                    style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 15,
                                     ),
                                   ),
-                                  Text(
-                                    "10 nuits",
-                                    style: TextStyle(
-                                      color: Colors.green,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
+                                  Expanded(
+                                    child: Text(
+                                      "${endDate.difference(startDate).inDays} nuits",
+                                      style: const TextStyle(
+                                        color: Colors.green,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -153,24 +223,24 @@ class DetailLocationScreen extends StatelessWidget {
                             fontSize: 18,
                           ),
                         ),
-                        Padding(
+                         Padding(
                           padding: const EdgeInsets.only(
                             left: 20,
                             top: 8,
                           ),
                           child: Row(
-                            children: const [
+                            children: [
                               Text(
-                                "25.000 F x 10 = ",
-                                style: TextStyle(
+                                "${location!.residence!.price} F x ${endDate.difference(startDate).inDays} = ",
+                                style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
-                                "250.000 Fcfa",
-                                style: TextStyle(
+                                "${location!.residence!.price! * endDate.difference(startDate).inDays} FCFA",
+                                style: const TextStyle(
                                   color: Colors.green,
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
@@ -202,9 +272,9 @@ class DetailLocationScreen extends StatelessWidget {
                                     height: 30,
                                     width: 30,
                                   ),
-                                  const Text(
-                                    "5 Personnes",
-                                    style: TextStyle(
+                                   Text(
+                                    "${location!.residence!.personsSupported} Personnes",
+                                    style: const TextStyle(
                                       fontSize: 15,
                                       color: Colors.black,
                                       fontWeight: FontWeight.normal,
@@ -219,9 +289,9 @@ class DetailLocationScreen extends StatelessWidget {
                                     height: 30,
                                     width: 30,
                                   ),
-                                  const Text(
-                                    "2 Chambres",
-                                    style: TextStyle(
+                                   Text(
+                                    "${location!.residence!.rooms} Chambres",
+                                    style: const TextStyle(
                                       fontSize: 15,
                                       color: Colors.black,
                                       fontWeight: FontWeight.normal,
@@ -236,9 +306,9 @@ class DetailLocationScreen extends StatelessWidget {
                                     height: 30,
                                     width: 30,
                                   ),
-                                  const Text(
-                                    "2 Lits",
-                                    style: TextStyle(
+                                  Text(
+                                    "${location!.residence!.beds} Lits",
+                                    style: const TextStyle(
                                       fontSize: 15,
                                       color: Colors.black,
                                       fontWeight: FontWeight.normal,
@@ -253,9 +323,9 @@ class DetailLocationScreen extends StatelessWidget {
                                     height: 30,
                                     width: 30,
                                   ),
-                                  const Text(
-                                    "2 Salles d'eau",
-                                    style: TextStyle(
+                                  Text(
+                                    "${location!.residence!.bathrooms} Salles d'eau",
+                                    style: const TextStyle(
                                       fontSize: 15,
                                       color: Colors.black,
                                       fontWeight: FontWeight.normal,
@@ -293,8 +363,8 @@ class DetailLocationScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Gap(10),
-                                  Text(
+                                  const Gap(10),
+                                  const Text(
                                     "Parking",
                                     style: TextStyle(
                                       color: Colors.black,
@@ -316,8 +386,8 @@ class DetailLocationScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Gap(10),
-                                  Text(
+                                  const Gap(10),
+                                  const Text(
                                     "Climatisation",
                                     style: TextStyle(
                                       color: Colors.black,
@@ -339,8 +409,8 @@ class DetailLocationScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Gap(10),
-                                  Text(
+                                  const Gap(10),
+                                  const Text(
                                     "Piscine",
                                     style: TextStyle(
                                       color: Colors.black,
@@ -362,8 +432,8 @@ class DetailLocationScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Gap(10),
-                                  Text(
+                                  const Gap(10),
+                                  const Text(
                                     "Concierge",
                                     style: TextStyle(
                                       color: Colors.black,
@@ -385,8 +455,8 @@ class DetailLocationScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Gap(10),
-                                  Text(
+                                  const Gap(10),
+                                  const Text(
                                     "Wifi",
                                     style: TextStyle(
                                       color: Colors.black,
@@ -408,8 +478,8 @@ class DetailLocationScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Gap(10),
-                                  Text(
+                                  const Gap(10),
+                                  const Text(
                                     "Bar",
                                     style: TextStyle(
                                       color: Colors.black,
@@ -431,8 +501,8 @@ class DetailLocationScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Gap(10),
-                                  Text(
+                                  const Gap(10),
+                                  const Text(
                                     "Lave linge",
                                     style: TextStyle(
                                       color: Colors.black,
@@ -464,7 +534,7 @@ class DetailLocationScreen extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             left: 90.0,
             right: 90.0,
             top: 10,
