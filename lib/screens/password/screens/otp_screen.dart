@@ -19,7 +19,6 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-  final _formkey = GlobalKey<FormState>();
 
   final _fieldOne = TextEditingController();
   final _fieldTwo = TextEditingController();
@@ -94,7 +93,7 @@ class _OtpScreenState extends State<OtpScreen> {
                               Container(
                                 margin: const EdgeInsets.only(
                                     left: 5, top: 25, bottom: 10),
-                                child: Column(
+                                child: const Column(
                                   children: [
                                     Text(
                                       " vérification du numéro ",
@@ -187,20 +186,19 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 
   void verifotp() async {
-    print(telephone);
-    print("ICI OH");
     var reponse = await http.post(
-        Uri.parse("${ApiUrls.baseUrlApi}verificationCodeOtp/$telephone"),
-        body: ({
+      Uri.parse("${ApiUrls.baseUrlApi}verificationCodeOtp/$telephone"),
+      body: (
+        {
           'code_otp': (_fieldOne.text +
                   _fieldTwo.text +
                   _fieldThree.text +
                   _fieldFour.text +
                   _fieldFive.text)
               .toString()
-        }));
-
-    print(reponse.statusCode);
+        },
+      ),
+    );
 
     if (reponse.statusCode == 200) {
       var resp = json.decode(reponse.body);
@@ -219,8 +217,6 @@ class _OtpScreenState extends State<OtpScreen> {
             const SnackBar(content: Text("code non validé veillez reessayer")));
       }
     } else {
-      var resp = json.decode(reponse.body);
-
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Erreur, veuillez ressayer")));
     }
@@ -240,7 +236,7 @@ class OtpInput extends StatelessWidget {
   final TextEditingController controller;
   final bool autoFocus;
 
-  const OtpInput(this.controller, this.autoFocus, {Key? key}) : super(key: key);
+  const OtpInput(this.controller, this.autoFocus, {super.key});
 
   @override
   Widget build(BuildContext context) {

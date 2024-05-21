@@ -165,12 +165,9 @@ class _InscriptionState extends State<Inscription> {
                                         border: Border.all()),
                                     child: InternationalPhoneNumberInput(
                                       onInputChanged: (PhoneNumber number) {
-                                        print(number);
-                                        print(number.phoneNumber);
                                         phoneIndicator = number.phoneNumber!;
                                       },
                                       onInputValidated: (bool value) {
-                                        print(value);
                                       },
                                       errorMessage: "Le numéro est invalide",
                                       hintText: "Numéro de téléphone",
@@ -196,7 +193,6 @@ class _InscriptionState extends State<Inscription> {
                                         borderSide: BorderSide.none,
                                       ),
                                       onSaved: (PhoneNumber number) {
-                                        print('On Saved: $number');
                                       },
                                     ),
                                   ),
@@ -279,11 +275,9 @@ class _InscriptionState extends State<Inscription> {
                                           border: Border.all()),
                                       child: InternationalPhoneNumberInput(
                                         onInputChanged: (PhoneNumber number) {
-                                          print(number.phoneNumber);
                                           mobileIndicator = number.phoneNumber!;
                                         },
                                         onInputValidated: (bool value) {
-                                          print(value);
                                         },
                                         errorMessage: "Le numéro est invalide",
                                         hintText: "Numéro de téléphone",
@@ -309,7 +303,6 @@ class _InscriptionState extends State<Inscription> {
                                           borderSide: BorderSide.none,
                                         ),
                                         onSaved: (PhoneNumber number) {
-                                          print('On Saved: $number');
                                         },
                                       ),
                                     ),

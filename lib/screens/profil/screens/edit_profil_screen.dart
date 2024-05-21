@@ -22,8 +22,6 @@ class EditProfilScreen extends StatefulWidget {
 class _EditProfilScreenState extends State<EditProfilScreen> {
   final _formkey = GlobalKey<FormState>();
 
-  bool _obscure = true;
-
   File? images;
   final picker = ImagePicker();
 
@@ -60,7 +58,7 @@ class _EditProfilScreenState extends State<EditProfilScreen> {
     try {
       final images = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (images == null) return;
-      final imageTemp = File(images!.path);
+      final imageTemp = File(images.path);
       setState(() {
         this.images = imageTemp;
         _saveImageForProfile(this.images = imageTemp);
@@ -74,10 +72,7 @@ class _EditProfilScreenState extends State<EditProfilScreen> {
       final appDir = await getApplicationDocumentsDirectory();
       final profileImage = File('${appDir.path}/profile.png');
       await images!.copy(profileImage.path);
-      print('Image sauvegardée avec succès : ${profileImage.path}');
-    } catch (e) {
-      print('Erreur lors de la sauvegarde de l\'image : $e');
-    }
+    } catch (e) {}
   }
 
   var password = TextEditingController();
@@ -109,9 +104,9 @@ class _EditProfilScreenState extends State<EditProfilScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Gap(150),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Icon(
                   Icons.person_outline_rounded,
                   size: 30,
@@ -159,7 +154,7 @@ class _EditProfilScreenState extends State<EditProfilScreen> {
                     top: 50,
                     left: 34,
                     child: IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.photo_camera,
                         color: Colors.white,
                       ),
@@ -192,10 +187,10 @@ class _EditProfilScreenState extends State<EditProfilScreen> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20),
                                 ),
-                                label: Text("Nom"),
-                                prefixIcon: Column(
+                                label: const Text("Nom"),
+                                prefixIcon: const Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [],
+                                  children: [],
                                 ),
                                 suffixIcon: Container(
                                   margin: const EdgeInsets.all(8),
@@ -231,10 +226,10 @@ class _EditProfilScreenState extends State<EditProfilScreen> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20),
                                 ),
-                                label: Text("Téléphone"),
-                                prefixIcon: Column(
+                                label: const Text("Téléphone"),
+                                prefixIcon: const Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [],
+                                  children: [],
                                 ),
                                 suffixIcon: Container(
                                   margin: const EdgeInsets.all(8),
@@ -268,10 +263,10 @@ class _EditProfilScreenState extends State<EditProfilScreen> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20),
                                 ),
-                                label: Text("Email"),
-                                prefixIcon: Column(
+                                label: const Text("Email"),
+                                prefixIcon: const Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [],
+                                  children: [],
                                 ),
                                 suffixIcon: Container(
                                   margin: const EdgeInsets.all(8),
@@ -349,7 +344,6 @@ class _EditProfilScreenState extends State<EditProfilScreen> {
           'Authorization': '$type $token',
         });
 
-    print(reponse.statusCode);
 
     if (reponse.statusCode == 200) {
       var resp = json.decode(reponse.body);
@@ -359,7 +353,7 @@ class _EditProfilScreenState extends State<EditProfilScreen> {
 
       if (response == 'SUCCESS') {
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("${message}")));
+            .showSnackBar(SnackBar(content: Text("$message")));
 
         //pageRoute(phone.text, password.text);
       } else if (response == 'ERREUR') {

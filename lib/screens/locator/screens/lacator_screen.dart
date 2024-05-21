@@ -135,11 +135,11 @@ class Panel extends StatefulWidget {
   final String type;
 
   const Panel({
-    Key? key,
+    super.key,
     required this.controller,
     required this.panelController,
     required this.type,
-  }) : super(key: key);
+  });
 
   @override
   State<Panel> createState() => _PanelState();
@@ -180,8 +180,6 @@ class _PanelState extends State<Panel> {
         'Authorization': "Bearer $token",
       },
     );
-
-    print("RETOUR ${response.body}");
 
     final jsonData = json.decode(response.body) as List<dynamic>;
 
@@ -293,37 +291,35 @@ class _PanelState extends State<Panel> {
                     ),
                     Column(
                       children: <Widget>[
-                        Container(
-                          child: DropdownButtonFormField<Pays>(
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
+                        DropdownButtonFormField<Pays>(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
                             ),
-                            value: _selectedCountryId != null
-                                ? _pays.firstWhere(
-                                    (c) => c.id == _selectedCountryId)
-                                : null,
-                            hint: const Text('Selectionner le pays'),
-                            items: _pays
-                                .map(
-                                  (pays) => DropdownMenuItem<Pays>(
-                                    value: pays,
-                                    child: SizedBox(
-                                      width: 300,
-                                      child: Text(pays.name),
-                                    ),
-                                  ),
-                                )
-                                .toList(),
-                            onChanged: (pays) {
-                              setState(() {
-                                _selectedCountryId = pays?.id;
-                                _selectedCityId = null;
-                              });
-                              _fetchVille(pays!.id);
-                            },
                           ),
+                          value: _selectedCountryId != null
+                              ? _pays.firstWhere(
+                                  (c) => c.id == _selectedCountryId)
+                              : null,
+                          hint: const Text('Selectionner le pays'),
+                          items: _pays
+                              .map(
+                                (pays) => DropdownMenuItem<Pays>(
+                                  value: pays,
+                                  child: SizedBox(
+                                    width: 300,
+                                    child: Text(pays.name),
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (pays) {
+                            setState(() {
+                              _selectedCountryId = pays?.id;
+                              _selectedCityId = null;
+                            });
+                            _fetchVille(pays!.id);
+                          },
                         ),
                         const SizedBox(height: 20),
                         DropdownButtonFormField<Ville>(

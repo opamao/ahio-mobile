@@ -76,7 +76,7 @@ class _SecurityProfilScreenState extends State<SecurityProfilScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Gap(150),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
@@ -128,7 +128,7 @@ class _SecurityProfilScreenState extends State<SecurityProfilScreen> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               hintText: "Mot de passe",
-                              prefixIcon: Column(
+                              prefixIcon: const Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Padding(
@@ -176,7 +176,7 @@ class _SecurityProfilScreenState extends State<SecurityProfilScreen> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               hintText: "Mot de passe",
-                              prefixIcon: Column(
+                              prefixIcon: const Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Padding(
@@ -221,7 +221,7 @@ class _SecurityProfilScreenState extends State<SecurityProfilScreen> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               hintText: "Mot de passe",
-                              prefixIcon: Column(
+                              prefixIcon: const Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Padding(
@@ -322,8 +322,6 @@ class _SecurityProfilScreenState extends State<SecurityProfilScreen> {
           'Authorization': '$type $token',
         });
 
-    print(reponse.statusCode);
-
     if (reponse.statusCode == 200) {
       var resp = json.decode(reponse.body);
 
@@ -332,7 +330,7 @@ class _SecurityProfilScreenState extends State<SecurityProfilScreen> {
 
       if (response == 'SUCCESS') {
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("${message}")));
+            .showSnackBar(SnackBar(content: Text("$message")));
 
         //pageRoute(phone.text, password.text);
       } else if (response == 'ERREUR') {

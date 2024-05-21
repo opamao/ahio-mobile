@@ -153,7 +153,6 @@ class _EquipementScreenState extends State<EquipementScreen> {
                             buttonLables: equipmentNames,
                             buttonValuesList: equipmentIds,
                             checkBoxButtonValues: (values) {
-                              print(values);
                               valeurs = values.cast<String>();
                             },
                             horizontal: false,

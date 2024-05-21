@@ -40,7 +40,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   List<String> option = ['proprietaire', 'client'];
 
   bool _obscure = true;
-  bool _obscure1 = true;
   var password = TextEditingController();
   var confirmpassword = TextEditingController();
 
@@ -101,7 +100,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                   Container(
                                     margin: const EdgeInsets.only(
                                         left: 5, top: 15, bottom: 10),
-                                    child: Column(
+                                    child: const Column(
                                       children: [
                                         Text(
                                           "Creation de mot de passe ",
@@ -240,10 +239,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   void changemdp() async {
     var reponse = await http.post(
-        Uri.parse("${ApiUrls.baseUrlApi}changePassword/${phone}"),
+        Uri.parse("${ApiUrls.baseUrlApi}changePassword/$phone"),
         body: ({'password': password.text}));
-
-    print(reponse.statusCode);
 
     if (reponse.statusCode == 200) {
       var resp = json.decode(reponse.body);
@@ -260,8 +257,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             content: Text("Mot de passe non modifie, ressayez")));
       }
     } else {
-      var resp = json.decode(reponse.body);
-
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("Erreur, ressayez")));
     }

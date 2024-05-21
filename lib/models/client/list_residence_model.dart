@@ -72,13 +72,13 @@ class ResidenceClient {
     if (json['equipments'] != null) {
       equipments = <Equipments>[];
       json['equipments'].forEach((v) {
-        equipments!.add(new Equipments.fromJson(v));
+        equipments!.add(Equipments.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['created_at'] = createdAt;
     data['code'] = code;
@@ -117,7 +117,7 @@ class Equipments {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['name'] = name;
     return data;
   }

@@ -10,14 +10,14 @@ class InputText_ extends StatelessWidget {
 
   final bool obscureText;
   const InputText_({
-    Key? key,
+    super.key,
     required this.controller,
     this.keyboardType,
     this.hintText,
     this.prefixIcon,
     this.suffixIcon,
     this.obscureText = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

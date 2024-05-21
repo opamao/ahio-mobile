@@ -1,11 +1,17 @@
+import 'dart:convert';
+
 import 'package:ahio/models/client/list_reservation_model.dart';
 import 'package:ahio/utils/utils.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:quickalert/quickalert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
+import 'package:http/http.dart' as http;
 
+import '../../../constants/constants.dart';
 import '../../../themes/themes.dart';
 
 class DetailLocationScreen extends StatelessWidget {
@@ -64,7 +70,7 @@ class DetailLocationScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.transparent,
                   image: DecorationImage(
-                    image: NetworkImage(location!.residence!.mainPhoto!),
+                    image: NetworkImage(location!.residenceMainPhoto!),
                     fit: BoxFit.cover,
                   ),
                   borderRadius: BorderRadius.all(
@@ -92,7 +98,7 @@ class DetailLocationScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  location!.residence!.district!,
+                                  location!.residenceOwnerAddress!,
                                   style: TextStyle(
                                     color: colorBlack,
                                     fontWeight: FontWeight.bold,
@@ -102,7 +108,7 @@ class DetailLocationScreen extends StatelessWidget {
                                 SizedBox(
                                   width: 200,
                                   child: AutoSizeText(
-                                    "${location!.residence!.code!} ${location!.residence!.street}",
+                                    "${location!.residenceType!} ${location!.residenceStreet}",
                                     maxLines: 2,
                                     style: TextStyle(
                                       color: colorBlack,
@@ -118,7 +124,7 @@ class DetailLocationScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  "${location!.residence!.price!} F",
+                                  "${location!.residencePrice!} F",
                                   style: TextStyle(
                                     color: Colors.red,
                                     fontWeight: FontWeight.bold,
@@ -223,7 +229,7 @@ class DetailLocationScreen extends StatelessWidget {
                             fontSize: 18,
                           ),
                         ),
-                         Padding(
+                        Padding(
                           padding: const EdgeInsets.only(
                             left: 20,
                             top: 8,
@@ -231,7 +237,7 @@ class DetailLocationScreen extends StatelessWidget {
                           child: Row(
                             children: [
                               Text(
-                                "${location!.residence!.price} F x ${endDate.difference(startDate).inDays} = ",
+                                "${location!.residencePrice} F x ${endDate.difference(startDate).inDays} = ",
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 15,
@@ -239,7 +245,7 @@ class DetailLocationScreen extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "${location!.residence!.price! * endDate.difference(startDate).inDays} FCFA",
+                                "${location!.residencePrice! * endDate.difference(startDate).inDays} FCFA",
                                 style: const TextStyle(
                                   color: Colors.green,
                                   fontSize: 15,
@@ -272,8 +278,8 @@ class DetailLocationScreen extends StatelessWidget {
                                     height: 30,
                                     width: 30,
                                   ),
-                                   Text(
-                                    "${location!.residence!.personsSupported} Personnes",
+                                  Text(
+                                    "${location!.persons} Personnes",
                                     style: const TextStyle(
                                       fontSize: 15,
                                       color: Colors.black,
@@ -289,8 +295,8 @@ class DetailLocationScreen extends StatelessWidget {
                                     height: 30,
                                     width: 30,
                                   ),
-                                   Text(
-                                    "${location!.residence!.rooms} Chambres",
+                                  Text(
+                                    "${location!.residenceRooms} Chambres",
                                     style: const TextStyle(
                                       fontSize: 15,
                                       color: Colors.black,
@@ -307,7 +313,7 @@ class DetailLocationScreen extends StatelessWidget {
                                     width: 30,
                                   ),
                                   Text(
-                                    "${location!.residence!.beds} Lits",
+                                    "${location!.residenceBeds} Lits",
                                     style: const TextStyle(
                                       fontSize: 15,
                                       color: Colors.black,
@@ -324,7 +330,7 @@ class DetailLocationScreen extends StatelessWidget {
                                     width: 30,
                                   ),
                                   Text(
-                                    "${location!.residence!.bathrooms} Salles d'eau",
+                                    "${location!.residenceBathrooms} Salles d'eau",
                                     style: const TextStyle(
                                       fontSize: 15,
                                       color: Colors.black,
@@ -350,169 +356,8 @@ class DetailLocationScreen extends StatelessWidget {
                             top: 8,
                           ),
                           child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 10,
-                                    height: 10,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(50),
-                                      ),
-                                    ),
-                                  ),
-                                  const Gap(10),
-                                  const Text(
-                                    "Parking",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 10,
-                                    height: 10,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(50),
-                                      ),
-                                    ),
-                                  ),
-                                  const Gap(10),
-                                  const Text(
-                                    "Climatisation",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 10,
-                                    height: 10,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(50),
-                                      ),
-                                    ),
-                                  ),
-                                  const Gap(10),
-                                  const Text(
-                                    "Piscine",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 10,
-                                    height: 10,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(50),
-                                      ),
-                                    ),
-                                  ),
-                                  const Gap(10),
-                                  const Text(
-                                    "Concierge",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 10,
-                                    height: 10,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(50),
-                                      ),
-                                    ),
-                                  ),
-                                  const Gap(10),
-                                  const Text(
-                                    "Wifi",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 10,
-                                    height: 10,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(50),
-                                      ),
-                                    ),
-                                  ),
-                                  const Gap(10),
-                                  const Text(
-                                    "Bar",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 10,
-                                    height: 10,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(50),
-                                      ),
-                                    ),
-                                  ),
-                                  const Gap(10),
-                                  const Text(
-                                    "Lave linge",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                            children:
+                                buildEquipmentWidgets(location!.equipments!),
                           ),
                         ),
                         const Gap(20),
@@ -547,7 +392,9 @@ class DetailLocationScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0),
               ),
             ),
-            onPressed: () {},
+            onPressed: () async {
+              _fetchChangeStatus(context);
+            },
             child: const Text(
               "Terminer",
               style: TextStyle(
@@ -560,5 +407,82 @@ class DetailLocationScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  List<Widget> buildEquipmentWidgets(equipments) {
+    List<Widget> widgets = [];
+
+    for (var equipment in equipments!) {
+      widgets.add(
+        Row(
+          children: [
+            Container(
+              width: 10,
+              height: 10,
+              decoration: const BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(50),
+                ),
+              ),
+            ),
+            const Gap(10),
+            Text(
+              equipment,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 15,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+    return widgets;
+  }
+
+  Future<void> _fetchChangeStatus(BuildContext context) async {
+    QuickAlert.show(
+      disableBackBtn: true,
+      context: context,
+      type: QuickAlertType.warning,
+      title: "Veuillez patienter...",
+      showConfirmBtn: false,
+    );
+
+    SharedPreferences pref = await SharedPreferences.getInstance();
+
+    var response = await http.post(
+      Uri.parse(ApiUrls.postUpdateStatusReservation),
+      headers: {
+        'Authorization': "Bearer ${pref.getString("access_token")}",
+        'Content-Type': "application/json",
+        'Accept': "application/json",
+      },
+      body: jsonEncode({
+        'state': "completed",
+        'reservation_id': location!.id!,
+      }),
+    );
+
+    Navigator.pop(context);
+
+    if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.green,
+          content: Text("Vous avez terminer votre séjour avec succès"),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content:
+              Text("Impossible de terminer vitre séjour. Veuillez réessayer"),
+        ),
+      );
+    }
   }
 }

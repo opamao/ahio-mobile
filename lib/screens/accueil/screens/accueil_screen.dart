@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:http/http.dart' as http;
@@ -130,13 +129,13 @@ class AccueilScreenContent extends State<AccueilScreen> {
 
                   // Organisez les données par catégorie
                   Map<String, List<ResidenceClient>> residencesParCategorie = {};
-                  residences.forEach((residence) {
+                  for (var residence in residences) {
                     if (residencesParCategorie.containsKey(residence.category)) {
                       residencesParCategorie[residence.category]!.add(residence);
                     } else {
                       residencesParCategorie[residence.category!] = [residence];
                     }
-                  });
+                  }
 
                   // Créez les onglets à partir des catégories
                   List<Tab> tabs = residencesParCategorie.keys

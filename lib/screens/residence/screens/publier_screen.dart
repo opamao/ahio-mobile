@@ -68,8 +68,6 @@ class _PublierScreenState extends State<PublierScreen> {
   }
 
   Future<void> _fetchEquipmentNames() async {
-    print("OHHH ${widget.equipement} $token");
-    print(jsonEncode(widget.equipement!.toList()));
 
     var response = await http.post(
       Uri.parse(ApiUrls.getListEquipments),
@@ -84,13 +82,10 @@ class _PublierScreenState extends State<PublierScreen> {
     if (response.statusCode == 200) {
       List<dynamic> jsonData = json.decode(response.body);
 
-      print("data $jsonData");
-
       for (var item in jsonData) {
         valeurs.add(item.toString());
       }
 
-      print(valeurs);
     } else {
       throw Exception("Échec de récupération des noms d'équipement");
     }
@@ -513,7 +508,6 @@ class _PublierScreenState extends State<PublierScreen> {
         });
       }
     } catch (e) {
-      print('Erreur lors de l\'envoi de la requête: $e');
     }
   }
 }

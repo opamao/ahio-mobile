@@ -38,10 +38,7 @@ class DisponibiliteScreen extends StatefulWidget {
 }
 
 class _DisponibiliteScreenState extends State<DisponibiliteScreen> {
-  String _selectedDate = '';
-  String _dateCount = '';
   String _range = '';
-  String _rangeCount = '';
 
   final _formkey = GlobalKey<FormState>();
 

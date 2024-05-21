@@ -19,7 +19,7 @@ class FavorisScreenContent extends State<FavorisScreen> {
           const Gap(40),
           Container(
             padding: const EdgeInsets.only(left: 25),
-            child: Text(
+            child: const Text(
               "FAVORIS",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -27,7 +27,7 @@ class FavorisScreenContent extends State<FavorisScreen> {
               ),
             ),
           ),
-          Gap(16),
+          const Gap(16),
           GridView.count(
             crossAxisCount: 2,
             childAspectRatio: 0.66,
@@ -59,7 +59,7 @@ class FavorisScreenContent extends State<FavorisScreen> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 5.0),
+                        padding: const EdgeInsets.only(left: 5.0),
                         child: Column(
                           children: [
                             Row(
@@ -79,7 +79,7 @@ class FavorisScreenContent extends State<FavorisScreen> {
                                 )
                               ],
                             ),
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -100,7 +100,7 @@ class FavorisScreenContent extends State<FavorisScreen> {
                                     ),
                                   ],
                                 ),
-                                Container(
+                                SizedBox(
                                   height: 30,
                                   width: 20,
                                   child: VerticalDivider(color: Colors.green),
@@ -157,7 +157,7 @@ class FavorisScreenContent extends State<FavorisScreen> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 5.0),
+                        padding: const EdgeInsets.only(left: 5.0),
                         child: Column(
                           children: [
                             Row(
@@ -177,7 +177,7 @@ class FavorisScreenContent extends State<FavorisScreen> {
                                 )
                               ],
                             ),
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -198,7 +198,7 @@ class FavorisScreenContent extends State<FavorisScreen> {
                                     ),
                                   ],
                                 ),
-                                Container(
+                                SizedBox(
                                   height: 30,
                                   width: 20,
                                   child: VerticalDivider(color: Colors.green),
@@ -255,7 +255,7 @@ class FavorisScreenContent extends State<FavorisScreen> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 5.0),
+                        padding: const EdgeInsets.only(left: 5.0),
                         child: Column(
                           children: [
                             Row(
@@ -275,7 +275,7 @@ class FavorisScreenContent extends State<FavorisScreen> {
                                 )
                               ],
                             ),
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -296,7 +296,7 @@ class FavorisScreenContent extends State<FavorisScreen> {
                                     ),
                                   ],
                                 ),
-                                Container(
+                                SizedBox(
                                   height: 30,
                                   width: 20,
                                   child: VerticalDivider(color: Colors.green),

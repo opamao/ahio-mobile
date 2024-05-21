@@ -105,12 +105,12 @@ class _FelicitationState extends State<Felicitation> {
         var tokenType = resp["token_type"];
 
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("${message}")));
+            .showSnackBar(SnackBar(content: Text("$message")));
 
         pageRoute(accessToken, tokenType);
       } else if (response == 'ERREUR') {
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("${message}")));
+            .showSnackBar(SnackBar(content: Text("$message")));
       }
     } else {
       var resp = json.decode(reponse.body);

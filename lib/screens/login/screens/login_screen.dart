@@ -4,7 +4,6 @@ import 'dart:ui';
 
 import 'package:ahio/constants/constants.dart';
 import 'package:ahio/screens/inscription/screens/inscription_screen.dart';
-import 'package:ahio/screens/loading/screens/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
@@ -130,12 +129,10 @@ class _LoginState extends State<Login> {
                                                 InternationalPhoneNumberInput(
                                               onInputChanged:
                                                   (PhoneNumber number) {
-                                                print(number.phoneNumber);
                                                 phoneInicator =
                                                     number.phoneNumber!;
                                               },
                                               onInputValidated: (bool value) {
-                                                print(value);
                                               },
                                               errorMessage:
                                                   "Le numéro est invalide",
@@ -166,7 +163,6 @@ class _LoginState extends State<Login> {
                                                 borderSide: BorderSide.none,
                                               ),
                                               onSaved: (PhoneNumber number) {
-                                                print('On Saved: $number');
                                               },
                                             ),
                                           ),
@@ -326,8 +322,6 @@ class _LoginState extends State<Login> {
     Navigator.pop(context);
 
     var resp = jsonDecode(respons.body);
-
-    print(resp);
 
     if (respons.statusCode == 200) {
 

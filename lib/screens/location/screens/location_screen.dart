@@ -1,9 +1,7 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -93,13 +91,13 @@ class LocationsScreenContent extends State<LocationsScreen> {
             }
 
             Map<String, List<ListReservationClient>> residencesParStatus = {};
-            residences.forEach((residence) {
+            for (var residence in residences) {
               if (residencesParStatus.containsKey(residence.state)) {
                 residencesParStatus[residence.state]!.add(residence);
               } else {
                 residencesParStatus[residence.state!] = [residence];
               }
-            });
+            }
 
             List<Tab> tabs = residencesParStatus.keys.map((status) {
               String tabText;
@@ -167,15 +165,14 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                     Radius.circular(2.w),
                                   ),
                                 ),
-                                child: locations[index].residence!.mainPhoto !=
+                                child: locations[index].residenceMainPhoto !=
                                         null
                                     ? ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(3.w),
                                         child: Image.network(
                                           locations[index]
-                                              .residence!
-                                              .mainPhoto!,
+                                              .residenceMainPhoto!,
                                           fit: BoxFit.cover,
                                         ),
                                       )
@@ -189,17 +186,17 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    locations[index].residence!.district!,
+                                    locations[index].residenceOwnerAddress!,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 6.w,
+                                      fontSize: 4.w,
                                     ),
                                   ),
                                   const Gap(10),
                                   SizedBox(
                                     width: 150,
                                     child: AutoSizeText(
-                                      "${locations[index].residence!.code!} ${locations[index].residence!.street!}",
+                                      "${locations[index].residenceOwnerAddress!} ${locations[index].residenceStreet!}",
                                       maxLines: 2,
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
@@ -265,7 +262,7 @@ class LocationsScreenContent extends State<LocationsScreen> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            "${locations[index].residence!.price!} F",
+                                            "${locations[index].residencePrice!} F",
                                             textAlign: TextAlign.start,
                                             style: TextStyle(
                                               fontSize: 4.w,

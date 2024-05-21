@@ -1,6 +1,5 @@
 import 'package:ahio/constants/constants.dart';
 import 'package:ahio/screens/login/screens/login_screen.dart';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,7 +8,7 @@ import 'package:http/http.dart' as http;
 import '../profil.dart';
 
 class ProfilScreen extends StatefulWidget {
-  const ProfilScreen({Key? key}) : super(key: key);
+  const ProfilScreen({super.key});
 
   @override
   State<ProfilScreen> createState() => _ProfilScreenState();
@@ -219,8 +218,6 @@ class _autresState extends State<_autres> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String token = pref.getString("access_token")!;
 
-    print(token);
-
     var reponse = await http.post(
       Uri.parse(
         ApiUrls.postLogoutAuth,
@@ -231,8 +228,6 @@ class _autresState extends State<_autres> {
         'Authorization': "Bearer $token",
       },
     );
-
-    print(reponse.statusCode);
 
     Navigator.pop(context);
 
@@ -261,7 +256,7 @@ class _autresState extends State<_autres> {
 }
 
 class _TopPortion extends StatefulWidget {
-  const _TopPortion({Key? key}) : super(key: key);
+  const _TopPortion();
 
   @override
   State<_TopPortion> createState() => _TopPortionState();

@@ -30,7 +30,6 @@ class ModePaiementScreen extends StatefulWidget {
 }
 
 class _ModePaiementScreenState extends State<ModePaiementScreen> {
-  final _formkey = GlobalKey<FormState>();
 
   var dateFin = TextEditingController();
 
@@ -250,11 +249,6 @@ class _ModePaiementScreenState extends State<ModePaiementScreen> {
     );
 
     Navigator.pop(context);
-
-    var resp = jsonDecode(respons.body);
-
-    print(resp);
-    print(respons.statusCode);
 
     if (respons.statusCode == 201) {
 

@@ -11,7 +11,7 @@ class InputText extends StatelessWidget {
 
   final bool obscureText;
   const InputText({
-    Key? key,
+    super.key,
     required this.controller,
     required this.validatorMessage,
     this.keyboardType,
@@ -19,7 +19,7 @@ class InputText extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.obscureText = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

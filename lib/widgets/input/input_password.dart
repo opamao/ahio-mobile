@@ -9,13 +9,13 @@ class InputPassword extends StatefulWidget {
   final Widget? prefixIcon;
 
   const InputPassword({
-    Key? key,
+    super.key,
     required this.controller,
     required this.validatorMessage,
     this.hintText,
     this.prefixIcon,
     required IconButton suffixIcon,
-  }) : super(key: key);
+  });
 
   @override
   State<InputPassword> createState() => _InputPasswordState();

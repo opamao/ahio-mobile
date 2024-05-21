@@ -164,7 +164,6 @@ class _RecupPasswordScreenState extends State<RecupPasswordScreen> {
                                                         .validate()) {
                                                       recupass();
                                                     } else {
-                                                      print("erreur");
                                                     }
                                                   },
                                                   child: const Text(
@@ -203,7 +202,6 @@ class _RecupPasswordScreenState extends State<RecupPasswordScreen> {
     var reponse = await http.post(
         Uri.parse("${ApiUrls.baseUrlApi}askToChangePassword"),
         body: ({'phone': phone.text}));
-    print(reponse.statusCode);
     if (reponse.statusCode == 200) {
       var resp = json.decode(reponse.body);
       var response = resp["response"].toString();
@@ -211,7 +209,6 @@ class _RecupPasswordScreenState extends State<RecupPasswordScreen> {
       if (response == 'SUCCESS') {
         var phonee = phone.text;
 
-        print(phonee);
 
         pageRoute(phonee);
       } else if (response == 'ERREUR') {

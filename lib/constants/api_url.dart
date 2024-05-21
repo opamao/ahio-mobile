@@ -23,6 +23,7 @@ class ApiUrls {
   static const postCreateReservation = "${baseUrlApi}reservations";
   static const putUpdateReservation = "${baseUrlApi}reservations/";
   static const deleteReservation = "${baseUrlApi}reservations/";
+  static const postUpdateStatusReservation = "${putUpdateReservation}update-state";
 
   static const getListTypeResidence = "${baseUrlApi}residence-types";
   static const getListResidence = "${baseUrlApi}residences";

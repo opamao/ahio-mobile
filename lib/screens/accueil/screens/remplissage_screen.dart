@@ -22,10 +22,7 @@ class RempliPayerScreen extends StatefulWidget {
 }
 
 class _RempliPayerScreenState extends State<RempliPayerScreen> {
-  String _selectedDate = '';
-  String _dateCount = '';
   String _range = '';
-  String _rangeCount = '';
 
   final _formkey = GlobalKey<FormState>();
 
@@ -50,13 +47,6 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
             text: DateFormat('dd/MM/yyyy')
                 .format(args.value.endDate ?? args.value.startDate));
       }
-      /*else if (args.value is DateTime) {
-        _selectedDate = args.value.toString();
-      } else if (args.value is List<DateTime>) {
-        _dateCount = args.value.length.toString();
-      } else {
-        _rangeCount = args.value.length.toString();
-      }*/
     });
   }
 
@@ -124,7 +114,7 @@ class _RempliPayerScreenState extends State<RempliPayerScreen> {
                     padding: const EdgeInsets.only(left: 30.0, bottom: 15),
                     child: Column(
                       children: [
-                        Spacer(),
+                        const Spacer(),
                         Container(
                           padding: EdgeInsets.all(2.w),
                           decoration: BoxDecoration(
