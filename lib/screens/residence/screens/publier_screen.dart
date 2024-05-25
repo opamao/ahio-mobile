@@ -475,7 +475,7 @@ class _PublierScreenState extends State<PublierScreen> {
       final streamedResponse = await request.send();
       final response = await http.Response.fromStream(streamedResponse);
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 404) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text("Votre résidence a été ajouté"),

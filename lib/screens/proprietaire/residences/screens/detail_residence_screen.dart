@@ -1,38 +1,20 @@
-import 'dart:convert';
-
-import 'package:ahio/models/client/list_reservation_model.dart';
-import 'package:ahio/utils/utils.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:quickalert/quickalert.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
-import 'package:http/http.dart' as http;
 
-import '../../../constants/constants.dart';
-import '../../../themes/themes.dart';
+import '../../../../models/client/list_residence_model.dart';
+import '../../../../themes/themes.dart';
+import '../../../../utils/utils.dart';
 
-class DetailLocationScreen extends StatelessWidget {
-  ListReservationClient? location;
+class DetailResidenceScreen extends StatelessWidget {
 
-  final DateTime startDate;
-  final DateTime endDate;
+  ResidenceClient? residence;
 
-  DetailLocationScreen({
+  DetailResidenceScreen({
     super.key,
-    required this.location,
-  })  : startDate = location != null &&
-                location.startDate != null &&
-                location.endDate != null
-            ? DateTime.parse(location.startDate!.split('-').reversed.join())
-            : DateTime.now(),
-        endDate = location != null &&
-                location.startDate != null &&
-                location.endDate != null
-            ? DateTime.parse(location.endDate!.split('-').reversed.join())
-            : DateTime.now();
+    this.residence,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +24,7 @@ class DetailLocationScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "Détails - location",
+          "Détails",
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.normal),
         ),
         backgroundColor: Colors.transparent,
@@ -70,7 +52,7 @@ class DetailLocationScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.transparent,
                   image: DecorationImage(
-                    image: NetworkImage(location!.residenceMainPhoto!),
+                    image: NetworkImage(residence!.mainPhoto!),
                     fit: BoxFit.cover,
                   ),
                   borderRadius: BorderRadius.all(
@@ -98,7 +80,7 @@ class DetailLocationScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  location!.residenceOwnerAddress!,
+                                  residence!.category!,
                                   style: TextStyle(
                                     color: colorBlack,
                                     fontWeight: FontWeight.bold,
@@ -108,7 +90,7 @@ class DetailLocationScreen extends StatelessWidget {
                                 SizedBox(
                                   width: 200,
                                   child: AutoSizeText(
-                                    "${location!.residenceType!} ${location!.residenceStreet}",
+                                    "${residence!.city!} ${residence!.district!} \n${residence!.country!}",
                                     maxLines: 2,
                                     style: TextStyle(
                                       color: colorBlack,
@@ -124,7 +106,7 @@ class DetailLocationScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  "${location!.residencePrice!} F",
+                                  "${residence!.price!} F",
                                   style: TextStyle(
                                     color: Colors.red,
                                     fontWeight: FontWeight.bold,
@@ -163,100 +145,6 @@ class DetailLocationScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          "Période de location",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 20,
-                            top: 8,
-                          ),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  const Text(
-                                    "En cours...",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 15,
-                                        color: Colors.green),
-                                  ),
-                                  LinearPercentIndicator(
-                                    animation: true,
-                                    animationDuration: 2500,
-                                    width: 190.0,
-                                    lineHeight: 8.0,
-                                    percent: .5,
-                                    barRadius: const Radius.circular(16),
-                                    backgroundColor: Colors.grey,
-                                    progressColor: Colors.black,
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "Du ${formatDates(location!.startDate!)} au ${formatDates(location!.endDate!)} = ",
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      "${endDate.difference(startDate).inDays} nuits",
-                                      style: const TextStyle(
-                                        color: Colors.green,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        const Gap(20),
-                        const Text(
-                          "Montant par nuit :",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 20,
-                            top: 8,
-                          ),
-                          child: Row(
-                            children: [
-                              Text(
-                                "${location!.residencePrice} F x ${endDate.difference(startDate).inDays} = ",
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                "${location!.residencePrice! * endDate.difference(startDate).inDays} FCFA",
-                                style: const TextStyle(
-                                  color: Colors.green,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const Gap(20),
-                        const Text(
                           "Capacité de la résidence :",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -279,9 +167,9 @@ class DetailLocationScreen extends StatelessWidget {
                                     width: 30,
                                   ),
                                   Text(
-                                    "${location!.persons} Personnes",
-                                    style: const TextStyle(
-                                      fontSize: 15,
+                                    "${residence!.personsSupported!} Personnes",
+                                    style: TextStyle(
+                                      fontSize: 11.sp,
                                       color: Colors.black,
                                       fontWeight: FontWeight.normal,
                                     ),
@@ -296,9 +184,9 @@ class DetailLocationScreen extends StatelessWidget {
                                     width: 30,
                                   ),
                                   Text(
-                                    "${location!.residenceRooms} Chambres",
-                                    style: const TextStyle(
-                                      fontSize: 15,
+                                    "${residence!.rooms!} Chambres",
+                                    style: TextStyle(
+                                      fontSize: 11.sp,
                                       color: Colors.black,
                                       fontWeight: FontWeight.normal,
                                     ),
@@ -313,9 +201,9 @@ class DetailLocationScreen extends StatelessWidget {
                                     width: 30,
                                   ),
                                   Text(
-                                    "${location!.residenceBeds} Lits",
-                                    style: const TextStyle(
-                                      fontSize: 15,
+                                    "${residence!.beds!} Lits",
+                                    style: TextStyle(
+                                      fontSize: 11.sp,
                                       color: Colors.black,
                                       fontWeight: FontWeight.normal,
                                     ),
@@ -330,9 +218,9 @@ class DetailLocationScreen extends StatelessWidget {
                                     width: 30,
                                   ),
                                   Text(
-                                    "${location!.residenceBathrooms} Salles d'eau",
-                                    style: const TextStyle(
-                                      fontSize: 15,
+                                    "${residence!.bathrooms!} Salles d'eau",
+                                    style: TextStyle(
+                                      fontSize: 11.sp,
                                       color: Colors.black,
                                       fontWeight: FontWeight.normal,
                                     ),
@@ -356,8 +244,29 @@ class DetailLocationScreen extends StatelessWidget {
                             top: 8,
                           ),
                           child: Column(
-                            children:
-                                buildEquipmentWidgets(location!.equipments!),
+                            children: buildEquipmentWidgets(residence!.equipments!),
+                          ),
+                        ),
+                        const Gap(20),
+                        const Text(
+                          "Disponibilité :",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 20,
+                            top: 8,
+                          ),
+                          child: Text(
+                            "Du ${formatDates(residence!.availableAt!)} au ${formatDates(residence!.availableUntil!)}",
+                            style: const TextStyle(
+                              color: Colors.green,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         const Gap(20),
@@ -370,46 +279,10 @@ class DetailLocationScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15),
-            topRight: Radius.circular(15),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 90.0,
-            right: 90.0,
-            top: 10,
-            bottom: 10,
-          ),
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromRGBO(147, 226, 55, 1),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-            ),
-            onPressed: () async {
-              _fetchChangeStatus(context);
-            },
-            child: const Text(
-              "Terminer",
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.black,
-                fontWeight: FontWeight.normal,
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 
-  List<Widget> buildEquipmentWidgets(equipments) {
+  List<Widget> buildEquipmentWidgets(List<Equipments>? equipments) {
     List<Widget> widgets = [];
 
     for (var equipment in equipments!) {
@@ -428,7 +301,7 @@ class DetailLocationScreen extends StatelessWidget {
             ),
             const Gap(10),
             Text(
-              equipment,
+              equipment.name!, // Affiche le nom de l'équipement
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 15,
@@ -439,53 +312,7 @@ class DetailLocationScreen extends StatelessWidget {
         ),
       );
     }
+
     return widgets;
-  }
-
-  Future<void> _fetchChangeStatus(BuildContext context) async {
-    QuickAlert.show(
-      disableBackBtn: true,
-      context: context,
-      type: QuickAlertType.warning,
-      title: "Veuillez patienter...",
-      showConfirmBtn: false,
-    );
-
-    SharedPreferences pref = await SharedPreferences.getInstance();
-
-    var response = await http.post(
-      Uri.parse(ApiUrls.postUpdateStatusReservation),
-      headers: {
-        'Authorization': "Bearer ${pref.getString("access_token")}",
-        'Content-Type': "application/json",
-        'Accept': "application/json",
-      },
-      body: jsonEncode({
-        'state': "completed",
-        'reservation_id': location!.id!,
-      }),
-    );
-
-    Navigator.pop(context);
-
-    print(response.statusCode);
-    print(response.body);
-
-    if (response.statusCode == 200) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: Colors.green,
-          content: Text("Vous avez terminer votre séjour avec succès"),
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: Colors.red,
-          content:
-              Text("Impossible de terminer vitre séjour. Veuillez réessayer"),
-        ),
-      );
-    }
   }
 }

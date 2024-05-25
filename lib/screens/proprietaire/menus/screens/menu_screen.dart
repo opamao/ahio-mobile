@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
+import '../../../profil/profil.dart';
 import '../../accueil/accueil.dart';
 import '../../gains/gains.dart';
-import '../../profil/profil.dart';
 import '../../residences/residences.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -20,7 +20,7 @@ class _MenuScreenState extends State<MenuScreen> {
   final Widget _accueil = const AccueilProprioScreen();
   final Widget _gains = const GainsScreen();
   final Widget _residences = const ResidencesScreen();
-  final Widget _profile = const ProfileScreen();
+  final Widget _profile = const ProfilScreen();
 
   @override
   Widget build(BuildContext context) {
