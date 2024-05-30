@@ -392,7 +392,7 @@ class DetailLocationScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0),
               ),
             ),
-            onPressed: () async {
+            onPressed: () {
               _fetchChangeStatus(context);
             },
             child: const Text(

@@ -1,10 +1,16 @@
+import 'dart:convert';
+
 import 'package:ahio/models/client/list_residence_model.dart';
 import 'package:ahio/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:quickalert/quickalert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
+import 'package:http/http.dart' as http;
 
+import '../../../constants/constants.dart';
 import '../../../utils/utils.dart';
 import '../accueil.dart';
 
@@ -305,7 +311,9 @@ class DetailAccueilScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  _fetchAddFavourites(context);
+                },
                 label: const Text(
                   "Aj. favoris",
                   style: TextStyle(
@@ -379,6 +387,49 @@ class DetailAccueilScreen extends StatelessWidget {
     }
 
     return widgets;
+  }
+
+  Future<void> _fetchAddFavourites(BuildContext context) async {
+    QuickAlert.show(
+      disableBackBtn: true,
+      context: context,
+      type: QuickAlertType.warning,
+      title: "Veuillez patienter...",
+      showConfirmBtn: false,
+    );
+
+    SharedPreferences pref = await SharedPreferences.getInstance();
+
+    var response = await http.post(
+      Uri.parse(ApiUrls.postAddFavourites),
+      headers: {
+        'Authorization': "Bearer ${pref.getString("access_token")}",
+        'Content-Type': "application/json",
+        'Accept': "application/json",
+      },
+      body: jsonEncode({
+        'residence_id': residence!.id!,
+      }),
+    );
+
+    Navigator.pop(context);
+
+    if (response.statusCode == 201) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.green,
+          content: Text("La residence a été ajoutée en tant que favoris"),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content:
+          Text("Impossible d'ajouter'. Veuillez réessayer"),
+        ),
+      );
+    }
   }
 
 }

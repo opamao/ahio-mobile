@@ -44,4 +44,8 @@ class ApiUrls {
 
   static const getListPays = "${baseUrlApi}countries";
   static const getListVille = "${baseUrlApi}countries/";
+
+  static const getListFavourites = "${baseUrlApi}favourites";
+  static const postAddFavourites = "${baseUrlApi}favourites";
+  static const deleteFavourites = "${baseUrlApi}favourites/";
 }
