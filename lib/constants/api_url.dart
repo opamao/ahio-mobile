@@ -32,13 +32,8 @@ class ApiUrls {
   static const postUpdateResidence = "${baseUrlApi}residences/";
   static const deleteResidence = "${baseUrlApi}residences/";
 
-  static const statistic = "${baseUrlApi}statistics/";
-  static const getNbrTotalReservation = "${statistic}reservations";
-  static const getNbrTotalReservationCompleted = "${statistic}reservations/completed";
-  static const getNbrTotalReservationCancelled = "${statistic}reservations/cancelled";
-  static const getNbrTotalResidence = "${statistic}residences";
-  static const getNbrTotalResidenceCompleted = "${statistic}residences/active";
-  static const getNbrTotalResidenceCancelled = "${statistic}residences/inactive";
+  static const getStatistic = "${baseUrlApi}statistics";
+  static const getNbrTotalReservation = "$getStatistic/residences/gains";
 
   static const getListEquipments = "${baseUrlApi}equipments";
 

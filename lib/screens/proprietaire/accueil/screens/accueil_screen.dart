@@ -1,8 +1,15 @@
+import 'dart:convert';
+
 import 'package:ahio/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:http/http.dart' as http;
 
+import '../../../../constants/constants.dart';
+import '../../../../models/proprio/states_model.dart';
 import '../../../../themes/themes.dart';
 import '../../../../widgets/widgets.dart';
 import '../../../residence/residence.dart';
@@ -15,6 +22,40 @@ class AccueilProprioScreen extends StatefulWidget {
 }
 
 class _AccueilProprioScreenState extends State<AccueilProprioScreen> {
+  Future<States> fetchStates() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+
+    final http.Response response = await http.get(
+      Uri.parse(ApiUrls.getStatistic),
+      headers: {
+        'Authorization': "Bearer ${pref.getString("access_token")}",
+        'Content-Type': "application/json",
+        'Accept': "application/json",
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      States states = States.fromJson(jsonResponse);
+      return states;
+    } else {
+      throw Exception("Une erreur s'est produite");
+    }
+  }
+
+  List<_SalesData> convertStatesToSalesData(States states) {
+    return [
+      _SalesData('Total RS', (states.totalResidences ?? 0).toDouble()),
+      _SalesData('Active', (states.totalResidencesActive ?? 0).toDouble()),
+      _SalesData('Inactive', (states.totalResidencesInactive ?? 0).toDouble()),
+      _SalesData('Total RV', (states.totalReservation ?? 0).toDouble()),
+      _SalesData(
+          'Complètes', (states.totalReservationsCompleted ?? 0).toDouble()),
+      _SalesData(
+          'Annulées', (states.totalReservationsCancelled ?? 0).toDouble()),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,8 +75,10 @@ class _AccueilProprioScreenState extends State<AccueilProprioScreen> {
                 const Gap(10),
                 Text(
                   "Les meilleurs\nrésidences sont ici !",
-                  style:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.sp,
+                  ),
                 ),
               ],
             ),
@@ -134,8 +177,56 @@ class _AccueilProprioScreenState extends State<AccueilProprioScreen> {
               ],
             ),
           ),
+          FutureBuilder<States>(
+            future: fetchStates(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.hasError) {
+                return Text("Erreur : ${snapshot.error}");
+              } else if (snapshot.hasData) {
+                List<_SalesData> data =
+                    convertStatesToSalesData(snapshot.data!);
+                return SfCartesianChart(
+                  primaryXAxis: CategoryAxis(),
+                  title: ChartTitle(
+                    text: 'Statistiques',
+                    textStyle: TextStyle(
+                      fontSize: 14.sp,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  tooltipBehavior: TooltipBehavior(enable: true),
+                  series: <CartesianSeries<_SalesData, String>>[
+                    LineSeries<_SalesData, String>(
+                      dataSource: data,
+                      xValueMapper: (_SalesData sales, _) => sales.name,
+                      yValueMapper: (_SalesData sales, _) => sales.values,
+                      dataLabelSettings:
+                          const DataLabelSettings(isVisible: true),
+                    )
+                  ],
+                );
+              } else {
+                return const Text("Aucune donnée disponible");
+              }
+            },
+          ),
         ],
       ),
     );
   }
+}
+
+class _SalesData {
+  _SalesData(
+    this.name,
+    this.values,
+  );
+
+  final String name;
+  final double values;
 }
