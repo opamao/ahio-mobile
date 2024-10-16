@@ -3,11 +3,12 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>autorisation galeire</string>
 	<key>NSCameraUsageDescription</key>
 	<string>autorisation camera</string>
-	<string>$(DEVELOPMENT_LANGUAGE)</string>
+
 	<key>CFBundleDisplayName</key>
 	<string>Ahio</string>
 	<key>CFBundleExecutable</key>
