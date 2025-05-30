@@ -1,0 +1,383 @@
+import 'dart:convert';
+
+import 'package:ahio/constants/constants.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:http/http.dart' as http;
+
+import '../../../widgets/widgets.dart';
+import '../../residence/residence.dart';
+
+class Maps extends StatefulWidget {
+  final String type;
+
+  const Maps({
+    super.key,
+    required this.type,
+  });
+
+  @override
+  State<Maps> createState() => _MapsState();
+}
+
+class _MapsState extends State<Maps> {
+  final panelController = PanelController();
+  final controller = ScrollController();
+
+  @override
+  Widget build(BuildContext context) {
+    final panelHeightOpen = MediaQuery.of(context).size.height * 0.7;
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const CircleAvatar(
+            backgroundColor: Colors.white,
+            child: Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+          ),
+        ),
+      ),
+      body: SlidingUpPanel(
+        backdropColor: const Color.fromARGB(255, 222, 245, 207),
+        body: Column(
+          children: [
+            Expanded(
+              child: FlutterMap(
+                options: const MapOptions(
+                  // center: LatLng(51.509364, -0.128928),
+                  initialCenter: LatLng(7.546855, -5.5471),
+                  //pour la cote d'ivoire
+                  initialZoom: 9.2,
+                ),
+                // nonRotatedChildren: [
+                //   AttributionWidget.defaultWidget(
+                //     source: 'OpenStreetMap contributors',
+                //     onSourceTapped: null,
+                //   ),
+                // ],
+                children: [
+                  TileLayer(
+                    urlTemplate:
+                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    userAgentPackageName: 'com.example.app',
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        controller: panelController,
+        maxHeight: panelHeightOpen,
+        minHeight: 180,
+        defaultPanelState: PanelState.CLOSED,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+        backdropTapClosesPanel: false,
+        panelBuilder: (controller) {
+          return Panel(
+            controller: controller,
+            panelController: panelController,
+            type: widget.type,
+          );
+        },
+      ),
+    );
+  }
+}
+
+class Pays {
+  String id;
+  String name;
+
+  Pays({
+    required this.id,
+    required this.name,
+  });
+
+  factory Pays.fromJson(Map<String, dynamic> json) {
+    return Pays(
+      id: json['id'],
+      name: json['name'],
+    );
+  }
+}
+
+class Ville {
+  final String id;
+  final String name;
+
+  Ville({
+    required this.id,
+    required this.name,
+  });
+
+  factory Ville.fromJson(Map<String, dynamic> json) {
+    return Ville(
+      id: json['id'],
+      name: json['name'],
+    );
+  }
+}
+
+class Panel extends StatefulWidget {
+  final ScrollController controller;
+  final PanelController panelController;
+  final String type;
+
+  const Panel({
+    super.key,
+    required this.controller,
+    required this.panelController,
+    required this.type,
+  });
+
+  @override
+  State<Panel> createState() => _PanelState();
+}
+
+class _PanelState extends State<Panel> {
+  final _formkey = GlobalKey<FormState>();
+
+  TextEditingController rue = TextEditingController();
+  TextEditingController quartier = TextEditingController();
+  TextEditingController adresse = TextEditingController();
+
+  List<Pays> _pays = [];
+  List<Ville> _ville = [];
+  String? _selectedCountryId;
+  String? _selectedCityId;
+
+  late String token, type = "";
+
+  @override
+  void initState() {
+    super.initState();
+    getCred();
+  }
+
+  void getCred() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    setState(() {
+      token = pref.getString("access_token")!;
+      _fetchPays();
+    });
+  }
+
+  Future<void> _fetchPays() async {
+    final response = await http.get(
+      Uri.parse(ApiUrls.getListPays),
+      headers: {
+        'Authorization': "Bearer $token",
+      },
+    );
+
+    final jsonData = json.decode(response.body) as List<dynamic>;
+
+    List<Pays> paysList = jsonData.map((item) => Pays.fromJson(item)).toList();
+    paysList.sort((a, b) => a.name.compareTo(b.name));
+
+    setState(() {
+      _pays = paysList;
+    });
+  }
+
+  Future<void> _fetchVille(String countryId) async {
+    final response = await http.get(
+      Uri.parse("${ApiUrls.getListVille}$countryId"),
+      headers: {
+        'Authorization': "Bearer $token",
+      },
+    );
+
+    final jsonData = json.decode(response.body) as List<dynamic>;
+
+    List<Ville> villeList =
+        jsonData.map((item) => Ville.fromJson(item)).toList();
+    villeList.sort((a, b) => a.name.compareTo(b.name));
+
+    setState(() {
+      _ville = villeList;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      physics: const BouncingScrollPhysics(),
+      controller: widget.controller,
+      children: <Widget>[
+        Center(
+          child: Container(
+            padding: const EdgeInsets.all(25),
+            child: SingleChildScrollView(
+              child: Form(
+                key: _formkey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    const Text(
+                      "Saisir votre adresse",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      controller: adresse,
+                      textInputAction: TextInputAction.done,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        hintText: "adresse",
+                        prefixIcon: const Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Icon(
+                            Icons.location_on_rounded,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      controller: rue,
+                      textInputAction: TextInputAction.done,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        hintText: "  rue",
+                        suffixIcon: const Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Icon(Icons.edit),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      controller: quartier,
+                      textInputAction: TextInputAction.done,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        hintText: "  quartier",
+                        suffixIcon: const Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Icon(Icons.edit),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Column(
+                      children: <Widget>[
+                        DropdownButtonFormField<Pays>(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                          ),
+                          value: _selectedCountryId != null
+                              ? _pays.firstWhere(
+                                  (c) => c.id == _selectedCountryId)
+                              : null,
+                          hint: const Text('Selectionner le pays'),
+                          items: _pays
+                              .map(
+                                (pays) => DropdownMenuItem<Pays>(
+                                  value: pays,
+                                  child: SizedBox(
+                                    width: 300,
+                                    child: Text(pays.name),
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (pays) {
+                            setState(() {
+                              _selectedCountryId = pays?.id;
+                              _selectedCityId = null;
+                            });
+                            _fetchVille(pays!.id);
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                        DropdownButtonFormField<Ville>(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                          ),
+                          value: _selectedCityId != null
+                              ? _ville
+                                  .firstWhere((c) => c.id == _selectedCityId)
+                              : null,
+                          hint: const Text('Selectionner la ville'),
+                          items: _ville
+                              .map((ville) => DropdownMenuItem<Ville>(
+                                    value: ville,
+                                    child: Text(ville.name),
+                                  ))
+                              .toList(),
+                          onChanged: (ville) {
+                            setState(() {
+                              _selectedCityId = ville?.id;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SubmitButton(
+                      "Suivant",
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CapaciteScreen(
+                              adresse: adresse.text,
+                              rue: rue.text,
+                              quartier: quartier.text,
+                              pays: _selectedCountryId,
+                              ville: _selectedCityId,
+                              type: widget.type,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}

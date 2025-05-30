@@ -6,7 +6,7 @@ class Routes {
   static const String homeScreen = "/home_screen";
   static const String homeApbar = "/homeApbar";
   static const String otp = "/otp";
-  static const String locator = "/locator";
+  static const String locator = "/map";
   static const String inscription = "/inscription";
   static const String changepass = "/changepass";
   static const String capacite = "/capacite";
